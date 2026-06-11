@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dream Bingo 離線預覽</title>
+  <title>Dream Bingo 學生自訂版</title>
   <style>
     :root {
       --bg: #f7f1e8;
@@ -284,48 +284,117 @@
     .bingo-board {
       display: grid;
       grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 10px;
-      padding: 14px;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      background: #fff;
-      box-shadow: var(--shadow);
+      gap: 12px;
+      padding: 18px;
+      border: 2px solid rgba(31, 31, 31, 0.08);
+      border-radius: 20px;
+      background:
+        linear-gradient(135deg, rgba(244, 123, 32, 0.12), rgba(47, 143, 91, 0.12)),
+        #fff;
+      box-shadow: 0 22px 50px rgba(42, 29, 18, 0.16);
     }
 
     .cell {
+      --tone: #f47b20;
+      --tone-soft: #fff0e4;
+      --tone-ink: #7a2f00;
       position: relative;
       aspect-ratio: 1;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: #fff;
+      border: 2px solid color-mix(in srgb, var(--tone) 32%, #fff);
+      border-radius: 16px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.78)),
+        linear-gradient(135deg, var(--tone-soft), #fff);
       cursor: pointer;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       gap: 8px;
-      padding: 10px;
-      transition: 0.2s ease;
+      padding: 11px;
+      box-shadow: 0 10px 20px rgba(31, 31, 31, 0.08);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
       overflow: hidden;
     }
 
+    .cell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-top: 7px solid var(--tone);
+      pointer-events: none;
+    }
+
     .cell:hover {
-      transform: translateY(-2px);
-      border-color: rgba(244, 123, 32, 0.55);
+      transform: translateY(-3px) rotate(-0.4deg);
+      border-color: color-mix(in srgb, var(--tone) 70%, #fff);
+      box-shadow: 0 16px 26px rgba(31, 31, 31, 0.13);
     }
 
     .cell.done,
     .cell.center {
-      background: linear-gradient(160deg, #ff9a3d, #f47b20);
+      background:
+        linear-gradient(160deg, #ff9a3d, #f47b20);
       color: #fff;
       border-color: transparent;
-      box-shadow: 0 10px 18px rgba(244, 123, 32, 0.2);
+      box-shadow: 0 14px 26px rgba(244, 123, 32, 0.28);
+    }
+
+    .cell.done::before,
+    .cell.center::before {
+      border-top-color: #c65310;
+    }
+
+    .cell.done::after {
+      content: "完成";
+      position: absolute;
+      right: 8px;
+      top: 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.22);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 4px 7px;
     }
 
     .cell .category {
-      color: inherit;
-      opacity: 0.78;
+      align-self: flex-start;
+      border-radius: 999px;
+      background: var(--tone);
+      color: #fff;
       font-size: 12px;
       font-weight: 900;
+      line-height: 1;
+      padding: 6px 8px;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      z-index: 1;
+    }
+
+    .cell.done .category,
+    .cell.center .category {
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .goal-copy {
+      display: grid;
+      gap: 4px;
+      min-height: 0;
+      z-index: 1;
+    }
+
+    .goal-label {
+      color: var(--tone-ink);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .cell.done .goal-label,
+    .cell.center .goal-label {
+      color: rgba(255, 255, 255, 0.72);
     }
 
     .cell .title {
@@ -333,20 +402,28 @@
       line-height: 1.35;
       font-weight: 900;
       word-break: break-word;
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
     }
 
     .cell .xp {
-      align-self: flex-start;
-      border-radius: 999px;
-      background: rgba(31, 31, 31, 0.08);
-      padding: 4px 8px;
+      align-self: stretch;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--tone-ink);
+      padding: 7px 9px;
       font-size: 12px;
       font-weight: 900;
+      text-align: center;
+      z-index: 1;
     }
 
     .cell.done .xp,
     .cell.center .xp {
       background: rgba(255, 255, 255, 0.2);
+      color: #fff;
     }
 
     .notice {
@@ -362,6 +439,57 @@
 
     .notice.show {
       display: block;
+    }
+
+    .dialog-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(31, 31, 31, 0.42);
+      backdrop-filter: blur(8px);
+    }
+
+    .dialog-backdrop.show {
+      display: flex;
+    }
+
+    .confirm-dialog {
+      width: min(420px, 100%);
+      border: 2px solid rgba(244, 123, 32, 0.24);
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 26px 70px rgba(31, 31, 31, 0.28);
+      padding: 22px;
+    }
+
+    .confirm-dialog h2 {
+      margin-bottom: 8px;
+      font-size: 28px;
+    }
+
+    .confirm-task {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--orange-soft);
+      padding: 14px;
+      margin: 14px 0;
+    }
+
+    .confirm-task strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    .dialog-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 18px;
     }
 
     .submission-list {
@@ -506,8 +634,8 @@
       }
 
       .bingo-board {
-        gap: 6px;
-        padding: 8px;
+        gap: 7px;
+        padding: 9px;
       }
 
       .cell {
@@ -515,9 +643,18 @@
         padding: 7px;
       }
 
+      .cell::before {
+        border-top-width: 5px;
+      }
+
       .cell .category,
       .cell .xp {
         font-size: 10px;
+        padding: 5px 6px;
+      }
+
+      .goal-label {
+        display: none;
       }
     }
   </style>
@@ -529,7 +666,7 @@
         <div class="brand-mark">★</div>
         <div>
           Dream Bingo
-          <small>夢想賓果成長系統｜離線預覽</small>
+          <small>夢想賓果成長系統｜學生自訂版</small>
         </div>
       </div>
       <nav aria-label="頁面切換">
@@ -548,15 +685,15 @@
         <div class="panel">
           <span class="badge">Student Dashboard</span>
           <h1>您好，王小明</h1>
-          <p>今天也往自己的作品目標前進一點。完成任務、累積 XP，讓夢想賓果慢慢亮起來。</p>
+          <p>先寫下自己的 24 個成長目標，產生專屬賓果卡後再開始完成任務、累積 XP。</p>
           <div class="actions">
-            <button class="button" data-page-link="bingo">前往我的賓果卡</button>
+            <button class="button" data-page-link="bingo">建立我的賓果卡</button>
             <button class="button secondary" data-page-link="admin">查看教師後台</button>
           </div>
         </div>
         <div class="panel">
           <h2>目前進度</h2>
-          <p>學生先填 24 個自訂目標與 XP，送出後鎖定；中心格固定為「完成學生美展作品」。</p>
+          <p>學生自己填目標、選類別與 XP。產生後會鎖定排序，中心格固定為「完成漫畫美展作品」。</p>
           <div class="stats" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 0;">
             <div class="card stat"><span>完成率</span><strong id="dashRate">4%</strong></div>
             <div class="card stat"><span>Bingo</span><strong id="dashBingo">0</strong></div>
@@ -566,7 +703,7 @@
 
       <div class="stats">
         <div class="card stat"><span>完成數</span><strong id="dashDone">1 / 25</strong></div>
-        <div class="card stat"><span>XP 總分</span><strong>1000</strong></div>
+        <div class="card stat"><span>XP 總分</span><strong id="dashXp">100</strong></div>
         <div class="card stat"><span>美展任務</span><strong>10%</strong></div>
         <div class="card stat"><span>排名</span><strong>12</strong></div>
       </div>
@@ -576,20 +713,20 @@
       <div class="panel" style="margin-bottom: 18px;">
         <span class="badge">Bingo Board</span>
         <h1>我的 Bingo 卡</h1>
-        <p>第一頁先讓學生填 24 個目標與 XP；上傳後就鎖定，進入第二頁的 25 格亂數賓果卡。</p>
+        <p>先填 24 個自己的目標。完成後系統會亂數排列成 5x5 賓果卡，並把內容鎖定在這台裝置上。</p>
       </div>
 
       <div id="draftView">
         <div class="stats">
-          <div class="card stat"><span>自訂目標</span><strong>24</strong></div>
-          <div class="card stat"><span>總 XP</span><strong>1000</strong></div>
+          <div class="card stat"><span>已填目標</span><strong id="filledGoalCount">0 / 24</strong></div>
+          <div class="card stat"><span>目前 XP</span><strong id="draftXp">100</strong></div>
           <div class="card stat"><span>美展固定</span><strong>100</strong></div>
-          <div class="card stat"><span>剩餘可分配</span><strong id="remainXp">0</strong></div>
+          <div class="card stat"><span>狀態</span><strong id="draftStatus">尚未鎖定</strong></div>
         </div>
 
         <div class="panel">
-          <h2>25 行目標確認表</h2>
-          <p>第 1 行固定為美展任務，其餘 24 行可調整類別、內容與 XP。總 XP 必須剛好 1000 才能上傳。</p>
+          <h2>建立我的 24 個目標</h2>
+          <p>第 1 行固定為美展任務，其餘 24 行由學生自己填寫，XP 由學生自己判斷。</p>
           <div class="table-wrap">
             <table>
               <thead>
@@ -604,21 +741,25 @@
             </table>
           </div>
           <div class="actions">
-            <button id="uploadBtn" class="button">上傳並鎖定賓果卡</button>
-            <span id="uploadHint" class="hint">目前總 XP：1000，可以上傳。</span>
+            <button id="uploadBtn" class="button">產生並鎖定賓果卡</button>
+            <span id="uploadHint" class="hint">請先填滿 24 個自己的目標。</span>
           </div>
         </div>
       </div>
 
       <div id="boardView" style="display: none;">
-        <div id="bingoNotice" class="notice">內容已鎖定並送出給教師後台。</div>
+        <div id="bingoNotice" class="notice">賓果卡已產生並鎖定。這台裝置重新整理後仍會保留目前卡片。</div>
         <div class="stats">
           <div class="card stat"><span>完成率</span><strong id="doneCount">1 / 25</strong></div>
           <div class="card stat"><span>Bingo 線數</span><strong id="lineCount">0</strong></div>
-          <div class="card stat"><span>中心格</span><strong>100 XP</strong></div>
+          <div class="card stat"><span>中心格</span><strong>固定</strong></div>
           <div class="card stat"><span>狀態</span><strong>已鎖定</strong></div>
         </div>
         <div id="board" class="bingo-board" aria-label="Bingo 賓果卡"></div>
+        <div class="actions">
+          <button id="resetCardBtn" class="button secondary">重新建立卡片</button>
+          <span class="hint">測試版可重新建立；正式版可改成由老師解鎖。</span>
+        </div>
       </div>
     </section>
 
@@ -675,7 +816,7 @@
       <div class="panel" style="margin-bottom: 18px;">
         <span class="badge">Achievements</span>
         <h1>等級成就</h1>
-        <p>目標等級也補回來了。這裡用 Lv、XP 進度條、徽章與時間軸呈現學生的成長狀態。</p>
+        <p>學生自訂的 XP 也會保留。這裡用 Lv、XP 進度條、徽章與時間軸呈現學生的成長狀態。</p>
       </div>
 
       <div class="grid-two" style="margin-bottom: 18px;">
@@ -689,8 +830,8 @@
           </div>
         </div>
         <div class="panel">
-          <h2>目標等級</h2>
-          <p>可以之後再細分成創作、語言、生活技能、好人好事、變可愛等不同成長路線。</p>
+          <h2>自訂 XP</h2>
+          <p>學生可以依照自己判斷的挑戰程度，為每個目標設定 XP。</p>
           <div class="timeline">
             <div class="timeline-item"><strong>青銅</strong><br><span class="hint">完成 5 個目標</span></div>
             <div class="timeline-item"><strong>白銀</strong><br><span class="hint">完成 10 個目標</span></div>
@@ -739,6 +880,22 @@
     </section>
   </main>
 
+  <div id="completeDialog" class="dialog-backdrop" role="dialog" aria-modal="true" aria-labelledby="completeTitle">
+    <div class="confirm-dialog">
+      <span class="badge">完成確認</span>
+      <h2 id="completeTitle">你好棒棒，完成了嗎？</h2>
+      <p>確認後這一格會變成橘色完成狀態，並更新完成率與 Bingo 線數。</p>
+      <div class="confirm-task">
+        <strong id="confirmGoalTitle">目標內容</strong>
+        <span id="confirmGoalMeta" class="hint">類別｜XP</span>
+      </div>
+      <div class="dialog-actions">
+        <button id="cancelCompleteBtn" class="button secondary" type="button">先不要</button>
+        <button id="confirmCompleteBtn" class="button" type="button">確認完成</button>
+      </div>
+    </div>
+  </div>
+
   <div class="countdown" aria-label="開學倒數">
     <div class="countdown-icon">日</div>
     <div>
@@ -748,43 +905,20 @@
   </div>
 
   <script>
+    const storageKey = "dream-bingo-student-card-v1";
     const categories = ["創作", "平面設計", "數位繪圖", "學習", "練習", "合作", "表達", "語言", "生活技能", "好人好事", "變可愛", "健康"];
-    const centerGoal = { id: "center-goal", category: "創作", title: "完成學生美展作品", points: 100, completed: true, gridIndex: 12 };
-    let draftGoals = [
-      ["創作", "完成角色設定三視圖", 40],
-      ["平面設計", "完成一張海報構圖草稿", 35],
-      ["平面設計", "整理作品封面草案", 35],
-      ["學習", "完成美術史筆記一頁", 30],
-      ["語言", "練習英文作品介紹", 35],
-      ["創作", "完成色彩配色練習", 40],
-      ["健康", "完成一週健康喝水紀錄", 30],
-      ["創作", "完成一張四格漫畫", 45],
-      ["習慣", "整理電腦檔案與命名", 25],
-      ["合作", "與同學互評一次作品", 35],
-      ["好人好事", "完成一件好人好事紀錄", 30],
-      ["生活技能", "整理書包與學習用品", 35],
-      ["平面設計", "製作一張活動宣傳圖", 40],
-      ["表達", "完成一段作品說明文字", 30],
-      ["練習", "練習 10 分鐘速寫", 25],
-      ["數位繪圖", "完成一張數位上色作品", 45],
-      ["合作", "參與一次班級討論", 25],
-      ["平面設計", "完成一個版面排版練習", 40],
-      ["語言", "練習三句日常英文對話", 30],
-      ["健康", "完成一次規律運動", 35],
-      ["學習", "閱讀一篇設計文章", 25],
-      ["變可愛", "主動稱讚同學一次", 35],
-      ["創作", "完成一張手繪草圖", 40],
-      ["合作", "協助同學解決作品問題", 35]
-    ].map((item, index) => ({
+    const centerGoal = { id: "center-goal", category: "創作", title: "完成漫畫美展作品", points: 100, completed: true, gridIndex: 12 };
+    let draftGoals = Array.from({ length: 24 }, (_, index) => ({
       id: `goal-${String(index + 1).padStart(2, "0")}`,
-      category: item[0],
-      title: item[1],
-      points: item[2],
+      category: categories[index % categories.length],
+      title: "",
+      points: 40,
       completed: false,
       gridIndex: index
     }));
     const boardPositions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
     let boardGoals = null;
+    let pendingCompleteGoal = null;
     let submissions = [{
       studentName: "王小明",
       className: "設計群 1 班",
@@ -794,6 +928,71 @@
       bingoCount: 0,
       reviewStatus: "待檢視"
     }];
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function normalizeGoal(goal, index) {
+      return {
+        id: goal.id || `goal-${String(index + 1).padStart(2, "0")}`,
+        category: categories.includes(goal.category) ? goal.category : categories[index % categories.length],
+        title: goal.title || "",
+        points: Number(goal.points || 0),
+        completed: Boolean(goal.completed),
+        gridIndex: Number.isInteger(goal.gridIndex) ? goal.gridIndex : index
+      };
+    }
+
+    function categoryToneStyle(category) {
+      const tones = {
+        "創作": ["#f47b20", "#fff0e4", "#8a3800"],
+        "平面設計": ["#4f6ef7", "#e9eeff", "#243a9b"],
+        "數位繪圖": ["#9b5de5", "#f2eaff", "#55268f"],
+        "學習": ["#00a6a6", "#e1fbfb", "#006464"],
+        "練習": ["#ffb300", "#fff4d6", "#7a5200"],
+        "合作": ["#2f8f5b", "#e5f6ed", "#145a36"],
+        "表達": ["#ef476f", "#ffe7ee", "#9f1738"],
+        "語言": ["#118ab2", "#e3f6fd", "#07516d"],
+        "生活技能": ["#7c6a0a", "#f4f0d6", "#4b3f00"],
+        "好人好事": ["#06d6a0", "#dffcf4", "#04785b"],
+        "變可愛": ["#ff70a6", "#ffe8f1", "#9c2c5d"],
+        "健康": ["#43aa8b", "#e7f7f1", "#1b654f"]
+      };
+      const [tone, soft, ink] = tones[category] || ["#f47b20", "#fff0e4", "#7a2f00"];
+      return `--tone: ${tone}; --tone-soft: ${soft}; --tone-ink: ${ink};`;
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(storageKey, JSON.stringify({ draftGoals, boardGoals, submissions }));
+      } catch (error) {
+        console.warn("無法儲存到這台裝置", error);
+      }
+    }
+
+    function loadState() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(storageKey) || "null");
+        if (!saved) return;
+        if (Array.isArray(saved.draftGoals) && saved.draftGoals.length === 24) {
+          draftGoals = saved.draftGoals.map(normalizeGoal);
+        }
+        if (Array.isArray(saved.boardGoals) && saved.boardGoals.length === 24) {
+          boardGoals = saved.boardGoals.map(normalizeGoal);
+        }
+        if (Array.isArray(saved.submissions) && saved.submissions.length) {
+          submissions = saved.submissions;
+        }
+      } catch (error) {
+        console.warn("無法讀取已儲存卡片", error);
+      }
+    }
 
     function switchPage(id) {
       document.querySelectorAll(".page").forEach(page => page.classList.toggle("active", page.id === id));
@@ -820,7 +1019,7 @@
         <td><span class="badge">創作</span></td>
         <td><strong>${centerGoal.title}</strong></td>
         <td><strong>${centerGoal.points} XP</strong></td>
-      `;
+        `;
       tbody.appendChild(fixed);
 
       draftGoals.forEach((goal, index) => {
@@ -832,8 +1031,8 @@
               ${categories.map(category => `<option ${category === goal.category ? "selected" : ""}>${category}</option>`).join("")}
             </select>
           </td>
-          <td><input data-index="${index}" data-field="title" value="${goal.title}"></td>
-          <td><input data-index="${index}" data-field="points" type="number" min="0" step="5" value="${goal.points}"></td>
+          <td><input data-index="${index}" data-field="title" value="${escapeHtml(goal.title)}" placeholder="例如：完成一張角色草圖"></td>
+          <td><input data-index="${index}" data-field="points" type="number" min="1" step="5" value="${goal.points || ""}" placeholder="40"></td>
         `;
         tbody.appendChild(row);
       });
@@ -843,22 +1042,27 @@
           const index = Number(event.target.dataset.index);
           const field = event.target.dataset.field;
           draftGoals[index][field] = field === "points" ? Number(event.target.value || 0) : event.target.value;
-          updateXpState();
+          updateDraftState();
+          saveState();
         });
       });
 
-      updateXpState();
+      updateDraftState();
     }
 
-    function updateXpState() {
+    function updateDraftState() {
       const total = totalXp();
-      const remain = 1000 - total;
-      const ready = remain === 0 && draftGoals.every(goal => goal.title.trim() && goal.points > 0);
-      document.getElementById("remainXp").textContent = remain;
+      const filled = draftGoals.filter(goal => goal.title.trim()).length;
+      const missingXp = draftGoals.filter(goal => !Number(goal.points || 0)).length;
+      const ready = filled === 24 && missingXp === 0;
+      document.getElementById("filledGoalCount").textContent = `${filled} / 24`;
+      document.getElementById("draftXp").textContent = total;
+      document.getElementById("draftStatus").textContent = ready ? "可以產生" : "填寫中";
+      document.getElementById("dashXp").textContent = total;
       document.getElementById("uploadBtn").disabled = !ready;
       document.getElementById("uploadHint").textContent = ready
-        ? `目前總 XP：${total}，可以上傳。`
-        : `目前總 XP：${total}，請讓總分剛好等於 1000。`;
+        ? `目標與 XP 都填好了，可以產生專屬賓果卡。`
+        : `還差 ${24 - filled} 個目標、${missingXp} 個 XP。`;
     }
 
     function shuffle(items) {
@@ -886,6 +1090,19 @@
       return lines;
     }
 
+    function openCompleteDialog(goal) {
+      pendingCompleteGoal = goal;
+      document.getElementById("confirmGoalTitle").textContent = goal.title;
+      document.getElementById("confirmGoalMeta").textContent = `${goal.category}｜${Number(goal.points || 0)} XP`;
+      document.getElementById("completeDialog").classList.add("show");
+      document.getElementById("confirmCompleteBtn").focus();
+    }
+
+    function closeCompleteDialog() {
+      pendingCompleteGoal = null;
+      document.getElementById("completeDialog").classList.remove("show");
+    }
+
     function renderBoard() {
       const board = document.getElementById("board");
       board.innerHTML = "";
@@ -897,16 +1114,18 @@
       cells.forEach(goal => {
         const cell = document.createElement("button");
         cell.className = `cell ${goal.id === "center-goal" ? "center" : ""} ${goal.completed ? "done" : ""}`;
+        cell.setAttribute("style", categoryToneStyle(goal.category));
         cell.innerHTML = `
-          <span class="category">${goal.id === "center-goal" ? "中心固定" : goal.category}</span>
-          <span class="title">${goal.completed ? "✓ " : ""}${goal.title}</span>
-          <span class="xp">${goal.points} XP</span>
+          <span class="category">${escapeHtml(goal.category)}</span>
+          <span class="goal-copy">
+            <span class="goal-label">目標內容</span>
+            <span class="title">${goal.completed ? "✓ " : ""}${escapeHtml(goal.title)}</span>
+          </span>
+          <span class="xp">${Number(goal.points || 0)} XP</span>
         `;
         if (goal.id !== "center-goal" && !goal.completed) {
           cell.addEventListener("click", () => {
-            goal.completed = true;
-            renderBoard();
-            renderAdmin();
+            openCompleteDialog(goal);
           });
         }
         board.appendChild(cell);
@@ -926,7 +1145,21 @@
       document.getElementById("leaderBingo").textContent = lines;
       submissions[0].completionRate = rate;
       submissions[0].bingoCount = lines;
+      submissions[0].allocatedXp = totalXp();
     }
+
+    document.getElementById("cancelCompleteBtn").addEventListener("click", closeCompleteDialog);
+    document.getElementById("completeDialog").addEventListener("click", event => {
+      if (event.target.id === "completeDialog") closeCompleteDialog();
+    });
+    document.getElementById("confirmCompleteBtn").addEventListener("click", () => {
+      if (!pendingCompleteGoal) return;
+      pendingCompleteGoal.completed = true;
+      closeCompleteDialog();
+      renderBoard();
+      renderAdmin();
+      saveState();
+    });
 
     document.getElementById("uploadBtn").addEventListener("click", () => {
       boardGoals = shuffle(draftGoals).map((goal, index) => ({
@@ -939,6 +1172,21 @@
       document.getElementById("bingoNotice").classList.add("show");
       renderBoard();
       renderAdmin();
+      saveState();
+    });
+
+    document.getElementById("resetCardBtn").addEventListener("click", () => {
+      const shouldReset = confirm("要重新建立賓果卡嗎？目前完成狀態會清除。");
+      if (!shouldReset) return;
+      boardGoals = null;
+      submissions[0].completionRate = 4;
+      submissions[0].bingoCount = 0;
+      document.getElementById("draftView").style.display = "block";
+      document.getElementById("boardView").style.display = "none";
+      document.getElementById("bingoNotice").classList.remove("show");
+      renderRows();
+      renderAdmin();
+      saveState();
     });
 
     function renderAdmin() {
@@ -966,7 +1214,14 @@
       document.getElementById("daysLeft").textContent = `${days} 天`;
     }
 
+    loadState();
     renderRows();
+    if (boardGoals) {
+      document.getElementById("draftView").style.display = "none";
+      document.getElementById("boardView").style.display = "block";
+      document.getElementById("bingoNotice").classList.add("show");
+      renderBoard();
+    }
     renderAdmin();
     updateCountdown();
   </script>
