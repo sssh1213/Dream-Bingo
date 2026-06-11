@@ -103,6 +103,31 @@
       border-color: rgba(244, 123, 32, 0.22);
     }
 
+    .teacher-only {
+      display: none;
+    }
+
+    body.teacher-mode .teacher-only {
+      display: inline-flex;
+    }
+
+    body.teacher-mode .teacher-login {
+      display: block;
+    }
+
+    body.teacher-authorized .teacher-login {
+      display: none;
+    }
+
+    .teacher-login,
+    .teacher-content {
+      display: none;
+    }
+
+    body.teacher-authorized .teacher-content {
+      display: block;
+    }
+
     main {
       max-width: 1180px;
       margin: 0 auto;
@@ -283,7 +308,7 @@
 
     .profile-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr 0.7fr 1.2fr;
+      grid-template-columns: 0.9fr 1fr 1fr 0.7fr 1.2fr;
       gap: 12px;
       margin-top: 16px;
     }
@@ -385,16 +410,24 @@
     }
 
     .cell.done::after {
-      content: "完成";
+      content: "✓";
       position: absolute;
       right: 8px;
       top: 8px;
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
       border-radius: 999px;
       background: rgba(255, 255, 255, 0.22);
       color: #fff;
-      font-size: 11px;
+      font-size: 15px;
       font-weight: 900;
-      padding: 4px 7px;
+      padding: 0;
+    }
+
+    .cell.done .category {
+      max-width: calc(100% - 32px);
     }
 
     .cell .category {
@@ -506,6 +539,12 @@
       padding: 22px;
     }
 
+    .student-dialog {
+      width: min(820px, 100%);
+      max-height: min(760px, 88vh);
+      overflow: auto;
+    }
+
     .confirm-dialog h2 {
       margin-bottom: 8px;
       font-size: 28px;
@@ -532,6 +571,39 @@
       margin-top: 18px;
     }
 
+    .student-detail-meta {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    .student-detail-meta .card {
+      padding: 12px;
+      box-shadow: none;
+    }
+
+    .goal-detail-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .goal-detail {
+      display: grid;
+      grid-template-columns: 72px 120px 1fr 80px 82px;
+      gap: 10px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      padding: 10px;
+    }
+
+    .goal-detail strong {
+      word-break: break-word;
+    }
+
     .submission-list {
       display: grid;
       gap: 12px;
@@ -546,6 +618,13 @@
       border-radius: 14px;
       background: #fff;
       padding: 14px;
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .submission:hover {
+      border-color: rgba(244, 123, 32, 0.4);
+      box-shadow: 0 10px 24px rgba(31, 31, 31, 0.08);
     }
 
     .rank-grid,
@@ -667,6 +746,11 @@
       .profile-grid {
         grid-template-columns: 1fr;
       }
+
+      .student-detail-meta,
+      .goal-detail {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 620px) {
@@ -703,7 +787,7 @@
       }
 
       .cell .title {
-        font-size: 10px;
+        font-size: 9px;
         line-height: 1.2;
         -webkit-line-clamp: 4;
       }
@@ -711,8 +795,13 @@
       .cell.done::after {
         right: 5px;
         top: 5px;
-        font-size: 9px;
-        padding: 3px 5px;
+        width: 18px;
+        height: 18px;
+        font-size: 12px;
+      }
+
+      .cell.done .category {
+        max-width: calc(100% - 23px);
       }
 
       .goal-label {
@@ -744,8 +833,8 @@
       }
 
       .cell .title {
-        font-size: 12px;
-        line-height: 1.28;
+        font-size: 10px;
+        line-height: 1.22;
       }
     }
   </style>
@@ -765,7 +854,7 @@
         <button data-page="bingo">Bingo</button>
         <button data-page="leaderboard">排行榜</button>
         <button data-page="achievements">等級成就</button>
-        <button data-page="admin">教師後台</button>
+        <button class="teacher-only" data-page="admin">教師後台</button>
       </nav>
     </div>
   </header>
@@ -779,12 +868,11 @@
           <p>先寫下自己的 24 個成長目標，產生專屬賓果卡後再開始完成任務、累積 XP。</p>
           <div class="actions">
             <button class="button" data-page-link="bingo">建立我的賓果卡</button>
-            <button class="button secondary" data-page-link="admin">查看教師後台</button>
           </div>
         </div>
         <div class="panel">
           <h2>目前進度</h2>
-          <p>學生自己填目標、選類別與 XP。產生後會鎖定排序，中心格固定為「完成漫畫美展作品」。</p>
+          <p>學生自己填目標、選類別與 XP。產生後會鎖定排序，中心格固定為「<span id="centerGoalSummary">完成漫畫美展作品</span>」。</p>
           <div class="stats" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 0;">
             <div class="card stat"><span>完成率</span><strong id="dashRate">4%</strong></div>
             <div class="card stat"><span>Bingo</span><strong id="dashBingo">0</strong></div>
@@ -818,6 +906,10 @@
           <p>正式收資料版會把學生資料、25 格目標、XP、完成狀態一起送到 Firebase。</p>
           <div class="profile-grid">
             <label class="field-label">
+              群組代碼
+              <input id="groupCodeInput" placeholder="main">
+            </label>
+            <label class="field-label">
               姓名
               <input id="studentNameInput" placeholder="例如：王小明">
             </label>
@@ -845,7 +937,7 @@
 
         <div class="panel">
           <h2>建立我的 24 個目標</h2>
-          <p>第 1 行固定為美展任務，其餘 24 行由學生自己填寫，XP 由學生自己判斷。</p>
+          <p>第 1 行固定為共同中心目標，其餘 24 行由學生自己填寫，XP 由學生自己判斷。</p>
           <div class="table-wrap">
             <table>
               <thead>
@@ -974,9 +1066,20 @@
       <div class="panel" style="margin-bottom: 18px;">
         <span class="badge">Teacher Dashboard</span>
         <h1>教師後台</h1>
-        <p>學生上傳後，老師可以在這裡查看提交紀錄。填入 Firebase 設定後，資料會寫入 Firestore 的 bingoSubmissions。</p>
+        <p>學生上傳後，老師可以依群組查看提交紀錄。資料會寫入 Firestore 的 groups / 群組代碼 / bingoSubmissions。</p>
       </div>
 
+      <div class="panel teacher-login" style="margin-bottom: 18px;">
+        <h2>老師登入</h2>
+        <p>請使用白名單內的 Google 帳號登入，登入後才會顯示教師後台資料。</p>
+        <div class="actions">
+          <button id="teacherLoginBtn" class="button" type="button">使用 Google 登入</button>
+          <button id="teacherLogoutBtn" class="button secondary" type="button">登出</button>
+          <span id="teacherAuthStatus" class="hint">尚未登入。</span>
+        </div>
+      </div>
+
+      <div class="teacher-content">
       <div class="stats">
         <div class="card stat"><span>學生數</span><strong>30</strong></div>
         <div class="card stat"><span>平均完成率</span><strong id="adminRate">4%</strong></div>
@@ -991,13 +1094,28 @@
           <div id="submissions" class="submission-list"></div>
         </div>
         <div class="panel">
-          <h2>建議串接方式</h2>
-          <p>正式使用建議用 Firebase 當主後台，再視需要同步到 Google Sheets。Google 表單較適合收一次性資料，不適合處理鎖定、亂數排列與後續完成狀態。</p>
-          <div class="card stat">
-            <span>Firestore collection</span>
-            <strong style="font-size: 22px;">bingoSubmissions</strong>
+          <h2>共同中心目標</h2>
+          <p>老師可以調整所有人賓果卡中央那格。適合班級、朋友群、社團一起設定共同挑戰。</p>
+          <label class="field-label" style="margin-bottom: 12px;">
+            目前管理群組
+            <select id="adminGroupSelect">
+              <option value="main">main</option>
+            </select>
+          </label>
+          <label class="field-label" style="margin-bottom: 12px;">
+            新增或手動輸入群組
+            <input id="adminGroupCodeInput" placeholder="例如：students 或 friends">
+          </label>
+          <label class="field-label">
+            中心格目標內容
+            <input id="centerGoalTitleInput" placeholder="例如：完成漫畫美展作品">
+          </label>
+          <div class="actions">
+            <button id="saveCenterGoalBtn" class="button" type="button">儲存中心目標</button>
+            <span id="centerGoalStatus" class="hint">會儲存到目前群組的 settings/public。</span>
           </div>
         </div>
+      </div>
       </div>
     </section>
   </main>
@@ -1018,6 +1136,20 @@
     </div>
   </div>
 
+  <div id="studentDetailDialog" class="dialog-backdrop" role="dialog" aria-modal="true" aria-labelledby="studentDetailTitle">
+    <div class="confirm-dialog student-dialog">
+      <span class="badge">學生目標詳情</span>
+      <h2 id="studentDetailTitle">學生姓名</h2>
+      <p id="studentDetailSubtitle">班級、座號與提交狀態</p>
+      <div id="studentDetailMeta" class="student-detail-meta"></div>
+      <div id="studentGoalList" class="goal-detail-list"></div>
+      <div class="dialog-actions">
+        <button id="requestRevisionBtn" class="button secondary" type="button">退回修改</button>
+        <button id="closeStudentDetailBtn" class="button" type="button">關閉</button>
+      </div>
+    </div>
+  </div>
+
   <div class="countdown" aria-label="開學倒數">
     <div class="countdown-icon">日</div>
     <div>
@@ -1027,6 +1159,7 @@
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore-compat.js"></script>
   <script>
     const storageKey = "dream-bingo-student-card-v1";
@@ -1039,9 +1172,14 @@
       appId: "1:407102075551:web:689851258731f79203e8aa",
       measurementId: "G-S1Z4TJBEYL"
     };
+    const teacherEmailAllowlist = [
+      "sssh1213@sssh.tyc.edu.tw"
+    ];
     const categories = ["創作", "平面設計", "數位繪圖", "學習", "練習", "合作", "表達", "語言", "生活技能", "好人好事", "變可愛", "健康"];
-    const centerGoal = { id: "center-goal", category: "創作", title: "完成漫畫美展作品", points: 100, completed: true, gridIndex: 12 };
+    const defaultCenterGoal = { id: "center-goal", category: "創作", title: "完成漫畫美展作品", points: 100, completed: true, gridIndex: 12 };
+    let centerGoal = { ...defaultCenterGoal };
     let studentProfile = {
+      groupCode: "main",
       studentName: "",
       className: "",
       seatNumber: "",
@@ -1056,9 +1194,14 @@
       gridIndex: index
     }));
     const boardPositions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
+    const teacherMode = new URLSearchParams(window.location.search).get("teacher") === "1";
     let boardGoals = null;
     let pendingCompleteGoal = null;
+    let activeDetailSubmission = null;
     let firestoreDb = null;
+    let firebaseAuth = null;
+    let currentTeacherUser = null;
+    let knownGroups = ["main"];
     let submissions = [];
 
     function hasFirebaseConfig() {
@@ -1071,6 +1214,21 @@
       status.innerHTML = `<span>${escapeHtml(text)}</span><small>${escapeHtml(detail)}</small>`;
     }
 
+    function groupDocRef() {
+      if (!firestoreDb) return null;
+      return firestoreDb.collection("groups").doc(normalizedGroupCode());
+    }
+
+    function settingsDocRef() {
+      const group = groupDocRef();
+      return group ? group.collection("settings").doc("public") : null;
+    }
+
+    function submissionsCollectionRef() {
+      const group = groupDocRef();
+      return group ? group.collection("bingoSubmissions") : null;
+    }
+
     function initFirebase() {
       if (!hasFirebaseConfig()) {
         updateFirebaseStatus("目前為本機測試模式", "貼上 Firebase 設定後，資料會上傳到 Firestore。");
@@ -1081,11 +1239,60 @@
           window.firebase.initializeApp(firebaseConfig);
         }
         firestoreDb = window.firebase.firestore();
-        updateFirebaseStatus("Firebase 已連線", "學生送出後會寫入 bingoSubmissions。");
+        firebaseAuth = window.firebase.auth();
+        bindTeacherAuth();
+        updateFirebaseStatus("Firebase 已連線", `目前群組：${normalizedGroupCode()}。學生送出後會寫入該群組。`);
       } catch (error) {
         console.warn("Firebase 初始化失敗", error);
         updateFirebaseStatus("Firebase 連線失敗", "請確認 firebaseConfig 是否正確。");
       }
+    }
+
+    function isAllowedTeacher(user) {
+      return Boolean(user && teacherEmailAllowlist.includes(String(user.email || "").toLowerCase()));
+    }
+
+    function updateTeacherAuthUi(user) {
+      currentTeacherUser = user || null;
+      const status = document.getElementById("teacherAuthStatus");
+      const allowed = isAllowedTeacher(user);
+      document.body.classList.toggle("teacher-authorized", Boolean(teacherMode && allowed));
+      if (!teacherMode) return;
+      if (!user) {
+        if (status) status.textContent = "尚未登入。";
+        switchPage("dashboard");
+        return;
+      }
+      if (!allowed) {
+        if (status) status.textContent = `${user.email} 不在老師白名單內。`;
+        switchPage("dashboard");
+        return;
+      }
+      if (status) status.textContent = `已登入：${user.email}`;
+    }
+
+    function bindTeacherAuth() {
+      if (!firebaseAuth) return;
+      firebaseAuth.onAuthStateChanged(updateTeacherAuthUi);
+    }
+
+    async function teacherLogin() {
+      if (!firebaseAuth) {
+        alert("Firebase Auth 尚未初始化。");
+        return;
+      }
+      const provider = new window.firebase.auth.GoogleAuthProvider();
+      try {
+        await firebaseAuth.signInWithPopup(provider);
+      } catch (error) {
+        console.warn("老師登入失敗", error);
+        alert("Google 登入失敗，請確認 Firebase Authentication 已啟用 Google 登入。");
+      }
+    }
+
+    async function teacherLogout() {
+      if (!firebaseAuth) return;
+      await firebaseAuth.signOut();
     }
 
     function escapeHtml(value) {
@@ -1129,7 +1336,7 @@
 
     function saveState() {
       try {
-        localStorage.setItem(storageKey, JSON.stringify({ studentProfile, draftGoals, boardGoals, submissions }));
+        localStorage.setItem(storageKey, JSON.stringify({ centerGoal, studentProfile, draftGoals, boardGoals, submissions }));
       } catch (error) {
         console.warn("無法儲存到這台裝置", error);
       }
@@ -1139,8 +1346,17 @@
       try {
         const saved = JSON.parse(localStorage.getItem(storageKey) || "null");
         if (!saved) return;
+        if (saved.centerGoal) {
+          centerGoal = {
+            ...defaultCenterGoal,
+            title: saved.centerGoal.title || defaultCenterGoal.title,
+            category: saved.centerGoal.category || defaultCenterGoal.category,
+            points: Number(saved.centerGoal.points || defaultCenterGoal.points)
+          };
+        }
         if (saved.studentProfile) {
           studentProfile = {
+            groupCode: saved.studentProfile.groupCode || "main",
             studentName: saved.studentProfile.studentName || "",
             className: saved.studentProfile.className || "",
             seatNumber: saved.studentProfile.seatNumber || "",
@@ -1162,15 +1378,27 @@
     }
 
     function profileReady() {
-      return Boolean(studentProfile.studentName.trim() && studentProfile.className.trim() && String(studentProfile.seatNumber).trim());
+      return Boolean(studentProfile.groupCode.trim() && studentProfile.studentName.trim() && studentProfile.className.trim() && String(studentProfile.seatNumber).trim());
+    }
+
+    function normalizedGroupCode() {
+      return (studentProfile.groupCode || "main")
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9_-]+/g, "-")
+        .replace(/-+/g, "-")
+        .replace(/^-|-$/g, "") || "main";
     }
 
     function studentDocumentId() {
-      const raw = `${studentProfile.className}-${studentProfile.seatNumber}-${studentProfile.studentName}`.trim();
+      const raw = `${normalizedGroupCode()}-${studentProfile.className}-${studentProfile.seatNumber}-${studentProfile.studentName}`.trim();
       return raw.replace(/[^\u4e00-\u9fa5a-zA-Z0-9_-]+/g, "-").replace(/-+/g, "-") || "student-card";
     }
 
     function renderProfile() {
+      document.getElementById("groupCodeInput").value = studentProfile.groupCode;
+      document.getElementById("adminGroupCodeInput").value = studentProfile.groupCode;
+      renderGroupSelect();
       document.getElementById("studentNameInput").value = studentProfile.studentName;
       document.getElementById("classNameInput").value = studentProfile.className;
       document.getElementById("seatNumberInput").value = studentProfile.seatNumber;
@@ -1182,6 +1410,8 @@
 
     function bindProfileInputs() {
       const fieldMap = {
+        groupCodeInput: "groupCode",
+        adminGroupCodeInput: "groupCode",
         studentNameInput: "studentName",
         classNameInput: "className",
         seatNumberInput: "seatNumber",
@@ -1194,10 +1424,138 @@
           updateDraftState();
           saveState();
         });
+        if (field === "groupCode") {
+          document.getElementById(id).addEventListener("change", async event => {
+            await switchGroup(event.target.value);
+          });
+        }
       });
     }
 
+    function renderGroupSelect() {
+      const select = document.getElementById("adminGroupSelect");
+      if (!select) return;
+      const current = normalizedGroupCode();
+      const groups = [...new Set([current, ...knownGroups, "main"])].filter(Boolean).sort();
+      select.innerHTML = groups.map(group => `<option value="${escapeHtml(group)}" ${group === current ? "selected" : ""}>${escapeHtml(group)}</option>`).join("");
+    }
+
+    async function switchGroup(nextGroup) {
+      studentProfile.groupCode = (nextGroup || "main").trim();
+      studentProfile.groupCode = normalizedGroupCode();
+      if (!knownGroups.includes(studentProfile.groupCode)) knownGroups.push(studentProfile.groupCode);
+      renderProfile();
+      updateDraftState();
+      updateFirebaseStatus("正在切換群組", `目前群組：${normalizedGroupCode()}`);
+      await loadRemoteSettings();
+      await loadRemoteSubmissions();
+      saveState();
+    }
+
+    function bindGroupSelect() {
+      const select = document.getElementById("adminGroupSelect");
+      if (!select) return;
+      select.addEventListener("change", event => switchGroup(event.target.value));
+    }
+
+    async function loadKnownGroups() {
+      if (!firestoreDb) {
+        renderGroupSelect();
+        return;
+      }
+      try {
+        const snapshot = await firestoreDb.collection("groups").limit(100).get();
+        knownGroups = [...new Set(["main", ...snapshot.docs.map(doc => doc.id)])].sort();
+        renderGroupSelect();
+      } catch (error) {
+        console.warn("讀取群組清單失敗", error);
+        renderGroupSelect();
+      }
+    }
+
+    function renderCenterGoalSettings() {
+      const input = document.getElementById("centerGoalTitleInput");
+      if (input) input.value = centerGoal.title;
+      const summary = document.getElementById("centerGoalSummary");
+      if (summary) summary.textContent = centerGoal.title;
+    }
+
+    async function loadRemoteSettings() {
+      if (!firestoreDb) {
+        renderCenterGoalSettings();
+        return;
+      }
+      try {
+        const doc = await settingsDocRef().get();
+        if (doc.exists && doc.data().centerGoalTitle) {
+          centerGoal = {
+            ...centerGoal,
+            title: doc.data().centerGoalTitle,
+            category: doc.data().centerGoalCategory || centerGoal.category,
+            points: Number(doc.data().centerGoalPoints || centerGoal.points)
+          };
+          renderCenterGoalSettings();
+          renderRows();
+          if (boardGoals) renderBoard();
+          saveState();
+        } else {
+          renderCenterGoalSettings();
+        }
+      } catch (error) {
+        console.warn("讀取中心目標設定失敗", error);
+        renderCenterGoalSettings();
+      }
+    }
+
+    async function saveCenterGoalSettings() {
+      const input = document.getElementById("centerGoalTitleInput");
+      const nextTitle = input.value.trim();
+      const status = document.getElementById("centerGoalStatus");
+      if (!nextTitle) {
+        status.textContent = "請先輸入中心目標內容。";
+        return;
+      }
+      centerGoal = { ...centerGoal, title: nextTitle };
+      renderCenterGoalSettings();
+      renderRows();
+      if (boardGoals) {
+        renderBoard();
+        await syncCurrentSubmission();
+      }
+      saveState();
+      if (!firestoreDb) {
+        status.textContent = "已儲存在這台裝置。連上 Firebase 後可同步給所有人。";
+        return;
+      }
+      try {
+        await groupDocRef().set({
+          groupCode: normalizedGroupCode(),
+          updatedAt: new Date().toISOString()
+        }, { merge: true });
+        await settingsDocRef().set({
+          centerGoalTitle: centerGoal.title,
+          centerGoalCategory: centerGoal.category,
+          centerGoalPoints: centerGoal.points,
+          groupCode: normalizedGroupCode(),
+          updatedAt: new Date().toISOString()
+        }, { merge: true });
+        status.textContent = `已儲存到群組 ${normalizedGroupCode()}，學生重新整理後會看到新的中心目標。`;
+      } catch (error) {
+        console.warn("儲存中心目標失敗", error);
+        status.textContent = "儲存失敗，請確認 Firestore 規則。";
+      }
+    }
+
+    function bindCenterGoalSettings() {
+      const button = document.getElementById("saveCenterGoalBtn");
+      if (!button) return;
+      button.addEventListener("click", saveCenterGoalSettings);
+    }
+
     function switchPage(id) {
+      if (id === "admin" && !teacherMode) {
+        id = "dashboard";
+      }
       document.querySelectorAll(".page").forEach(page => page.classList.toggle("active", page.id === id));
       document.querySelectorAll("nav button").forEach(button => button.classList.toggle("active", button.dataset.page === id));
     }
@@ -1297,6 +1655,7 @@
 
       return {
         id: studentDocumentId(),
+        groupCode: normalizedGroupCode(),
         studentName: studentProfile.studentName,
         className: studentProfile.className,
         seatNumber: studentProfile.seatNumber,
@@ -1305,7 +1664,7 @@
         completionRate,
         bingoCount,
         goals,
-        reviewStatus: "待檢視",
+        reviewStatus: "已送出",
         updatedAt: new Date().toISOString()
       };
     }
@@ -1318,7 +1677,11 @@
       saveState();
       if (!firestoreDb) return;
       try {
-        await firestoreDb.collection("bingoSubmissions").doc(record.id).set(record, { merge: true });
+        await groupDocRef().set({
+          groupCode: normalizedGroupCode(),
+          updatedAt: new Date().toISOString()
+        }, { merge: true });
+        await submissionsCollectionRef().doc(record.id).set(record, { merge: true });
         updateFirebaseStatus("已同步到 Firebase", `最後更新：${new Date().toLocaleTimeString("zh-TW", { hour: "2-digit", minute: "2-digit" })}`);
         await loadRemoteSubmissions();
       } catch (error) {
@@ -1330,13 +1693,36 @@
     async function loadRemoteSubmissions() {
       if (!firestoreDb) return;
       try {
-        const snapshot = await firestoreDb.collection("bingoSubmissions").orderBy("updatedAt", "desc").limit(100).get();
+        const snapshot = await submissionsCollectionRef().orderBy("updatedAt", "desc").limit(100).get();
         submissions = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        applyRevisionIfNeeded();
         renderAdmin();
         saveState();
       } catch (error) {
         console.warn("Firestore 讀取失敗", error);
       }
+    }
+
+    function applyRevisionIfNeeded() {
+      if (!profileReady()) return;
+      const myRecord = submissions.find(item => item.id === studentDocumentId());
+      if (!myRecord || myRecord.reviewStatus !== "需修改") return;
+      boardGoals = null;
+      if (Array.isArray(myRecord.goals) && myRecord.goals.length) {
+        draftGoals = myRecord.goals
+          .filter(goal => goal.id !== "center-goal")
+          .slice(0, 24)
+          .map((goal, index) => ({
+            ...normalizeGoal(goal, index),
+            completed: false,
+            gridIndex: index
+          }));
+      }
+      document.getElementById("draftView").style.display = "block";
+      document.getElementById("boardView").style.display = "none";
+      document.getElementById("bingoNotice").classList.remove("show");
+      renderRows();
+      updateFirebaseStatus("老師已退回修改", "請修正目標後重新產生並鎖定賓果卡。");
     }
 
     function shuffle(items) {
@@ -1393,7 +1779,7 @@
           <span class="category">${escapeHtml(goal.category)}</span>
           <span class="goal-copy">
             <span class="goal-label">目標內容</span>
-            <span class="title">${goal.completed ? "✓ " : ""}${escapeHtml(goal.title)}</span>
+            <span class="title">${escapeHtml(goal.title)}</span>
           </span>
           <span class="xp">${Number(goal.points || 0)} XP</span>
         `;
@@ -1467,8 +1853,8 @@
         list.innerHTML = `<div class="submission"><div><strong>尚未收到學生資料</strong><div class="hint">學生送出賓果卡後會出現在這裡。</div></div></div>`;
         return;
       }
-      list.innerHTML = submissions.map(submission => `
-        <div class="submission">
+      list.innerHTML = submissions.map((submission, index) => `
+        <div class="submission" data-submission-index="${index}">
           <div>
             <strong>${escapeHtml(submission.studentName || "未命名")}</strong>
             <div class="hint">${escapeHtml(submission.email || "未填 Email")}</div>
@@ -1481,7 +1867,86 @@
           <div><span class="status">${escapeHtml(submission.reviewStatus || "待檢視")}</span></div>
         </div>
       `).join("");
+      list.querySelectorAll("[data-submission-index]").forEach(item => {
+        item.addEventListener("click", () => {
+          const index = Number(item.dataset.submissionIndex);
+          openStudentDetail(submissions[index]);
+        });
+      });
     }
+
+    function openStudentDetail(submission) {
+      if (!submission) return;
+      activeDetailSubmission = submission;
+      const goals = Array.isArray(submission.goals) ? [...submission.goals] : [];
+      goals.sort((a, b) => {
+        const aIndex = Number.isInteger(a.gridIndex) ? a.gridIndex : 99;
+        const bIndex = Number.isInteger(b.gridIndex) ? b.gridIndex : 99;
+        return aIndex - bIndex;
+      });
+      document.getElementById("studentDetailTitle").textContent = submission.studentName || "未命名";
+      document.getElementById("studentDetailSubtitle").textContent = `${submission.className || "未填班級"}｜${submission.seatNumber || "-"} 號｜群組 ${submission.groupCode || normalizedGroupCode()}`;
+      document.getElementById("studentDetailMeta").innerHTML = `
+        <div class="card"><span>完成率</span><strong>${Number(submission.completionRate || 0)}%</strong></div>
+        <div class="card"><span>Bingo</span><strong>${Number(submission.bingoCount || 0)} 條</strong></div>
+        <div class="card"><span>XP</span><strong>${Number(submission.allocatedXp || 0)}</strong></div>
+        <div class="card"><span>狀態</span><strong>${escapeHtml(submission.reviewStatus || "已送出")}</strong></div>
+      `;
+      document.getElementById("studentGoalList").innerHTML = goals.map((goal, index) => `
+        <div class="goal-detail">
+          <span class="badge">${String(index + 1).padStart(2, "0")}</span>
+          <span>${escapeHtml(goal.category || "未分類")}</span>
+          <strong>${escapeHtml(goal.title || "未填目標")}</strong>
+          <span>${Number(goal.points || 0)} XP</span>
+          <span class="status">${goal.completed ? "已完成" : "未完成"}</span>
+        </div>
+      `).join("") || `<p class="hint">這筆紀錄還沒有目標資料。</p>`;
+      const revisionBtn = document.getElementById("requestRevisionBtn");
+      revisionBtn.disabled = submission.reviewStatus === "需修改";
+      revisionBtn.textContent = submission.reviewStatus === "需修改" ? "已退回修改" : "退回修改";
+      document.getElementById("studentDetailDialog").classList.add("show");
+    }
+
+    function closeStudentDetail() {
+      activeDetailSubmission = null;
+      document.getElementById("studentDetailDialog").classList.remove("show");
+    }
+
+    async function requestRevisionForActiveSubmission() {
+      if (!activeDetailSubmission) return;
+      const shouldRequest = confirm(`要退回 ${activeDetailSubmission.studentName || "這位學生"} 的賓果卡，讓他重新修改嗎？`);
+      if (!shouldRequest) return;
+      const nextRecord = {
+        ...activeDetailSubmission,
+        reviewStatus: "需修改",
+        revisionRequestedAt: new Date().toISOString()
+      };
+      submissions = submissions.map(item => item.id === nextRecord.id ? nextRecord : item);
+      activeDetailSubmission = nextRecord;
+      renderAdmin();
+      openStudentDetail(nextRecord);
+      saveState();
+      if (!firestoreDb || !nextRecord.id) return;
+      try {
+        await submissionsCollectionRef().doc(nextRecord.id).set({
+          reviewStatus: "需修改",
+          revisionRequestedAt: nextRecord.revisionRequestedAt,
+          updatedAt: new Date().toISOString()
+        }, { merge: true });
+        await loadRemoteSubmissions();
+      } catch (error) {
+        console.warn("退回修改失敗", error);
+        alert("退回修改失敗，請確認 Firebase 權限。");
+      }
+    }
+
+    document.getElementById("closeStudentDetailBtn").addEventListener("click", closeStudentDetail);
+    document.getElementById("requestRevisionBtn").addEventListener("click", requestRevisionForActiveSubmission);
+    document.getElementById("studentDetailDialog").addEventListener("click", event => {
+      if (event.target.id === "studentDetailDialog") closeStudentDetail();
+    });
+    document.getElementById("teacherLoginBtn").addEventListener("click", teacherLogin);
+    document.getElementById("teacherLogoutBtn").addEventListener("click", teacherLogout);
 
     function updateCountdown() {
       const target = new Date("2026-08-31T00:00:00+08:00");
@@ -1491,9 +1956,15 @@
     }
 
     loadState();
+    if (teacherMode) {
+      document.body.classList.add("teacher-mode");
+    }
     initFirebase();
     renderProfile();
     bindProfileInputs();
+    bindGroupSelect();
+    renderCenterGoalSettings();
+    bindCenterGoalSettings();
     renderRows();
     if (boardGoals) {
       document.getElementById("draftView").style.display = "none";
@@ -1502,6 +1973,11 @@
       renderBoard();
     }
     renderAdmin();
+    if (teacherMode) {
+      switchPage("admin");
+    }
+    loadKnownGroups();
+    loadRemoteSettings();
     loadRemoteSubmissions();
     updateCountdown();
   </script>
