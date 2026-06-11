@@ -719,7 +719,7 @@
       <div id="draftView">
         <div class="stats">
           <div class="card stat"><span>已填目標</span><strong id="filledGoalCount">0 / 24</strong></div>
-          <div class="card stat"><span>目前 XP</span><strong id="draftXp">100</strong></div>
+          <div class="card stat"><span>目前 XP</span><strong id="draftXp">100 / 1000</strong></div>
           <div class="card stat"><span>美展固定</span><strong>100</strong></div>
           <div class="card stat"><span>狀態</span><strong id="draftStatus">尚未鎖定</strong></div>
         </div>
@@ -1054,15 +1054,24 @@
       const total = totalXp();
       const filled = draftGoals.filter(goal => goal.title.trim()).length;
       const missingXp = draftGoals.filter(goal => !Number(goal.points || 0)).length;
-      const ready = filled === 24 && missingXp === 0;
+      const xpGap = 1000 - total;
+      const ready = filled === 24 && missingXp === 0 && total === 1000;
       document.getElementById("filledGoalCount").textContent = `${filled} / 24`;
-      document.getElementById("draftXp").textContent = total;
+      document.getElementById("draftXp").textContent = `${total} / 1000`;
       document.getElementById("draftStatus").textContent = ready ? "可以產生" : "填寫中";
       document.getElementById("dashXp").textContent = total;
       document.getElementById("uploadBtn").disabled = !ready;
-      document.getElementById("uploadHint").textContent = ready
-        ? `目標與 XP 都填好了，可以產生專屬賓果卡。`
-        : `還差 ${24 - filled} 個目標、${missingXp} 個 XP。`;
+      let hint = `還差 ${24 - filled} 個目標、${missingXp} 個 XP。`;
+      if (filled === 24 && missingXp === 0 && total < 1000) {
+        hint = `目前 ${total} XP，還差 ${xpGap} XP 才能上傳。`;
+      }
+      if (filled === 24 && missingXp === 0 && total > 1000) {
+        hint = `目前 ${total} XP，超過 ${Math.abs(xpGap)} XP，請調整到剛好 1000。`;
+      }
+      if (ready) {
+        hint = `總 XP 剛好 1000，可以產生專屬賓果卡。`;
+      }
+      document.getElementById("uploadHint").textContent = hint;
     }
 
     function shuffle(items) {
