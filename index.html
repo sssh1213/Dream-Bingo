@@ -328,6 +328,12 @@
       box-shadow: 0 22px 50px rgba(42, 29, 18, 0.16);
     }
 
+    .board-scroll {
+      overflow-x: auto;
+      padding-bottom: 4px;
+      -webkit-overflow-scrolling: touch;
+    }
+
     .cell {
       --tone: #f47b20;
       --tone-soft: #fff0e4;
@@ -668,14 +674,22 @@
         padding-inline: 12px;
       }
 
+      .board-scroll {
+        margin-inline: -4px;
+        padding-inline: 4px;
+      }
+
       .bingo-board {
-        gap: 7px;
-        padding: 9px;
+        gap: 5px;
+        padding: 7px;
+        border-radius: 14px;
       }
 
       .cell {
-        border-radius: 9px;
-        padding: 7px;
+        border-width: 1px;
+        border-radius: 10px;
+        gap: 4px;
+        padding: 6px;
       }
 
       .cell::before {
@@ -684,12 +698,54 @@
 
       .cell .category,
       .cell .xp {
+        font-size: 9px;
+        padding: 4px 5px;
+      }
+
+      .cell .title {
         font-size: 10px;
-        padding: 5px 6px;
+        line-height: 1.2;
+        -webkit-line-clamp: 4;
+      }
+
+      .cell.done::after {
+        right: 5px;
+        top: 5px;
+        font-size: 9px;
+        padding: 3px 5px;
       }
 
       .goal-label {
         display: none;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .board-scroll {
+        padding-bottom: 10px;
+      }
+
+      .bingo-board {
+        width: 540px;
+        min-width: 540px;
+        gap: 8px;
+        padding: 10px;
+      }
+
+      .cell {
+        padding: 8px;
+        gap: 6px;
+      }
+
+      .cell .category,
+      .cell .xp {
+        font-size: 10px;
+        padding: 5px 6px;
+      }
+
+      .cell .title {
+        font-size: 12px;
+        line-height: 1.28;
       }
     }
   </style>
@@ -818,7 +874,10 @@
           <div class="card stat"><span>中心格</span><strong>固定</strong></div>
           <div class="card stat"><span>狀態</span><strong>已鎖定</strong></div>
         </div>
-        <div id="board" class="bingo-board" aria-label="Bingo 賓果卡"></div>
+        <p class="hint mobile-board-hint">手機畫面較窄時，可以左右滑動查看完整賓果卡。</p>
+        <div class="board-scroll" aria-label="Bingo 賓果卡可滑動區域">
+          <div id="board" class="bingo-board" aria-label="Bingo 賓果卡"></div>
+        </div>
         <div class="actions">
           <button id="resetCardBtn" class="button secondary">重新建立卡片</button>
           <span class="hint">測試版可重新建立；正式版可改成由老師解鎖。</span>
