@@ -5,6 +5,7 @@
 主要檔案：
 
 - `index.html`：網站首頁，直接上傳即可瀏覽
+- `FIREBASE_SETUP.md`：正式收學生資料的 Firebase 設定說明
 - `firebase.json`：Firebase Hosting 設定
 - `vercel.json`：Vercel 靜態網站設定
 
@@ -36,5 +37,5 @@
 
 ## 備註
 
-這版是單一 HTML 檔，適合先讓學生或老師用手機測試流程。
-如果之後要加入登入、學生資料同步、教師後台資料庫，再發布完整 Next.js + Firebase 版本會更合適。
+這版是單一 HTML 檔，已預留 Firebase Firestore 收資料功能。
+填入 Firebase 設定後，學生送出的資料會寫入 `bingoSubmissions`。
