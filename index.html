@@ -4936,6 +4936,438 @@
         height: 38px;
       }
     }
+
+    /* Final interaction and page alignment pass. */
+    .topbar {
+      position: relative;
+    }
+
+    .news-bell {
+      position: relative;
+      flex: 0 0 auto;
+      width: 46px;
+      height: 46px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 16px;
+      color: #fff;
+      background:
+        radial-gradient(circle at 65% 20%, rgba(254, 200, 87, 0.28), transparent 42%),
+        rgba(255, 255, 255, 0.08);
+      box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.28),
+        0 0 20px rgba(34, 211, 238, 0.14);
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .news-bell:hover {
+      transform: translateY(-2px);
+      border-color: rgba(34, 211, 238, 0.42);
+      box-shadow:
+        0 14px 34px rgba(0, 0, 0, 0.34),
+        0 0 24px rgba(34, 211, 238, 0.24);
+    }
+
+    .news-bell span {
+      display: block;
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .news-dot {
+      position: absolute;
+      right: 9px;
+      top: 9px;
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: #fec857;
+      box-shadow: 0 0 14px rgba(254, 200, 87, 0.78);
+      opacity: 0;
+      transform: scale(0.4);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .news-dot.show {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    #firebaseStatus {
+      display: none !important;
+    }
+
+    body.teacher-mode #firebaseStatus {
+      display: flex !important;
+    }
+
+    #bingo th:first-child,
+    #bingo td:first-child {
+      width: 52px;
+      min-width: 46px;
+      padding-left: 8px;
+      padding-right: 8px;
+      text-align: center;
+    }
+
+    #boardView .actions .hint::before {
+      content: "👽 ";
+    }
+
+    #admin textarea {
+      width: 100%;
+      min-height: 104px;
+      resize: vertical;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(6, 10, 26, 0.66);
+      color: #f8fafc;
+      padding: 13px 14px;
+      font: inherit;
+      box-sizing: border-box;
+    }
+
+    #admin textarea:focus,
+    #bingo input:focus,
+    #bingo select:focus,
+    #admin input:focus,
+    #admin select:focus {
+      outline: 2px solid rgba(34, 211, 238, 0.38);
+      outline-offset: 2px;
+    }
+
+    .news-dialog p {
+      white-space: pre-wrap;
+      color: #dbe7ff;
+      line-height: 1.75;
+    }
+
+    #leaderboard .self-rank td {
+      color: #ffffff;
+      font-weight: 900;
+      background:
+        linear-gradient(135deg, rgba(108, 92, 231, 0.58), rgba(34, 211, 238, 0.44)) !important;
+      border-top: 1px solid rgba(34, 211, 238, 0.34);
+      border-bottom: 1px solid rgba(34, 211, 238, 0.34);
+      box-shadow: inset 0 0 24px rgba(34, 211, 238, 0.16);
+    }
+
+    #leaderboard .podium-gold {
+      left: 50%;
+      top: 46.5%;
+    }
+
+    #leaderboard .podium-silver {
+      left: 23.5%;
+      top: 54.2%;
+    }
+
+    #leaderboard .podium-bronze {
+      left: 76.5%;
+      top: 58.8%;
+    }
+
+    .achievement-hero-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) auto minmax(220px, 0.85fr);
+      align-items: center;
+      gap: 18px;
+    }
+
+    .achievement-hero-copy {
+      min-width: 0;
+    }
+
+    .achievement-hero-logo {
+      width: clamp(86px, 11vw, 138px);
+      height: clamp(86px, 11vw, 138px);
+      object-fit: contain;
+      filter:
+        drop-shadow(0 0 22px rgba(254, 200, 87, 0.34))
+        drop-shadow(0 14px 28px rgba(0, 0, 0, 0.34));
+    }
+
+    .achievement-current-boxes {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .achievement-current-box {
+      min-height: 132px;
+      display: grid;
+      justify-items: center;
+      align-content: center;
+      gap: 7px;
+      padding: 12px;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background:
+        radial-gradient(circle at 78% 18%, rgba(34, 211, 238, 0.18), transparent 38%),
+        rgba(255, 255, 255, 0.075);
+      text-align: center;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+
+    .achievement-current-box span {
+      color: #aab4d4;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .achievement-current-box strong {
+      color: #ffffff;
+      font-size: 15px;
+      line-height: 1.25;
+    }
+
+    .achievement-current-box img {
+      width: 58px;
+      height: 58px;
+      object-fit: contain;
+      filter:
+        drop-shadow(0 0 14px rgba(254, 200, 87, 0.28))
+        drop-shadow(0 10px 18px rgba(0, 0, 0, 0.28));
+    }
+
+    #achievements .grid-two > .panel:first-child > * {
+      max-width: 100% !important;
+    }
+
+    #achievements .grid-two > .panel:first-child {
+      min-height: 220px;
+      background:
+        linear-gradient(90deg, rgba(6, 10, 26, 0.9) 0%, rgba(6, 10, 26, 0.68) 62%, rgba(6, 10, 26, 0.18) 100%),
+        linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.05)),
+        url("assets/hero-mascot-c.png") right bottom / contain no-repeat;
+    }
+
+    .xp-tier-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    #achievements .xp-tier-grid .timeline-item {
+      min-height: 76px;
+    }
+
+    #bingo,
+    #leaderboard,
+    #achievements,
+    #admin {
+      width: min(100%, 1180px);
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #bingo > .panel,
+    #leaderboard > .panel,
+    #leaderboard .leaderboard-visual,
+    #achievements > .panel,
+    #achievements > .grid-two,
+    #achievements > .achievement-grid,
+    #admin > .panel,
+    #admin .teacher-content > .stats,
+    #admin .teacher-content > .grid-two,
+    #admin .teacher-content > .panel,
+    #draftView > .panel,
+    #draftView > .stats,
+    #boardView > .stats,
+    #boardView > .board-scroll {
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    @media (max-width: 768px) {
+      .topbar {
+        grid-template-columns: 1fr auto;
+      }
+
+      .topbar .nav-tabs {
+        grid-column: 1 / -1;
+      }
+
+      body.teacher-mode .nav-tab.teacher-only {
+        display: inline-flex !important;
+      }
+
+      .news-bell {
+        width: 40px;
+        height: 40px;
+        border-radius: 14px;
+      }
+
+      #leaderboard .podium-gold {
+        left: 50%;
+        top: 46.4%;
+      }
+
+      #leaderboard .podium-silver {
+        left: 23%;
+        top: 53.8%;
+      }
+
+      #leaderboard .podium-bronze {
+        left: 77%;
+        top: 58.8%;
+      }
+
+      .achievement-hero-panel {
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 10px;
+      }
+
+      .achievement-current-boxes {
+        grid-column: 1 / -1;
+      }
+
+      .achievement-hero-logo {
+        width: 74px;
+        height: 74px;
+      }
+
+      .achievement-current-box {
+        min-height: 94px;
+        border-radius: 16px;
+        padding: 9px;
+      }
+
+      .achievement-current-box img {
+        width: 42px;
+        height: 42px;
+      }
+
+      #achievements .grid-two > .panel:first-child {
+        min-height: 170px;
+        background:
+          linear-gradient(90deg, rgba(6, 10, 26, 0.94) 0%, rgba(6, 10, 26, 0.76) 64%, rgba(6, 10, 26, 0.28) 100%),
+          url("assets/hero-mascot-c.png") right bottom / contain no-repeat;
+      }
+
+      .xp-tier-grid {
+        gap: 7px;
+      }
+
+      #achievements .xp-tier-grid .timeline-item {
+        min-height: 52px;
+      }
+    }
+
+    /* Latest refinement: fixed top-right news bell and clean leaderboard rows. */
+    .topbar {
+      display: grid !important;
+      grid-template-columns: auto minmax(0, 1fr) auto !important;
+      align-items: center !important;
+      gap: 14px !important;
+      max-width: 1180px !important;
+      margin: 0 auto !important;
+      padding-left: 20px !important;
+      padding-right: 20px !important;
+    }
+
+    .topbar .brand {
+      grid-column: 1;
+      min-width: 0;
+    }
+
+    .topbar .nav-tabs {
+      grid-column: 2;
+      justify-self: end;
+      min-width: 0;
+    }
+
+    .topbar .news-bell {
+      grid-column: 3;
+      justify-self: end;
+    }
+
+    .news-dot {
+      right: -2px;
+      top: -2px;
+      width: 11px;
+      height: 11px;
+      background: #ff3b5f;
+      box-shadow:
+        0 0 0 3px rgba(13, 18, 36, 0.92),
+        0 0 16px rgba(255, 59, 95, 0.82);
+    }
+
+    #leaderboard table tbody tr:nth-child(4) {
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+
+    .news-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 10px;
+      color: #dbe7ff;
+    }
+
+    .news-timeline {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .news-timeline li {
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      background:
+        radial-gradient(circle at 88% 18%, rgba(34, 211, 238, 0.13), transparent 34%),
+        rgba(255, 255, 255, 0.07);
+    }
+
+    .news-timeline strong {
+      display: block;
+      color: #ffffff;
+      font-size: 16px;
+      line-height: 1.35;
+    }
+
+    .news-timeline p {
+      margin: 7px 0 0;
+      color: #cbd7f7;
+      line-height: 1.65;
+      white-space: pre-wrap;
+    }
+
+    .news-time {
+      display: block;
+      margin-top: 8px;
+      color: #aab4d4;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    @media (max-width: 900px) {
+      .topbar {
+        grid-template-columns: minmax(0, 1fr) auto !important;
+        gap: 10px !important;
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+      }
+
+      .topbar .brand {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      .topbar .news-bell {
+        grid-column: 2;
+        grid-row: 1;
+      }
+
+      .topbar .nav-tabs {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        justify-self: stretch;
+      }
+    }
   </style>
 </head>
 <body>
@@ -4957,6 +5389,10 @@
         <button class="nav-tab" data-page="achievements">等級成就</button>
         <button class="nav-tab teacher-only" data-page="admin">教師後台</button>
       </nav>
+      <button id="newsBellBtn" class="news-bell" type="button" aria-label="最新消息">
+        <span aria-hidden="true">🔔</span>
+        <i id="newsDot" class="news-dot" aria-hidden="true"></i>
+      </button>
     </div>
   </header>
 
@@ -5009,7 +5445,7 @@
           <h2>最近完成任務</h2>
         </div>
 
-        <div class="recent-list">
+        <div id="recentList" class="recent-list">
           <div class="recent-item">
             <span class="tag">完成</span>
             <strong>完成漫畫美展作品</strong>
@@ -5038,8 +5474,7 @@
         </div>
 
         <div class="panel" style="margin-bottom: 18px;">
-          <h2>學生資料</h2>
-          <p>正式收資料版會把學生資料、25 格目標、XP、完成狀態一起送到 Firebase。</p>
+          <h2>個人資料</h2>
           <div class="profile-grid">
             <label class="field-label">
               群組代碼
@@ -5071,12 +5506,12 @@
 
         <div class="panel">
           <h2>建立我的 24 個目標</h2>
-          <p>第 1 行固定為共同中心目標，其餘 24 行由學生自己填寫，XP 由學生自己判斷。</p>
+          <p>第一行為固定中心目標，其餘 24 行由個人自己填寫，並填上對應難度的 XP 值，總計 XP 1000。</p>
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th style="width: 70px;">序號</th>
+                  <th style="width: 52px;">序號</th>
                   <th style="width: 150px;">類別</th>
                   <th>目標內容</th>
                   <th style="width: 120px;">XP</th>
@@ -5104,7 +5539,7 @@
         </div>
         <div class="actions">
           <button id="resetCardBtn" class="button secondary">重新建立卡片</button>
-          <span class="hint">測試版可重新建立；正式版可改成由老師解鎖。</span>
+          <span class="hint">若需重新建立卡片，須由外星人解鎖。</span>
         </div>
       </div>
     </section>
@@ -5171,7 +5606,7 @@
               <tr><td>3</td><td>黃品瑜</td><td>設計群 1 班</td><td>91%</td><td>7</td></tr>
               <tr><td>4</td><td>吳承翰</td><td>設計群 1 班</td><td>88%</td><td>6</td></tr>
               <tr><td>5</td><td>劉子晴</td><td>設計群 2 班</td><td>84%</td><td>5</td></tr>
-              <tr><td>12</td><td>王小明</td><td>設計群 1 班</td><td id="leaderRate">4%</td><td id="leaderBingo">0</td></tr>
+              <tr class="self-rank"><td>6</td><td id="leaderName">王小明</td><td id="leaderClass">設計群 1 班</td><td id="leaderRate">4%</td><td id="leaderBingo">0</td></tr>
             </tbody>
           </table>
         </div>
@@ -5179,37 +5614,45 @@
     </section>
 
     <section id="achievements" class="page">
-      <div class="panel" style="margin-bottom: 18px;">
-        <span class="badge">Achievement Galaxy</span>
-        <h1>星際徽章</h1>
-        <p>學生自訂的 XP 也會保留。這裡用 Lv、XP 進度條、徽章與時間軸呈現學生的成長狀態。</p>
-        <div class="xp-level-display">
-          <img id="xpLevelLogo" src="assets/images/DD.png" alt="目前 XP 等級徽章">
-          <div>
-            <span>目前 XP 等級</span>
+      <div class="panel achievement-hero-panel" style="margin-bottom: 18px;">
+        <div class="achievement-hero-copy">
+          <span class="badge">Achievement Galaxy</span>
+          <h1>星際徽章</h1>
+          <p>每完成一個任務，就累積 XP 並解鎖新的成就徽章。</p>
+        </div>
+        <img id="heroAchievementLogo" class="achievement-hero-logo" src="assets/images/DD.png" alt="目前徽章">
+        <div class="achievement-current-boxes" aria-label="目前徽章狀態">
+          <div class="achievement-current-box">
+            <span>XP 等級徽章</span>
+            <img id="xpLevelLogo" src="assets/images/DD.png" alt="目前 XP 等級徽章">
             <strong id="xpLevelName">青銅徽章</strong>
+          </div>
+          <div class="achievement-current-box">
+            <span>成就徽章</span>
+            <img id="achievementBadgeLogo" src="assets/images/CC.png" alt="目前成就徽章">
+            <strong id="achievementBadgeName">起步之星</strong>
           </div>
         </div>
       </div>
 
       <div class="grid-two" style="margin-bottom: 18px;">
         <div class="panel">
-          <h2>Lv.18｜創作成長者</h2>
-          <p>目前 XP：1480 / 2000。再完成幾個自訂目標，就能升到下一級。</p>
-          <div class="progress-track"><div class="progress-fill"></div></div>
+          <h2 id="achievementLevelTitle">Lv.1｜創作成長者</h2>
+          <p id="achievementLevelText">目前 XP：0 / 50。完成任務就能累積本周 XP。</p>
+          <div class="progress-track"><div id="achievementProgressFill" class="progress-fill"></div></div>
           <div class="stats" style="grid-template-columns: repeat(2, 1fr); margin-top: 16px; margin-bottom: 0;">
-            <div class="card stat"><span>本月 XP</span><strong>+280</strong></div>
-            <div class="card stat"><span>下一級</span><strong>Lv.19</strong></div>
+            <div class="card stat"><span>本周 XP</span><strong id="weeklyXp">+0</strong></div>
+            <div class="card stat"><span>下一級</span><strong id="nextLevel">Lv.2</strong></div>
           </div>
         </div>
         <div class="panel">
-          <h2>自訂 XP</h2>
-          <p>學生可以依照自己判斷的挑戰程度，為每個目標設定 XP。</p>
-          <div class="timeline">
-            <div class="timeline-item"><img class="tier-icon" src="assets/images/DD.png" alt=""><div><strong>青銅</strong><br><span class="hint">完成 5 個目標</span></div></div>
-            <div class="timeline-item"><img class="tier-icon" src="assets/images/EE.png" alt=""><div><strong>白銀</strong><br><span class="hint">完成 10 個目標</span></div></div>
-            <div class="timeline-item"><img class="tier-icon" src="assets/images/AA.png" alt=""><div><strong>黃金</strong><br><span class="hint">完成 15 個目標</span></div></div>
-            <div class="timeline-item"><img class="tier-icon" src="assets/images/FF.png" alt=""><div><strong>鑽石</strong><br><span class="hint">完成 20 個目標</span></div></div>
+          <h2>目前 XP 等級徽章說明</h2>
+          <p>依照累積完成的 XP 自動呈現目前等級徽章。</p>
+          <div class="xp-tier-grid">
+            <div class="timeline-item"><img class="tier-icon" src="assets/images/DD.png" alt=""><div><strong>青銅</strong><br><span class="hint">0 XP 起</span></div></div>
+            <div class="timeline-item"><img class="tier-icon" src="assets/images/EE.png" alt=""><div><strong>白銀</strong><br><span class="hint">500 XP 起</span></div></div>
+            <div class="timeline-item"><img class="tier-icon" src="assets/images/AA.png" alt=""><div><strong>黃金</strong><br><span class="hint">750 XP 起</span></div></div>
+            <div class="timeline-item"><img class="tier-icon" src="assets/images/FF.png" alt=""><div><strong>鑽石</strong><br><span class="hint">1000 XP 起</span></div></div>
           </div>
         </div>
       </div>
@@ -5275,6 +5718,22 @@
           </div>
         </div>
       </div>
+      <div class="panel admin-news-panel">
+        <h2>最新消息廣播</h2>
+        <p>老師可以在這裡更新公告，學生點右上角鈴鐺就能看到最新消息。</p>
+        <label class="field-label" style="margin-bottom: 12px;">
+          消息標題
+          <input id="newsTitleInput" placeholder="例如：本周任務提醒">
+        </label>
+        <label class="field-label" style="margin-bottom: 12px;">
+          消息內容
+          <textarea id="newsBodyInput" rows="4" placeholder="輸入想提醒學生或群組成員的內容"></textarea>
+        </label>
+        <div class="actions">
+          <button id="saveNewsBtn" class="button" type="button">發布最新消息</button>
+          <span id="newsStatus" class="hint">會儲存到目前群組的 settings/public。</span>
+        </div>
+      </div>
       </div>
     </section>
   </main>
@@ -5309,6 +5768,18 @@
     </div>
   </div>
 
+  <div id="newsDialog" class="dialog-backdrop" role="dialog" aria-modal="true" aria-labelledby="newsDialogTitle">
+    <div class="confirm-dialog news-dialog">
+      <span class="badge">最新消息</span>
+      <h2 id="newsDialogTitle">任務中心公告</h2>
+      <div id="newsDialogBody" class="news-list">目前還沒有新的公告。</div>
+      <small id="newsDialogMeta" class="hint"></small>
+      <div class="dialog-actions">
+        <button id="closeNewsBtn" class="button" type="button">知道了</button>
+      </div>
+    </div>
+  </div>
+
   <div class="countdown countdown-card glass-card glow-border" aria-label="開學倒數">
     <img src="assets/rocket.png" alt="火箭" onerror="this.style.display='none'; this.parentElement.classList.add('rocket-fallback');">
     <div>
@@ -5338,7 +5809,7 @@
       "sssh1213@sssh.tyc.edu.tw"
     ];
     const categories = ["創作", "平面設計", "數位繪圖", "學習", "練習", "合作", "表達", "語言", "生活技能", "好人好事", "變可愛", "健康"];
-    const defaultCenterGoal = { id: "center-goal", category: "創作", title: "完成漫畫美展作品", points: 100, completed: false, completedByClick: false, gridIndex: 12 };
+    const defaultCenterGoal = { id: "center-goal", category: "創作", title: "完成漫畫美展作品", points: 100, completed: false, completedByClick: false, completedAt: "", gridIndex: 12 };
     let centerGoal = { ...defaultCenterGoal };
     let studentProfile = {
       groupCode: "main",
@@ -5365,6 +5836,12 @@
     let currentTeacherUser = null;
     let knownGroups = ["main"];
     let submissions = [];
+    let latestNews = {
+      title: "任務中心公告",
+      body: "目前還沒有新的公告。",
+      updatedAt: ""
+    };
+    let newsItems = [];
 
     function hasFirebaseConfig() {
       return Boolean(firebaseConfig.apiKey && firebaseConfig.projectId && window.firebase);
@@ -5473,6 +5950,7 @@
         title: goal.title || "",
         points: Number(goal.points || 0),
         completed: Boolean(goal.completed),
+        completedAt: goal.completedAt || "",
         gridIndex: Number.isInteger(goal.gridIndex) ? goal.gridIndex : index
       };
     }
@@ -5498,7 +5976,7 @@
 
     function saveState() {
       try {
-        localStorage.setItem(storageKey, JSON.stringify({ centerGoal, studentProfile, draftGoals, boardGoals, submissions }));
+        localStorage.setItem(storageKey, JSON.stringify({ centerGoal, studentProfile, draftGoals, boardGoals, submissions, latestNews, newsItems }));
       } catch (error) {
         console.warn("無法儲存到這台裝置", error);
       }
@@ -5515,7 +5993,8 @@
             category: saved.centerGoal.category || defaultCenterGoal.category,
             points: Number(saved.centerGoal.points || defaultCenterGoal.points),
             completed: Boolean(saved.centerGoal.completedByClick),
-            completedByClick: Boolean(saved.centerGoal.completedByClick)
+            completedByClick: Boolean(saved.centerGoal.completedByClick),
+            completedAt: saved.centerGoal.completedAt || ""
           };
         }
         if (saved.studentProfile) {
@@ -5535,6 +6014,18 @@
         }
         if (Array.isArray(saved.submissions) && saved.submissions.length) {
           submissions = saved.submissions;
+        }
+        if (saved.latestNews) {
+          latestNews = {
+            title: saved.latestNews.title || latestNews.title,
+            body: saved.latestNews.body || latestNews.body,
+            updatedAt: saved.latestNews.updatedAt || ""
+          };
+        }
+        if (Array.isArray(saved.newsItems)) {
+          newsItems = saved.newsItems;
+        } else if (saved.latestNews?.updatedAt) {
+          newsItems = [saved.latestNews];
         }
       } catch (error) {
         console.warn("無法讀取已儲存卡片", error);
@@ -5647,27 +6138,40 @@
     async function loadRemoteSettings() {
       if (!firestoreDb) {
         renderCenterGoalSettings();
+        renderLatestNews();
         return;
       }
       try {
         const doc = await settingsDocRef().get();
-        if (doc.exists && doc.data().centerGoalTitle) {
+        const data = doc.exists ? doc.data() : {};
+        if (data.centerGoalTitle) {
           centerGoal = {
             ...centerGoal,
-            title: doc.data().centerGoalTitle,
-            category: doc.data().centerGoalCategory || centerGoal.category,
-            points: Number(doc.data().centerGoalPoints || centerGoal.points)
+            title: data.centerGoalTitle,
+            category: data.centerGoalCategory || centerGoal.category,
+            points: Number(data.centerGoalPoints || centerGoal.points)
           };
-          renderCenterGoalSettings();
-          renderRows();
-          if (boardGoals) renderBoard();
-          saveState();
-        } else {
-          renderCenterGoalSettings();
         }
+        if (Array.isArray(data.latestNewsItems)) {
+          newsItems = data.latestNewsItems;
+          latestNews = normalizeNewsItems()[0] || latestNews;
+        } else if (data.latestNews || data.latestNewsTitle || data.latestNewsBody) {
+          latestNews = data.latestNews || {
+            title: data.latestNewsTitle || latestNews.title,
+            body: data.latestNewsBody || latestNews.body,
+            updatedAt: data.latestNewsUpdatedAt || data.updatedAt || ""
+          };
+          newsItems = latestNews.updatedAt ? [latestNews] : [];
+        }
+        renderCenterGoalSettings();
+        renderLatestNews();
+        renderRows();
+        if (boardGoals) renderBoard();
+        saveState();
       } catch (error) {
         console.warn("讀取中心目標設定失敗", error);
         renderCenterGoalSettings();
+        renderLatestNews();
       }
     }
 
@@ -5716,6 +6220,128 @@
       button.addEventListener("click", saveCenterGoalSettings);
     }
 
+    function normalizeNewsItems() {
+      const source = Array.isArray(newsItems) && newsItems.length
+        ? newsItems
+        : (latestNews.updatedAt ? [latestNews] : []);
+      return source
+        .filter(item => item && (item.title || item.body))
+        .map(item => ({
+          title: item.title || "任務中心公告",
+          body: item.body || "",
+          updatedAt: item.updatedAt || ""
+        }))
+        .sort((a, b) => String(b.updatedAt || "").localeCompare(String(a.updatedAt || "")));
+    }
+
+    function formatNewsTime(value) {
+      if (!value) return "尚未記錄時間";
+      const time = new Date(value);
+      if (Number.isNaN(time.getTime())) return "尚未記錄時間";
+      return time.toLocaleString("zh-TW", {
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    }
+
+    function renderLatestNews() {
+      const items = normalizeNewsItems();
+      const titleInput = document.getElementById("newsTitleInput");
+      const bodyInput = document.getElementById("newsBodyInput");
+      const dialogTitle = document.getElementById("newsDialogTitle");
+      const dialogBody = document.getElementById("newsDialogBody");
+      const dialogMeta = document.getElementById("newsDialogMeta");
+      const dot = document.getElementById("newsDot");
+      if (titleInput && !titleInput.value) titleInput.placeholder = "例如：本周任務提醒";
+      if (bodyInput && !bodyInput.value) bodyInput.placeholder = "輸入想提醒學生或群組成員的內容";
+      if (dialogTitle) dialogTitle.textContent = "最新消息";
+      if (dialogBody) {
+        dialogBody.innerHTML = items.length
+          ? `<ol class="news-timeline">${items.map(item => `
+              <li>
+                <strong>${escapeHtml(item.title)}</strong>
+                <p>${escapeHtml(item.body)}</p>
+                <span class="news-time">${formatNewsTime(item.updatedAt)}</span>
+              </li>
+            `).join("")}</ol>`
+          : `<p class="hint">目前還沒有新的公告。</p>`;
+      }
+      if (dialogMeta) {
+        dialogMeta.textContent = items.length
+          ? `共 ${items.length} 則公告，依公布時間由新到舊排列。`
+          : "尚未發布正式公告。";
+      }
+      if (dot) dot.classList.toggle("show", items.length > 0);
+    }
+
+    async function saveLatestNewsSettings() {
+      const titleInput = document.getElementById("newsTitleInput");
+      const bodyInput = document.getElementById("newsBodyInput");
+      const status = document.getElementById("newsStatus");
+      const title = (titleInput?.value || "").trim();
+      const body = (bodyInput?.value || "").trim();
+      if (!title || !body) {
+        if (status) status.textContent = "請先填寫消息標題與內容。";
+        return;
+      }
+      const nextNews = {
+        title,
+        body,
+        updatedAt: new Date().toISOString()
+      };
+      newsItems = [nextNews, ...normalizeNewsItems()].slice(0, 30);
+      latestNews = nextNews;
+      renderLatestNews();
+      if (titleInput) titleInput.value = "";
+      if (bodyInput) bodyInput.value = "";
+      saveState();
+      if (!firestoreDb) {
+        if (status) status.textContent = "已儲存在這台裝置。連上 Firebase 後可同步給學生。";
+        return;
+      }
+      try {
+        await groupDocRef().set({
+          groupCode: normalizedGroupCode(),
+          updatedAt: new Date().toISOString()
+        }, { merge: true });
+        await settingsDocRef().set({
+          latestNews,
+          latestNewsItems: newsItems,
+          latestNewsTitle: latestNews.title,
+          latestNewsBody: latestNews.body,
+          latestNewsUpdatedAt: latestNews.updatedAt,
+          groupCode: normalizedGroupCode(),
+          updatedAt: latestNews.updatedAt
+        }, { merge: true });
+        if (status) status.textContent = `已發布到群組 ${normalizedGroupCode()}。`;
+      } catch (error) {
+        console.warn("發布最新消息失敗", error);
+        if (status) status.textContent = "發布失敗，請確認 Firestore 規則。";
+      }
+    }
+
+    function bindLatestNewsSettings() {
+      const saveButton = document.getElementById("saveNewsBtn");
+      const bellButton = document.getElementById("newsBellBtn");
+      const closeButton = document.getElementById("closeNewsBtn");
+      const dialog = document.getElementById("newsDialog");
+      if (saveButton) saveButton.addEventListener("click", saveLatestNewsSettings);
+      if (bellButton) {
+        bellButton.addEventListener("click", () => {
+          renderLatestNews();
+          dialog?.classList.add("show");
+        });
+      }
+      if (closeButton) closeButton.addEventListener("click", () => dialog?.classList.remove("show"));
+      if (dialog) {
+        dialog.addEventListener("click", event => {
+          if (event.target.id === "newsDialog") dialog.classList.remove("show");
+        });
+      }
+    }
+
     function switchPage(id) {
       if (id === "admin" && !teacherMode) {
         id = "dashboard";
@@ -5746,10 +6372,115 @@
     function updateXpLevelDisplay(total) {
       const logo = document.getElementById("xpLevelLogo");
       const name = document.getElementById("xpLevelName");
-      if (!logo || !name) return;
       const level = xpLevelFor(total);
-      logo.src = level.src;
-      name.textContent = level.name;
+      if (logo) logo.src = level.src;
+      if (name) name.textContent = level.name;
+      const heroLogo = document.getElementById("heroAchievementLogo");
+      if (heroLogo) heroLogo.src = level.src;
+      return level;
+    }
+
+    function activeBoardGoals() {
+      if (!boardGoals) return [];
+      return [centerGoal, ...boardGoals];
+    }
+
+    function completedGoals() {
+      return activeBoardGoals().filter(goal => goal.completed);
+    }
+
+    function earnedXp() {
+      return completedGoals().reduce((sum, goal) => sum + Number(goal.points || 0), 0);
+    }
+
+    function weeklyEarnedXp() {
+      const now = new Date();
+      const weekStart = new Date(now);
+      weekStart.setHours(0, 0, 0, 0);
+      const dayOffset = (weekStart.getDay() + 6) % 7;
+      weekStart.setDate(weekStart.getDate() - dayOffset);
+      return completedGoals().reduce((sum, goal) => {
+        const completedAt = goal.completedAt ? new Date(goal.completedAt) : now;
+        return completedAt >= weekStart ? sum + Number(goal.points || 0) : sum;
+      }, 0);
+    }
+
+    function achievementBadgeFor(done, lines, xp) {
+      if (lines >= 3) return { name: "Bingo 達人", src: "assets/star-badge-clean2.png" };
+      if (done >= 10 || xp >= 500) return { name: "穩定創作", src: "assets/images/BB.png" };
+      return { name: "起步之星", src: "assets/images/CC.png" };
+    }
+
+    function updateAchievementDisplay(done, lines, xp) {
+      const level = updateXpLevelDisplay(xp);
+      const weeklyXp = weeklyEarnedXp();
+      const weeklyLevel = Math.min(20, Math.max(1, Math.floor(weeklyXp / 50) + 1));
+      const nextLevel = Math.min(20, weeklyLevel + 1);
+      const levelBase = (weeklyLevel - 1) * 50;
+      const levelProgress = weeklyLevel >= 20 ? 100 : Math.min(100, Math.round(((weeklyXp - levelBase) / 50) * 100));
+      const badge = achievementBadgeFor(done, lines, xp);
+      const title = document.getElementById("achievementLevelTitle");
+      const text = document.getElementById("achievementLevelText");
+      const fill = document.getElementById("achievementProgressFill");
+      const weekly = document.getElementById("weeklyXp");
+      const next = document.getElementById("nextLevel");
+      const badgeLogo = document.getElementById("achievementBadgeLogo");
+      const badgeName = document.getElementById("achievementBadgeName");
+      if (title) title.textContent = `Lv.${weeklyLevel}｜創作成長者`;
+      if (text) text.textContent = `目前 XP：${weeklyXp} / ${weeklyLevel >= 20 ? 1000 : nextLevel * 50 - 50}。本周每 50 XP 升 1 級，最高 Lv.20。`;
+      if (fill) fill.style.width = `${levelProgress}%`;
+      if (weekly) weekly.textContent = `+${weeklyXp}`;
+      if (next) next.textContent = weeklyLevel >= 20 ? "Lv.20" : `Lv.${nextLevel}`;
+      if (badgeLogo) badgeLogo.src = badge.src;
+      if (badgeName) badgeName.textContent = badge.name;
+      return { level, badge };
+    }
+
+    function renderRecentTasks() {
+      const list = document.getElementById("recentList");
+      if (!list) return;
+      const items = completedGoals()
+        .slice()
+        .sort((a, b) => String(b.completedAt || "").localeCompare(String(a.completedAt || "")))
+        .slice(0, 3);
+      if (!items.length) {
+        list.innerHTML = `
+          <div class="recent-item is-empty">
+            <span class="tag">待完成</span>
+            <strong>完成任務後會出現在這裡</strong>
+            <span class="xp">+0 XP</span>
+          </div>
+        `;
+        return;
+      }
+      list.innerHTML = items.map(goal => `
+        <div class="recent-item">
+          <span class="tag">完成</span>
+          <strong>${escapeHtml(goal.title)}</strong>
+          <span class="xp">+${Number(goal.points || 0)} XP</span>
+        </div>
+      `).join("");
+    }
+
+    function updateDashboardPanels() {
+      const done = completedGoals().length;
+      const rate = boardGoals ? Math.round(done / 25 * 100) : 0;
+      const lines = boardGoals ? calculateBingoLines() : 0;
+      const xp = earnedXp();
+      document.getElementById("dashDone").textContent = `${done} / 25`;
+      document.getElementById("dashRate").textContent = `${rate}%`;
+      document.getElementById("dashBingo").textContent = lines;
+      document.getElementById("dashXp").textContent = xp;
+      document.getElementById("leaderRate").textContent = `${rate}%`;
+      document.getElementById("leaderBingo").textContent = lines;
+      document.getElementById("leaderName").textContent = studentProfile.studentName || "自己";
+      document.getElementById("leaderClass").textContent = studentProfile.className || "尚未填寫";
+      const adminRate = document.getElementById("adminRate");
+      const adminBingo = document.getElementById("adminBingo");
+      if (adminRate) adminRate.textContent = `${rate}%`;
+      if (adminBingo) adminBingo.textContent = lines;
+      renderRecentTasks();
+      updateAchievementDisplay(done, lines, xp);
     }
 
     function renderRows() {
@@ -5802,8 +6533,6 @@
       document.getElementById("draftXp").textContent = `${total} / 1000`;
       const draftStatus = document.getElementById("draftStatus");
       if (draftStatus) draftStatus.textContent = ready ? "可以產生" : "填寫中";
-      document.getElementById("dashXp").textContent = total;
-      updateXpLevelDisplay(total);
       document.getElementById("uploadBtn").disabled = !ready;
       let hint = profileReady()
         ? `還差 ${24 - filled} 個目標、${missingXp} 個 XP。`
@@ -5818,6 +6547,7 @@
         hint = `總 XP 剛好 1000，可以產生專屬賓果卡。`;
       }
       document.getElementById("uploadHint").textContent = hint;
+      updateDashboardPanels();
     }
 
     function buildSubmissionRecord() {
@@ -5833,6 +6563,7 @@
         title: goal.title,
         points: Number(goal.points || 0),
         completed: Boolean(goal.completed),
+        completedAt: goal.completedAt || "",
         gridIndex: Number.isInteger(goal.gridIndex) ? goal.gridIndex : null
       }));
 
@@ -5844,6 +6575,7 @@
         seatNumber: studentProfile.seatNumber,
         email: studentProfile.email || "",
         allocatedXp: totalXp(),
+        earnedXp: earnedXp(),
         completionRate,
         bingoCount,
         goals,
@@ -5986,6 +6718,7 @@
       document.getElementById("adminBingo").textContent = lines;
       document.getElementById("leaderRate").textContent = `${rate}%`;
       document.getElementById("leaderBingo").textContent = lines;
+      updateDashboardPanels();
       if (profileReady()) {
         const record = buildSubmissionRecord();
         submissions = [record, ...submissions.filter(item => item.id !== record.id)];
@@ -5999,6 +6732,7 @@
     document.getElementById("confirmCompleteBtn").addEventListener("click", () => {
       if (!pendingCompleteGoal) return;
       pendingCompleteGoal.completed = true;
+      pendingCompleteGoal.completedAt = new Date().toISOString();
       if (pendingCompleteGoal.id === "center-goal") pendingCompleteGoal.completedByClick = true;
       closeCompleteDialog();
       renderBoard();
@@ -6006,10 +6740,11 @@
     });
 
     document.getElementById("uploadBtn").addEventListener("click", () => {
-      centerGoal = { ...centerGoal, completed: false };
+      centerGoal = { ...centerGoal, completed: false, completedAt: "" };
       boardGoals = shuffle(draftGoals).map((goal, index) => ({
         ...goal,
         completed: false,
+        completedAt: "",
         gridIndex: boardPositions[index]
       }));
       document.getElementById("draftView").style.display = "none";
@@ -6023,6 +6758,7 @@
       const shouldReset = confirm("要重新建立賓果卡嗎？目前完成狀態會清除。");
       if (!shouldReset) return;
       boardGoals = null;
+      centerGoal = { ...centerGoal, completed: false, completedByClick: false, completedAt: "" };
       document.getElementById("draftView").style.display = "block";
       document.getElementById("boardView").style.display = "none";
       document.getElementById("bingoNotice").classList.remove("show");
@@ -6150,6 +6886,8 @@
     bindGroupSelect();
     renderCenterGoalSettings();
     bindCenterGoalSettings();
+    renderLatestNews();
+    bindLatestNewsSettings();
     renderRows();
     if (boardGoals) {
       document.getElementById("draftView").style.display = "none";
