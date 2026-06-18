@@ -5054,17 +5054,17 @@
 
     #leaderboard .podium-gold {
       left: 50%;
-      top: 46.5%;
+      top: 46%;
     }
 
     #leaderboard .podium-silver {
-      left: 23.5%;
-      top: 54.2%;
+      left: 24.4%;
+      top: 54.6%;
     }
 
     #leaderboard .podium-bronze {
-      left: 76.5%;
-      top: 58.8%;
+      left: 75.7%;
+      top: 58.4%;
     }
 
     .achievement-hero-panel {
@@ -5298,6 +5298,68 @@
       box-shadow: none !important;
     }
 
+    #bingo table tbody tr:nth-child(4) {
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+
+    .news-bell {
+      display: grid;
+      place-items: center;
+      padding: 0;
+    }
+
+    .bell-line-icon {
+      display: grid !important;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      color: #f8fafc;
+    }
+
+    .bell-line-icon svg {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.28));
+    }
+
+    #studentDetailDialog .confirm-dialog,
+    #studentDetailDialog .student-dialog {
+      color: #f8fafc;
+      background:
+        radial-gradient(circle at 80% 14%, rgba(34, 211, 238, 0.16), transparent 34%),
+        linear-gradient(145deg, rgba(18, 24, 52, 0.98), rgba(6, 10, 26, 0.98));
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    #studentDetailDialog .goal-detail,
+    #studentDetailDialog .student-detail-meta .card {
+      color: #f8fafc;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(6, 10, 26, 0.72);
+    }
+
+    #studentDetailDialog .goal-detail strong,
+    #studentDetailDialog .student-detail-meta strong {
+      color: #ffffff;
+    }
+
+    #studentDetailDialog .goal-detail span,
+    #studentDetailDialog .student-detail-meta span {
+      color: #cbd7f7;
+    }
+
+    #studentDetailDialog .goal-detail .badge {
+      color: #ffffff;
+      background: rgba(108, 92, 231, 0.34);
+      border-color: rgba(34, 211, 238, 0.28);
+    }
+
     .news-list {
       display: grid;
       gap: 12px;
@@ -5344,6 +5406,65 @@
       font-weight: 800;
     }
 
+    .admin-news-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .admin-news-item {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 14px;
+      padding: 13px 15px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      background: rgba(6, 10, 26, 0.58);
+    }
+
+    .admin-news-item strong {
+      display: block;
+      color: #ffffff;
+    }
+
+    .admin-news-item p {
+      margin: 4px 0 0;
+      color: #aab4d4;
+      line-height: 1.45;
+    }
+
+    .student-edit-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      background: rgba(255, 255, 255, 0.055);
+    }
+
+    .student-edit-grid input {
+      width: 100%;
+      box-sizing: border-box;
+      color: #ffffff;
+      background: rgba(6, 10, 26, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .button.danger {
+      color: #ffffff;
+      background: linear-gradient(135deg, #d9365b, #ff6b6b);
+      box-shadow: 0 10px 26px rgba(217, 54, 91, 0.28);
+    }
+
+    #resetCardBtn:disabled {
+      opacity: 0.48;
+      cursor: not-allowed;
+      filter: grayscale(0.4);
+    }
+
     @media (max-width: 900px) {
       .topbar {
         grid-template-columns: minmax(0, 1fr) auto !important;
@@ -5366,6 +5487,14 @@
         grid-column: 1 / -1;
         grid-row: 2;
         justify-self: stretch;
+      }
+
+      .student-edit-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .admin-news-item {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -5390,7 +5519,12 @@
         <button class="nav-tab teacher-only" data-page="admin">教師後台</button>
       </nav>
       <button id="newsBellBtn" class="news-bell" type="button" aria-label="最新消息">
-        <span aria-hidden="true">🔔</span>
+        <span class="bell-line-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false">
+            <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+            <path d="M13.7 21a2 2 0 0 1-3.4 0"></path>
+          </svg>
+        </span>
         <i id="newsDot" class="news-dot" aria-hidden="true"></i>
       </button>
     </div>
@@ -5492,10 +5626,7 @@
               座號
               <input id="seatNumberInput" type="number" min="1" placeholder="12">
             </label>
-            <label class="field-label">
-              Email
-              <input id="emailInput" type="email" placeholder="可選填">
-            </label>
+            <input id="emailInput" type="hidden">
           </div>
         </div>
 
@@ -5538,7 +5669,7 @@
           <div id="board" class="bingo-board" aria-label="Bingo 賓果卡"></div>
         </div>
         <div class="actions">
-          <button id="resetCardBtn" class="button secondary">重新建立卡片</button>
+          <button id="resetCardBtn" class="button secondary" disabled>重新建立卡片</button>
           <span class="hint">若需重新建立卡片，須由外星人解鎖。</span>
         </div>
       </div>
@@ -5600,7 +5731,7 @@
                 <th>Bingo 數</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="leaderboardBody">
               <tr><td>1</td><td>林語萱</td><td>設計群 1 班</td><td>96%</td><td>8</td></tr>
               <tr><td>2</td><td>陳柏宇</td><td>設計群 2 班</td><td>92%</td><td>7</td></tr>
               <tr><td>3</td><td>黃品瑜</td><td>設計群 1 班</td><td>91%</td><td>7</td></tr>
@@ -5733,6 +5864,7 @@
           <button id="saveNewsBtn" class="button" type="button">發布最新消息</button>
           <span id="newsStatus" class="hint">會儲存到目前群組的 settings/public。</span>
         </div>
+        <div id="adminNewsList" class="admin-news-list"></div>
       </div>
       </div>
     </section>
@@ -5760,9 +5892,29 @@
       <h2 id="studentDetailTitle">學生姓名</h2>
       <p id="studentDetailSubtitle">班級、座號與提交狀態</p>
       <div id="studentDetailMeta" class="student-detail-meta"></div>
+      <div class="student-edit-grid">
+        <label class="field-label">
+          姓名
+          <input id="adminEditStudentName" type="text">
+        </label>
+        <label class="field-label">
+          班級
+          <input id="adminEditClassName" type="text">
+        </label>
+        <label class="field-label">
+          座號
+          <input id="adminEditSeatNumber" type="number" min="1">
+        </label>
+        <label class="field-label">
+          群組
+          <input id="adminEditGroupCode" type="text">
+        </label>
+      </div>
       <div id="studentGoalList" class="goal-detail-list"></div>
       <div class="dialog-actions">
-        <button id="requestRevisionBtn" class="button secondary" type="button">退回修改</button>
+        <button id="requestRevisionBtn" class="button secondary" type="button">解鎖賓果卡</button>
+        <button id="saveStudentProfileBtn" class="button" type="button">儲存資料修正</button>
+        <button id="deleteStudentBtn" class="button danger" type="button">刪除學生資料</button>
         <button id="closeStudentDetailBtn" class="button" type="button">關閉</button>
       </div>
     </div>
@@ -5842,6 +5994,7 @@
       updatedAt: ""
     };
     let newsItems = [];
+    let newsReadAt = "";
 
     function hasFirebaseConfig() {
       return Boolean(firebaseConfig.apiKey && firebaseConfig.projectId && window.firebase);
@@ -5976,7 +6129,7 @@
 
     function saveState() {
       try {
-        localStorage.setItem(storageKey, JSON.stringify({ centerGoal, studentProfile, draftGoals, boardGoals, submissions, latestNews, newsItems }));
+        localStorage.setItem(storageKey, JSON.stringify({ centerGoal, studentProfile, draftGoals, boardGoals, submissions, latestNews, newsItems, newsReadAt }));
       } catch (error) {
         console.warn("無法儲存到這台裝置", error);
       }
@@ -6027,6 +6180,7 @@
         } else if (saved.latestNews?.updatedAt) {
           newsItems = [saved.latestNews];
         }
+        newsReadAt = saved.newsReadAt || "";
       } catch (error) {
         console.warn("無法讀取已儲存卡片", error);
       }
@@ -6273,7 +6427,68 @@
           ? `共 ${items.length} 則公告，依公布時間由新到舊排列。`
           : "尚未發布正式公告。";
       }
-      if (dot) dot.classList.toggle("show", items.length > 0);
+      const newestAt = items[0]?.updatedAt || "";
+      if (dot) dot.classList.toggle("show", Boolean(newestAt && newestAt > newsReadAt));
+      renderAdminNewsList(items);
+    }
+
+    function renderAdminNewsList(items = normalizeNewsItems()) {
+      const list = document.getElementById("adminNewsList");
+      if (!list) return;
+      if (!items.length) {
+        list.innerHTML = `<p class="hint">目前沒有已發布的消息。</p>`;
+        return;
+      }
+      list.innerHTML = items.map((item, index) => `
+        <div class="admin-news-item">
+          <div>
+            <strong>${escapeHtml(item.title)}</strong>
+            <p>${escapeHtml(item.body)}</p>
+            <span class="news-time">${formatNewsTime(item.updatedAt)}</span>
+          </div>
+          <button class="button danger" type="button" data-delete-news-index="${index}">刪除</button>
+        </div>
+      `).join("");
+      list.querySelectorAll("[data-delete-news-index]").forEach(button => {
+        button.addEventListener("click", () => deleteNewsItem(Number(button.dataset.deleteNewsIndex)));
+      });
+    }
+
+    async function deleteNewsItem(index) {
+      const items = normalizeNewsItems();
+      const target = items[index];
+      if (!target) return;
+      const shouldDelete = confirm(`要刪除「${target.title}」這則消息嗎？`);
+      if (!shouldDelete) return;
+      items.splice(index, 1);
+      newsItems = items;
+      latestNews = items[0] || {
+        title: "任務中心公告",
+        body: "目前還沒有新的公告。",
+        updatedAt: ""
+      };
+      renderLatestNews();
+      saveState();
+      const status = document.getElementById("newsStatus");
+      if (!firestoreDb) {
+        if (status) status.textContent = "消息已從這台裝置刪除。";
+        return;
+      }
+      try {
+        await settingsDocRef().set({
+          latestNews,
+          latestNewsItems: newsItems,
+          latestNewsTitle: latestNews.title,
+          latestNewsBody: latestNews.body,
+          latestNewsUpdatedAt: latestNews.updatedAt,
+          groupCode: normalizedGroupCode(),
+          updatedAt: new Date().toISOString()
+        }, { merge: true });
+        if (status) status.textContent = "消息已刪除並同步。";
+      } catch (error) {
+        console.warn("刪除最新消息失敗", error);
+        if (status) status.textContent = "刪除失敗，請確認 Firestore 規則。";
+      }
     }
 
     async function saveLatestNewsSettings() {
@@ -6332,6 +6547,12 @@
         bellButton.addEventListener("click", () => {
           renderLatestNews();
           dialog?.classList.add("show");
+          const newestAt = normalizeNewsItems()[0]?.updatedAt || "";
+          if (newestAt) {
+            newsReadAt = newestAt;
+            saveState();
+            renderLatestNews();
+          }
         });
       }
       if (closeButton) closeButton.addEventListener("click", () => dialog?.classList.remove("show"));
@@ -6349,6 +6570,9 @@
       document.querySelectorAll(".page").forEach(page => page.classList.toggle("active", page.id === id));
       document.querySelectorAll("nav button").forEach(button => button.classList.toggle("active", button.dataset.page === id));
       document.body.dataset.page = id;
+      if (id === "dashboard" || id === "leaderboard" || id === "achievements") {
+        updateDashboardPanels();
+      }
     }
 
     document.querySelectorAll("[data-page]").forEach(button => {
@@ -6471,16 +6695,115 @@
       document.getElementById("dashRate").textContent = `${rate}%`;
       document.getElementById("dashBingo").textContent = lines;
       document.getElementById("dashXp").textContent = xp;
-      document.getElementById("leaderRate").textContent = `${rate}%`;
-      document.getElementById("leaderBingo").textContent = lines;
-      document.getElementById("leaderName").textContent = studentProfile.studentName || "自己";
-      document.getElementById("leaderClass").textContent = studentProfile.className || "尚未填寫";
+      const leaderRate = document.getElementById("leaderRate");
+      const leaderBingo = document.getElementById("leaderBingo");
+      const leaderName = document.getElementById("leaderName");
+      const leaderClass = document.getElementById("leaderClass");
+      if (leaderRate) leaderRate.textContent = `${rate}%`;
+      if (leaderBingo) leaderBingo.textContent = lines;
+      if (leaderName) leaderName.textContent = studentProfile.studentName || "自己";
+      if (leaderClass) leaderClass.textContent = studentProfile.className || "尚未填寫";
       const adminRate = document.getElementById("adminRate");
       const adminBingo = document.getElementById("adminBingo");
       if (adminRate) adminRate.textContent = `${rate}%`;
       if (adminBingo) adminBingo.textContent = lines;
       renderRecentTasks();
       updateAchievementDisplay(done, lines, xp);
+      renderLeaderboard();
+    }
+
+    function sampleLeaderboardRecords() {
+      return [
+        { id: "sample-1", studentName: "林語萱", className: "設計群 1 班", completionRate: 96, bingoCount: 8, earnedXp: 960 },
+        { id: "sample-2", studentName: "陳柏宇", className: "設計群 2 班", completionRate: 92, bingoCount: 7, earnedXp: 920 },
+        { id: "sample-3", studentName: "黃品瑜", className: "設計群 1 班", completionRate: 91, bingoCount: 7, earnedXp: 910 },
+        { id: "sample-4", studentName: "吳承翰", className: "設計群 1 班", completionRate: 88, bingoCount: 6, earnedXp: 880 },
+        { id: "sample-5", studentName: "劉子晴", className: "設計群 2 班", completionRate: 84, bingoCount: 5, earnedXp: 840 }
+      ];
+    }
+
+    function normalizedLeaderboardRecords() {
+      const records = new Map();
+      submissions.forEach(record => {
+        if (!record || !(record.studentName || record.id)) return;
+        const id = record.id || `${record.groupCode || normalizedGroupCode()}-${record.className || ""}-${record.seatNumber || ""}-${record.studentName || ""}`;
+        records.set(id, {
+          ...record,
+          id,
+          studentName: record.studentName || "未命名",
+          className: record.className || "未填班級",
+          completionRate: Number(record.completionRate || 0),
+          bingoCount: Number(record.bingoCount || 0),
+          earnedXp: Number(record.earnedXp || 0)
+        });
+      });
+      if (profileReady()) {
+        const current = buildSubmissionRecord();
+        records.set(current.id, current);
+      }
+      const list = [...records.values()];
+      if (list.length < 5) {
+        sampleLeaderboardRecords().forEach(sample => {
+          const duplicate = list.some(record =>
+            record.studentName === sample.studentName &&
+            record.className === sample.className
+          );
+          if (!duplicate && list.length < 5) list.push(sample);
+        });
+      }
+      return list.sort((a, b) => {
+        const byRate = Number(b.completionRate || 0) - Number(a.completionRate || 0);
+        if (byRate) return byRate;
+        const byBingo = Number(b.bingoCount || 0) - Number(a.bingoCount || 0);
+        if (byBingo) return byBingo;
+        const byXp = Number(b.earnedXp || 0) - Number(a.earnedXp || 0);
+        if (byXp) return byXp;
+        return String(a.updatedAt || "").localeCompare(String(b.updatedAt || ""));
+      });
+    }
+
+    function updatePodiumLabels(ranked) {
+      const podiums = [
+        { selector: ".podium-gold", record: ranked[0] },
+        { selector: ".podium-silver", record: ranked[1] },
+        { selector: ".podium-bronze", record: ranked[2] }
+      ];
+      podiums.forEach(({ selector, record }) => {
+        const node = document.querySelector(selector);
+        if (!node || !record) return;
+        const classText = node.querySelector(".podium-class");
+        const nameText = node.querySelector("strong");
+        const rateText = node.querySelector(".podium-rate");
+        if (classText) classText.textContent = record.className || "未填班級";
+        if (nameText) nameText.textContent = record.studentName || "未命名";
+        if (rateText) rateText.textContent = `完成率 ${Number(record.completionRate || 0)}%`;
+      });
+    }
+
+    function renderLeaderboard() {
+      const tbody = document.getElementById("leaderboardBody");
+      if (!tbody) return;
+      const ranked = normalizedLeaderboardRecords();
+      updatePodiumLabels(ranked);
+      const currentId = profileReady() ? studentDocumentId() : "";
+      const currentIndex = currentId ? ranked.findIndex(record => record.id === currentId) : -1;
+      const topRows = ranked.slice(0, 5).map((record, index) => ({ record, rank: index + 1, self: false }));
+      const currentRecord = currentIndex >= 0
+        ? ranked[currentIndex]
+        : (profileReady()
+          ? buildSubmissionRecord()
+          : { studentName: "自己", className: "尚未填寫", completionRate: 0, bingoCount: 0 });
+      const currentRank = currentIndex >= 0 ? currentIndex + 1 : (profileReady() ? ranked.length + 1 : "—");
+      const rows = [...topRows, { record: currentRecord, rank: currentRank, self: true }];
+      tbody.innerHTML = rows.map(({ record, rank, self }) => `
+        <tr class="${self ? "self-rank" : ""}">
+          <td>${rank}</td>
+          <td>${escapeHtml(record.studentName || "未命名")}</td>
+          <td>${escapeHtml(record.className || "未填班級")}</td>
+          <td>${Number(record.completionRate || 0)}%</td>
+          <td>${Number(record.bingoCount || 0)}</td>
+        </tr>
+      `).join("");
     }
 
     function renderRows() {
@@ -6637,7 +6960,8 @@
       document.getElementById("boardView").style.display = "none";
       document.getElementById("bingoNotice").classList.remove("show");
       renderRows();
-      updateFirebaseStatus("老師已退回修改", "請修正目標後重新產生並鎖定賓果卡。");
+      saveState();
+      updateFirebaseStatus("外星人已解鎖卡片", "請修正目標後重新產生並鎖定賓果卡。");
     }
 
     function shuffle(items) {
@@ -6716,13 +7040,11 @@
       document.getElementById("dashBingo").textContent = lines;
       document.getElementById("adminRate").textContent = `${rate}%`;
       document.getElementById("adminBingo").textContent = lines;
-      document.getElementById("leaderRate").textContent = `${rate}%`;
-      document.getElementById("leaderBingo").textContent = lines;
-      updateDashboardPanels();
       if (profileReady()) {
         const record = buildSubmissionRecord();
         submissions = [record, ...submissions.filter(item => item.id !== record.id)];
       }
+      updateDashboardPanels();
     }
 
     document.getElementById("cancelCompleteBtn").addEventListener("click", closeCompleteDialog);
@@ -6755,19 +7077,11 @@
     });
 
     document.getElementById("resetCardBtn").addEventListener("click", () => {
-      const shouldReset = confirm("要重新建立賓果卡嗎？目前完成狀態會清除。");
-      if (!shouldReset) return;
-      boardGoals = null;
-      centerGoal = { ...centerGoal, completed: false, completedByClick: false, completedAt: "" };
-      document.getElementById("draftView").style.display = "block";
-      document.getElementById("boardView").style.display = "none";
-      document.getElementById("bingoNotice").classList.remove("show");
-      renderRows();
-      renderAdmin();
-      saveState();
+      alert("卡片目前已鎖定，請聯絡外星人從教師後台解鎖。");
     });
 
     function renderAdmin() {
+      renderLeaderboard();
       document.getElementById("submissionCount").textContent = submissions.length;
       const list = document.getElementById("submissions");
       if (!submissions.length) {
@@ -6778,7 +7092,7 @@
         <div class="submission" data-submission-index="${index}">
           <div>
             <strong>${escapeHtml(submission.studentName || "未命名")}</strong>
-            <div class="hint">${escapeHtml(submission.email || "未填 Email")}</div>
+            <div class="hint">群組 ${escapeHtml(submission.groupCode || normalizedGroupCode())}</div>
           </div>
           <div>${escapeHtml(submission.className || "未填班級")}</div>
           <div>${escapeHtml(submission.seatNumber || "-")} 號</div>
@@ -6807,6 +7121,10 @@
       });
       document.getElementById("studentDetailTitle").textContent = submission.studentName || "未命名";
       document.getElementById("studentDetailSubtitle").textContent = `${submission.className || "未填班級"}｜${submission.seatNumber || "-"} 號｜群組 ${submission.groupCode || normalizedGroupCode()}`;
+      document.getElementById("adminEditStudentName").value = submission.studentName || "";
+      document.getElementById("adminEditClassName").value = submission.className || "";
+      document.getElementById("adminEditSeatNumber").value = submission.seatNumber || "";
+      document.getElementById("adminEditGroupCode").value = submission.groupCode || normalizedGroupCode();
       document.getElementById("studentDetailMeta").innerHTML = `
         <div class="card"><span>完成率</span><strong>${Number(submission.completionRate || 0)}%</strong></div>
         <div class="card"><span>Bingo</span><strong>${Number(submission.bingoCount || 0)} 條</strong></div>
@@ -6824,7 +7142,7 @@
       `).join("") || `<p class="hint">這筆紀錄還沒有目標資料。</p>`;
       const revisionBtn = document.getElementById("requestRevisionBtn");
       revisionBtn.disabled = submission.reviewStatus === "需修改";
-      revisionBtn.textContent = submission.reviewStatus === "需修改" ? "已退回修改" : "退回修改";
+      revisionBtn.textContent = submission.reviewStatus === "需修改" ? "已解鎖，等待修改" : "解鎖賓果卡";
       document.getElementById("studentDetailDialog").classList.add("show");
     }
 
@@ -6835,11 +7153,12 @@
 
     async function requestRevisionForActiveSubmission() {
       if (!activeDetailSubmission) return;
-      const shouldRequest = confirm(`要退回 ${activeDetailSubmission.studentName || "這位學生"} 的賓果卡，讓他重新修改嗎？`);
+      const shouldRequest = confirm(`要解鎖 ${activeDetailSubmission.studentName || "這位學生"} 的賓果卡，讓他重新修改嗎？`);
       if (!shouldRequest) return;
       const nextRecord = {
         ...activeDetailSubmission,
         reviewStatus: "需修改",
+        unlockRequestedAt: new Date().toISOString(),
         revisionRequestedAt: new Date().toISOString()
       };
       submissions = submissions.map(item => item.id === nextRecord.id ? nextRecord : item);
@@ -6851,6 +7170,7 @@
       try {
         await submissionsCollectionRef().doc(nextRecord.id).set({
           reviewStatus: "需修改",
+          unlockRequestedAt: nextRecord.unlockRequestedAt,
           revisionRequestedAt: nextRecord.revisionRequestedAt,
           updatedAt: new Date().toISOString()
         }, { merge: true });
@@ -6861,8 +7181,82 @@
       }
     }
 
+    function normalizeEditableGroupCode(value) {
+      return String(value || "main")
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9_-]+/g, "-")
+        .replace(/-+/g, "-")
+        .replace(/^-|-$/g, "") || "main";
+    }
+
+    async function saveStudentProfileChanges() {
+      if (!activeDetailSubmission) return;
+      const studentName = document.getElementById("adminEditStudentName").value.trim();
+      const className = document.getElementById("adminEditClassName").value.trim();
+      const seatNumber = document.getElementById("adminEditSeatNumber").value.trim();
+      const groupCode = normalizeEditableGroupCode(document.getElementById("adminEditGroupCode").value);
+      if (!studentName || !className || !seatNumber) {
+        alert("請填寫姓名、班級與座號。");
+        return;
+      }
+      const nextRecord = {
+        ...activeDetailSubmission,
+        studentName,
+        className,
+        seatNumber,
+        groupCode,
+        profileUpdatedAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      submissions = submissions.map(item => item.id === nextRecord.id ? nextRecord : item);
+      activeDetailSubmission = nextRecord;
+      renderAdmin();
+      openStudentDetail(nextRecord);
+      saveState();
+      if (!firestoreDb || !nextRecord.id) {
+        alert("學生資料已在這台裝置修正。");
+        return;
+      }
+      try {
+        await submissionsCollectionRef().doc(nextRecord.id).set({
+          studentName: nextRecord.studentName,
+          className: nextRecord.className,
+          seatNumber: nextRecord.seatNumber,
+          groupCode: nextRecord.groupCode,
+          profileUpdatedAt: nextRecord.profileUpdatedAt,
+          updatedAt: nextRecord.updatedAt
+        }, { merge: true });
+        alert("學生資料已修正並同步。");
+      } catch (error) {
+        console.warn("修正學生資料失敗", error);
+        alert("修正失敗，請確認 Firebase 權限。");
+      }
+    }
+
+    async function deleteActiveStudentSubmission() {
+      if (!activeDetailSubmission) return;
+      const target = activeDetailSubmission;
+      const shouldDelete = confirm(`確定要刪除 ${target.studentName || "這位學生"} 的全部提交資料嗎？這個動作無法復原。`);
+      if (!shouldDelete) return;
+      submissions = submissions.filter(item => item.id !== target.id);
+      closeStudentDetail();
+      renderAdmin();
+      saveState();
+      if (!firestoreDb || !target.id) return;
+      try {
+        await submissionsCollectionRef().doc(target.id).delete();
+        await loadRemoteSubmissions();
+      } catch (error) {
+        console.warn("刪除學生資料失敗", error);
+        alert("刪除失敗，請確認 Firebase 權限。");
+      }
+    }
+
     document.getElementById("closeStudentDetailBtn").addEventListener("click", closeStudentDetail);
     document.getElementById("requestRevisionBtn").addEventListener("click", requestRevisionForActiveSubmission);
+    document.getElementById("saveStudentProfileBtn").addEventListener("click", saveStudentProfileChanges);
+    document.getElementById("deleteStudentBtn").addEventListener("click", deleteActiveStudentSubmission);
     document.getElementById("studentDetailDialog").addEventListener("click", event => {
       if (event.target.id === "studentDetailDialog") closeStudentDetail();
     });
