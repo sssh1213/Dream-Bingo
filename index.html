@@ -5459,6 +5459,37 @@
       box-shadow: 0 10px 26px rgba(217, 54, 91, 0.28);
     }
 
+    .group-danger-zone {
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 107, 157, 0.24);
+      background: rgba(255, 107, 157, 0.07);
+    }
+
+    .group-danger-zone strong {
+      display: block;
+      margin-bottom: 5px;
+      color: #ffffff;
+    }
+
+    .group-danger-zone p {
+      margin: 0 0 12px;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .group-danger-zone .actions {
+      margin-top: 0;
+    }
+
+    .group-danger-zone .button:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
+      filter: grayscale(0.6);
+      transform: none;
+    }
+
     #resetCardBtn:disabled {
       opacity: 0.48;
       cursor: not-allowed;
@@ -5546,6 +5577,20 @@
       align-items: center;
       gap: clamp(22px, 4vw, 48px);
       margin-top: 24px;
+    }
+
+    .moofi-status-layout > *,
+    .moofi-status-info,
+    .moofi-progress-block,
+    .moofi-metrics {
+      min-width: 0;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+
+    .moofi-status-info {
+      width: 100%;
+      overflow: hidden;
     }
 
     .moofi-main-stage {
@@ -5766,6 +5811,11 @@
       margin-bottom: 20px;
     }
 
+    .moofi-collection-heading > div {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
     .moofi-collection-heading h2 {
       margin: 12px 0 6px;
       font-size: clamp(23px, 3vw, 34px);
@@ -5915,13 +5965,29 @@
 
       .moofi-status-layout {
         grid-template-columns: 1fr;
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
         gap: 16px;
         margin-top: 18px;
       }
 
+      .moofi-status-info {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+      }
+
       .moofi-main-stage {
+        width: 100%;
+        max-width: 100%;
         min-height: 260px;
         border-radius: 18px;
+      }
+
+      .moofi-main-stage.is-wide-stage {
+        min-height: 0;
+        aspect-ratio: 16 / 9;
       }
 
       .moofi-main-stage img {
@@ -5930,11 +5996,19 @@
       }
 
       .moofi-status-info h2 {
+        width: 100%;
+        max-width: 100%;
         margin: 11px 0 14px;
         font-size: 26px;
       }
 
+      .moofi-metrics {
+        width: 100%;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
       .moofi-metrics > div {
+        min-width: 0;
         padding: 12px 7px;
       }
 
@@ -5943,7 +6017,17 @@
       }
 
       .moofi-metrics strong {
-        font-size: 17px;
+        font-size: clamp(13px, 4vw, 17px);
+      }
+
+      .moofi-progress-labels {
+        grid-template-columns: minmax(28px, auto) minmax(0, 1fr) minmax(28px, auto);
+        gap: 6px;
+      }
+
+      .moofi-progress-labels strong {
+        min-width: 0;
+        font-size: 11px;
       }
 
       .moofi-collection-heading {
@@ -5977,6 +6061,17 @@
       max-height: none;
       object-fit: cover;
       border-radius: inherit;
+    }
+
+    .moofi-main-stage.is-wide-stage {
+      width: 100%;
+      min-height: 0;
+      aspect-ratio: 16 / 9;
+    }
+
+    .moofi-main-stage.is-wide-stage::before,
+    .moofi-main-stage.is-wide-stage::after {
+      opacity: 0.35;
     }
 
     #leaderboard .table-wrap {
@@ -6026,6 +6121,20 @@
     }
 
     @media (max-width: 768px) {
+      #admin .grid-two {
+        grid-template-columns: 1fr;
+      }
+
+      .group-danger-zone .actions {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .group-danger-zone .button {
+        width: 100%;
+      }
+
       #leaderboard .panel:last-child {
         padding: 14px 10px;
       }
@@ -6357,7 +6466,7 @@
         <div class="moofi-collection-heading">
           <div>
             <span class="badge">Moofi Collection</span>
-            <h2>已收集的 Moofi 小圖鑑</h2>
+            <h2 class="dynamic-single-line" data-min-font-size="12">已收集的 Moofi 小圖鑑</h2>
             <p>點擊已解鎖的 Moofi，可以暫時查看不同成長階段。</p>
           </div>
           <strong id="moofiCollectionCount">1 / 15</strong>
@@ -6418,6 +6527,15 @@
           <div class="actions">
             <button id="saveCenterGoalBtn" class="button" type="button">儲存中心目標</button>
             <span id="centerGoalStatus" class="hint">會儲存到目前群組的 settings/public。</span>
+          </div>
+          <div class="group-danger-zone">
+            <strong>群組資料管理</strong>
+            <p>重置會清除學生提交與排行榜進度，但保留中心目標和公告；刪除群組會連設定一起清除。</p>
+            <div class="actions">
+              <button id="resetGroupBtn" class="button secondary" type="button">重置群組學生進度</button>
+              <button id="deleteGroupBtn" class="button danger" type="button">刪除整個群組</button>
+              <span id="groupActionStatus" class="hint">目前群組：main</span>
+            </div>
           </div>
         </div>
       </div>
@@ -6567,6 +6685,7 @@
     };
     let newsItems = [];
     let newsReadAt = "";
+    let appliedGroupResetAt = {};
 
     function hasFirebaseConfig() {
       return Boolean(firebaseConfig.apiKey && firebaseConfig.projectId && window.firebase);
@@ -6701,7 +6820,7 @@
 
     function saveState() {
       try {
-        localStorage.setItem(storageKey, JSON.stringify({ centerGoal, studentProfile, draftGoals, boardGoals, submissions, latestNews, newsItems, newsReadAt }));
+        localStorage.setItem(storageKey, JSON.stringify({ centerGoal, studentProfile, draftGoals, boardGoals, submissions, latestNews, newsItems, newsReadAt, appliedGroupResetAt }));
       } catch (error) {
         console.warn("無法儲存到這台裝置", error);
       }
@@ -6753,6 +6872,9 @@
           newsItems = [saved.latestNews];
         }
         newsReadAt = saved.newsReadAt || "";
+        if (saved.appliedGroupResetAt && typeof saved.appliedGroupResetAt === "object") {
+          appliedGroupResetAt = saved.appliedGroupResetAt;
+        }
       } catch (error) {
         console.warn("無法讀取已儲存卡片", error);
       }
@@ -6830,6 +6952,22 @@
       const current = normalizedGroupCode();
       const groups = [...new Set([current, ...knownGroups, "main"])].filter(Boolean).sort();
       select.innerHTML = groups.map(group => `<option value="${escapeHtml(group)}" ${group === current ? "selected" : ""}>${escapeHtml(group)}</option>`).join("");
+      updateGroupActionUi();
+    }
+
+    function updateGroupActionUi(message = "") {
+      const group = normalizedGroupCode();
+      const deleteButton = document.getElementById("deleteGroupBtn");
+      const status = document.getElementById("groupActionStatus");
+      if (deleteButton) {
+        deleteButton.disabled = group === "main";
+        deleteButton.title = group === "main" ? "main 主群組只能重置，不能整組刪除。" : "";
+      }
+      if (status) {
+        status.textContent = message || (group === "main"
+          ? "目前群組：main（主群組只能重置）"
+          : `目前群組：${group}`);
+      }
     }
 
     async function switchGroup(nextGroup) {
@@ -6849,6 +6987,114 @@
       const select = document.getElementById("adminGroupSelect");
       if (!select) return;
       select.addEventListener("change", event => switchGroup(event.target.value));
+    }
+
+    function canManageCurrentGroup() {
+      if (!teacherMode || !isAllowedTeacher(currentTeacherUser)) {
+        alert("請先使用老師白名單帳號登入。");
+        return false;
+      }
+      return true;
+    }
+
+    function setGroupActionBusy(isBusy) {
+      const resetButton = document.getElementById("resetGroupBtn");
+      const deleteButton = document.getElementById("deleteGroupBtn");
+      if (resetButton) resetButton.disabled = isBusy;
+      if (deleteButton) deleteButton.disabled = isBusy || normalizedGroupCode() === "main";
+    }
+
+    async function deleteFirestoreCollectionDocuments(collectionRef) {
+      if (!firestoreDb || !collectionRef) return 0;
+      let deleted = 0;
+      while (true) {
+        const snapshot = await collectionRef.limit(200).get();
+        if (snapshot.empty) break;
+        const batch = firestoreDb.batch();
+        snapshot.docs.forEach(doc => batch.delete(doc.ref));
+        await batch.commit();
+        deleted += snapshot.size;
+        if (snapshot.size < 200) break;
+      }
+      return deleted;
+    }
+
+    async function resetCurrentGroupProgress() {
+      if (!canManageCurrentGroup()) return;
+      const group = normalizedGroupCode();
+      const shouldReset = confirm(`確定要重置群組「${group}」嗎？\n\n學生提交、排行榜與完成進度會被清除；中心目標與公告會保留。`);
+      if (!shouldReset) return;
+      setGroupActionBusy(true);
+      updateGroupActionUi(`正在重置群組 ${group}…`);
+      try {
+        let deleted = 0;
+        if (firestoreDb) {
+          deleted = await deleteFirestoreCollectionDocuments(submissionsCollectionRef());
+          const resetAt = new Date().toISOString();
+          await groupDocRef().set({
+            groupCode: group,
+            lastResetAt: resetAt,
+            updatedAt: resetAt
+          }, { merge: true });
+          await settingsDocRef().set({
+            groupCode: group,
+            groupResetAt: resetAt,
+            updatedAt: resetAt
+          }, { merge: true });
+        }
+        submissions = submissions.filter(item => normalizeEditableGroupCode(item.groupCode || "main") !== group);
+        renderAdmin();
+        saveState();
+        updateGroupActionUi(firestoreDb
+          ? `群組 ${group} 已重置，共清除 ${deleted} 筆學生資料。`
+          : `群組 ${group} 已清除這台裝置上的學生資料。`);
+      } catch (error) {
+        console.warn("重置群組失敗", error);
+        updateGroupActionUi("重置失敗，請確認 Firebase 權限與網路狀態。");
+      } finally {
+        setGroupActionBusy(false);
+      }
+    }
+
+    async function deleteCurrentGroup() {
+      if (!canManageCurrentGroup()) return;
+      const group = normalizedGroupCode();
+      if (group === "main") {
+        updateGroupActionUi("main 主群組不能刪除，可使用重置功能。");
+        return;
+      }
+      const shouldDelete = confirm(`確定要永久刪除群組「${group}」嗎？\n\n學生提交、排行榜、中心目標與公告都會被刪除，而且無法復原。`);
+      if (!shouldDelete) return;
+      setGroupActionBusy(true);
+      updateGroupActionUi(`正在刪除群組 ${group}…`);
+      try {
+        const groupRef = groupDocRef();
+        const settingsRef = settingsDocRef();
+        let deleted = 0;
+        if (firestoreDb) {
+          deleted = await deleteFirestoreCollectionDocuments(submissionsCollectionRef());
+          await settingsRef.delete();
+          await groupRef.delete();
+        }
+        submissions = submissions.filter(item => normalizeEditableGroupCode(item.groupCode || "main") !== group);
+        knownGroups = knownGroups.filter(item => item !== group);
+        saveState();
+        await switchGroup("main");
+        updateGroupActionUi(firestoreDb
+          ? `群組 ${group} 已刪除，共清除 ${deleted} 筆學生資料。`
+          : `群組 ${group} 已從這台裝置移除。`);
+      } catch (error) {
+        console.warn("刪除群組失敗", error);
+        updateGroupActionUi("刪除失敗，請確認 Firebase 權限與網路狀態。");
+      } finally {
+        setGroupActionBusy(false);
+      }
+    }
+
+    function bindGroupManagement() {
+      document.getElementById("resetGroupBtn")?.addEventListener("click", resetCurrentGroupProgress);
+      document.getElementById("deleteGroupBtn")?.addEventListener("click", deleteCurrentGroup);
+      updateGroupActionUi();
     }
 
     async function loadKnownGroups() {
@@ -6900,6 +7146,25 @@
             updatedAt: data.latestNewsUpdatedAt || data.updatedAt || ""
           };
           newsItems = latestNews.updatedAt ? [latestNews] : [];
+        }
+        const group = normalizedGroupCode();
+        const remoteResetAt = data.groupResetAt || "";
+        const appliedResetAt = appliedGroupResetAt[group] || "";
+        if (remoteResetAt && remoteResetAt > appliedResetAt) {
+          centerGoal = {
+            ...centerGoal,
+            completed: false,
+            completedByClick: false,
+            completedAt: ""
+          };
+          if (boardGoals) {
+            boardGoals = boardGoals.map(goal => ({
+              ...goal,
+              completed: false,
+              completedAt: ""
+            }));
+          }
+          appliedGroupResetAt[group] = remoteResetAt;
         }
         renderCenterGoalSettings();
         renderLatestNews();
@@ -7304,6 +7569,7 @@
           image.src = display.image;
         }
         image.classList.toggle("is-full-stage", display.level >= 12);
+        image.parentElement?.classList.toggle("is-wide-stage", display.level >= 12);
         image.alt = `Moofi Lv.${display.level} ${display.name}`;
       }
       if (previewTag) previewTag.textContent = selectedMoofiLevel ? "查看已收集狀態" : "目前狀態";
@@ -8027,6 +8293,7 @@
     renderProfile();
     bindProfileInputs();
     bindGroupSelect();
+    bindGroupManagement();
     renderCenterGoalSettings();
     bindCenterGoalSettings();
     renderLatestNews();
