@@ -5497,6 +5497,555 @@
         grid-template-columns: 1fr;
       }
     }
+
+    /* Moofi achievement page */
+    #achievements .moofi-status-card,
+    #achievements .moofi-collection-card {
+      width: 100%;
+      box-sizing: border-box;
+      border-radius: 26px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background:
+        radial-gradient(circle at 84% 16%, rgba(34, 211, 238, 0.17), transparent 30%),
+        radial-gradient(circle at 12% 86%, rgba(108, 92, 231, 0.2), transparent 34%),
+        linear-gradient(145deg, rgba(24, 32, 70, 0.9), rgba(8, 12, 32, 0.92));
+      box-shadow:
+        0 24px 70px rgba(0, 0, 0, 0.38),
+        inset 0 1px 0 rgba(255, 255, 255, 0.14);
+      overflow: hidden;
+    }
+
+    #achievements .moofi-status-card {
+      margin-bottom: 18px;
+      padding: clamp(20px, 3vw, 34px);
+    }
+
+    #achievements .moofi-status-card::after,
+    #achievements .moofi-collection-card::after {
+      display: none !important;
+      content: none !important;
+    }
+
+    #achievements .moofi-heading h1 {
+      margin: 13px 0 9px;
+      font-size: clamp(30px, 4.6vw, 50px);
+      letter-spacing: 0;
+    }
+
+    #achievements .moofi-heading p {
+      max-width: 760px;
+      margin: 0;
+      color: #bac6e8;
+      font-size: clamp(15px, 2vw, 18px);
+      line-height: 1.75;
+    }
+
+    .moofi-status-layout {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.1fr);
+      align-items: center;
+      gap: clamp(22px, 4vw, 48px);
+      margin-top: 24px;
+    }
+
+    .moofi-main-stage {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: clamp(300px, 38vw, 470px);
+      border-radius: 24px;
+      border: 1px solid rgba(108, 92, 231, 0.42);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(108, 92, 231, 0.28), transparent 42%),
+        radial-gradient(circle at 50% 86%, rgba(34, 211, 238, 0.14), transparent 32%),
+        rgba(5, 9, 25, 0.56);
+      box-shadow:
+        inset 0 0 44px rgba(108, 92, 231, 0.12),
+        0 18px 42px rgba(0, 0, 0, 0.26);
+      overflow: hidden;
+    }
+
+    .moofi-main-stage::before {
+      content: "";
+      position: absolute;
+      inset: 7% 10%;
+      border-radius: 50%;
+      border: 1px solid rgba(34, 211, 238, 0.16);
+      box-shadow:
+        0 0 34px rgba(34, 211, 238, 0.13),
+        inset 0 0 34px rgba(108, 92, 231, 0.12);
+      pointer-events: none;
+    }
+
+    .moofi-main-stage::after {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      width: min(76%, 360px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, rgba(255, 255, 255, 0.3) 0 8%, rgba(34, 211, 238, 0.34) 25%, rgba(108, 92, 231, 0.4) 48%, transparent 72%);
+      filter: blur(18px);
+      opacity: 0.92;
+      transform: scale(0.94);
+      animation: moofiAuraPulse 3.8s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .moofi-main-stage img {
+      position: relative;
+      z-index: 1;
+      width: min(90%, 430px);
+      height: clamp(270px, 35vw, 440px);
+      object-fit: contain;
+      filter:
+        drop-shadow(0 0 22px rgba(108, 92, 231, 0.36))
+        drop-shadow(0 24px 34px rgba(0, 0, 0, 0.38));
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+
+    @keyframes moofiAuraPulse {
+      0%, 100% {
+        opacity: 0.72;
+        transform: scale(0.9);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.04);
+      }
+    }
+
+    .dashboard-moofi-status {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      width: fit-content;
+      max-width: 100%;
+      margin-top: 12px;
+      padding: 8px 12px;
+      border: 1px solid rgba(34, 211, 238, 0.3);
+      border-radius: 14px;
+      color: #e8faff;
+      background: linear-gradient(135deg, rgba(108, 92, 231, 0.2), rgba(34, 211, 238, 0.1));
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 0 20px rgba(34, 211, 238, 0.1);
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+
+    .dashboard-moofi-status::before {
+      content: "✦";
+      flex: 0 0 auto;
+      color: #fec857;
+      text-shadow: 0 0 12px rgba(254, 200, 87, 0.8);
+    }
+
+    .moofi-main-stage img.is-switching {
+      opacity: 0.25;
+      transform: scale(0.96);
+    }
+
+    .moofi-preview-tag {
+      position: absolute;
+      z-index: 2;
+      top: 14px;
+      left: 14px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      color: #dffbff;
+      background: rgba(34, 211, 238, 0.13);
+      border: 1px solid rgba(34, 211, 238, 0.32);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .moofi-status-info h2 {
+      margin: 15px 0 20px;
+      color: #ffffff;
+      font-size: clamp(26px, 3.8vw, 42px);
+      line-height: 1.2;
+    }
+
+    #moofiLevelNumber {
+      color: #fec857;
+      text-shadow: 0 0 18px rgba(254, 200, 87, 0.34);
+    }
+
+    .moofi-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      background: rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+    }
+
+    .moofi-metrics > div {
+      min-width: 0;
+      padding: 17px 14px;
+      text-align: center;
+    }
+
+    .moofi-metrics > div + div {
+      border-left: 1px solid rgba(255, 255, 255, 0.11);
+    }
+
+    .moofi-metrics span {
+      display: block;
+      color: #aab4d4;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .moofi-metrics strong {
+      display: block;
+      margin-top: 7px;
+      color: #ffffff;
+      font-size: clamp(19px, 2.7vw, 28px);
+      line-height: 1.1;
+      overflow-wrap: anywhere;
+    }
+
+    .moofi-progress-block {
+      margin-top: 22px;
+    }
+
+    .moofi-progress-labels {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 9px;
+      color: #aab4d4;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .moofi-progress-labels strong {
+      color: #ffffff;
+      text-align: center;
+    }
+
+    .moofi-progress-track {
+      height: 14px;
+      padding: 3px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.09);
+      box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.36);
+    }
+
+    .moofi-progress-fill {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #6c5ce7, #22d3ee, #00ffa3);
+      box-shadow: 0 0 18px rgba(34, 211, 238, 0.48);
+      transition: width 0.4s ease;
+    }
+
+    .moofi-level-message {
+      min-height: 28px;
+      margin: 15px 0 0;
+      color: #dce5ff !important;
+      font-weight: 800;
+      line-height: 1.55;
+    }
+
+    #achievements .moofi-collection-card {
+      padding: clamp(18px, 2.8vw, 30px);
+    }
+
+    .moofi-collection-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .moofi-collection-heading h2 {
+      margin: 12px 0 6px;
+      font-size: clamp(23px, 3vw, 34px);
+    }
+
+    .moofi-collection-heading p {
+      margin: 0;
+    }
+
+    #moofiCollectionCount {
+      flex: 0 0 auto;
+      padding: 10px 14px;
+      border-radius: 16px;
+      color: #fec857;
+      background: rgba(254, 200, 87, 0.1);
+      border: 1px solid rgba(254, 200, 87, 0.26);
+      font-size: 20px;
+      box-shadow: 0 0 20px rgba(254, 200, 87, 0.12);
+    }
+
+    .moofi-collection-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .moofi-collection-item {
+      position: relative;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto;
+      gap: 8px;
+      aspect-ratio: 0.84;
+      min-width: 0;
+      padding: 10px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      color: #ffffff;
+      background:
+        radial-gradient(circle at 50% 35%, rgba(108, 92, 231, 0.17), transparent 42%),
+        rgba(255, 255, 255, 0.055);
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .moofi-collection-item:hover {
+      transform: translateY(-3px);
+      border-color: rgba(34, 211, 238, 0.38);
+    }
+
+    .moofi-collection-item img {
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.28));
+    }
+
+    .moofi-collection-item .moofi-thumb-copy {
+      min-width: 0;
+      text-align: center;
+    }
+
+    .moofi-collection-item .moofi-thumb-copy strong,
+    .moofi-collection-item .moofi-thumb-copy span {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .moofi-collection-item .moofi-thumb-copy strong {
+      font-size: 13px;
+    }
+
+    .moofi-collection-item .moofi-thumb-copy span {
+      margin-top: 3px;
+      color: #aab4d4;
+      font-size: 10px;
+    }
+
+    .moofi-collection-item.is-current {
+      border-color: rgba(254, 200, 87, 0.78);
+      box-shadow:
+        0 0 0 1px rgba(254, 200, 87, 0.24),
+        0 0 28px rgba(254, 200, 87, 0.25);
+    }
+
+    .moofi-collection-item.is-selected {
+      border-color: rgba(34, 211, 238, 0.8);
+      box-shadow:
+        0 0 0 1px rgba(34, 211, 238, 0.25),
+        0 0 28px rgba(34, 211, 238, 0.28);
+    }
+
+    .moofi-collection-item.is-locked {
+      cursor: not-allowed;
+      background: rgba(4, 7, 18, 0.68);
+    }
+
+    .moofi-collection-item.is-locked img {
+      opacity: 0.24;
+      filter: grayscale(1) brightness(0.55);
+    }
+
+    .moofi-collection-item.is-locked .moofi-thumb-copy {
+      opacity: 0.52;
+    }
+
+    .moofi-lock {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      color: #ffffff;
+      background: rgba(5, 9, 25, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      font-size: 14px;
+    }
+
+    .moofi-locked-message {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      color: #ffe8a1;
+      background: rgba(254, 200, 87, 0.1);
+      border: 1px solid rgba(254, 200, 87, 0.24);
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .moofi-locked-message.show {
+      display: block;
+      animation: cardEnter 0.28s ease both;
+    }
+
+    @media (max-width: 768px) {
+      #achievements .moofi-status-card {
+        padding: 16px;
+      }
+
+      .moofi-status-layout {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-top: 18px;
+      }
+
+      .moofi-main-stage {
+        min-height: 260px;
+        border-radius: 18px;
+      }
+
+      .moofi-main-stage img {
+        width: min(92%, 340px);
+        height: 260px;
+      }
+
+      .moofi-status-info h2 {
+        margin: 11px 0 14px;
+        font-size: 26px;
+      }
+
+      .moofi-metrics > div {
+        padding: 12px 7px;
+      }
+
+      .moofi-metrics span {
+        font-size: 10px;
+      }
+
+      .moofi-metrics strong {
+        font-size: 17px;
+      }
+
+      .moofi-collection-heading {
+        align-items: flex-start;
+      }
+
+      .moofi-collection-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .moofi-collection-item {
+        padding: 7px;
+        border-radius: 14px;
+      }
+
+      .moofi-collection-item .moofi-thumb-copy strong {
+        font-size: 11px;
+      }
+
+      .moofi-collection-item .moofi-thumb-copy span {
+        font-size: 9px;
+      }
+    }
+
+    .moofi-main-stage img.is-full-stage {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      max-height: none;
+      object-fit: cover;
+      border-radius: inherit;
+    }
+
+    #leaderboard .table-wrap {
+      overflow-x: hidden;
+    }
+
+    #leaderboard table {
+      width: 100%;
+      min-width: 0;
+      table-layout: fixed;
+    }
+
+    #leaderboard table th,
+    #leaderboard table td {
+      padding: 10px 5px;
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+
+    #leaderboard table th:nth-child(1),
+    #leaderboard table td:nth-child(1) {
+      width: 12%;
+    }
+
+    #leaderboard table th:nth-child(2),
+    #leaderboard table td:nth-child(2) {
+      width: 21%;
+    }
+
+    #leaderboard table th:nth-child(3),
+    #leaderboard table td:nth-child(3) {
+      width: 27%;
+    }
+
+    #leaderboard table th:nth-child(4),
+    #leaderboard table td:nth-child(4) {
+      width: 22%;
+    }
+
+    #leaderboard table th:nth-child(5),
+    #leaderboard table td:nth-child(5) {
+      width: 18%;
+    }
+
+    #leaderboard .podium-gold {
+      top: 43.8%;
+    }
+
+    @media (max-width: 768px) {
+      #leaderboard .panel:last-child {
+        padding: 14px 10px;
+      }
+
+      #leaderboard table th:nth-child(3),
+      #leaderboard table td:nth-child(3) {
+        display: table-cell !important;
+      }
+
+      #leaderboard table th,
+      #leaderboard table td {
+        padding: 8px 2px;
+        font-size: clamp(9px, 2.65vw, 11px);
+        line-height: 1.25;
+      }
+
+      #leaderboard .podium-gold {
+        top: 44.2%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -5538,6 +6087,7 @@
           <h1>您好，啟動任務卡前請先填個人資料</h1>
           <p>今天也完成一個任務，點亮你的夢想星圖，成為比昨天更好的自己。</p>
           <button class="button mission-button" data-page-link="bingo">啟動我的任務卡</button>
+          <div id="dashboardMoofiStatus" class="dashboard-moofi-status" aria-live="polite">你的小廢星Moofi降落了!</div>
         </div>
 
         <div class="hero-visual">
@@ -5745,53 +6295,65 @@
     </section>
 
     <section id="achievements" class="page">
-      <div class="panel achievement-hero-panel" style="margin-bottom: 18px;">
-        <div class="achievement-hero-copy">
-          <span class="badge">Achievement Galaxy</span>
-          <h1>星際徽章</h1>
-          <p>每完成一個任務，就累積 XP 並解鎖新的成就徽章。</p>
+      <div class="panel moofi-status-card">
+        <div class="moofi-heading">
+          <span class="badge">Moofi Growth Mission</span>
+          <h1>Moofi 小廢星養成系統</h1>
+          <p>完成目標、累積 XP，讓 Moofi 從軟爛小外星人成長為值得驕傲的星際夥伴。</p>
         </div>
-        <img id="heroAchievementLogo" class="achievement-hero-logo" src="assets/images/DD.png" alt="目前徽章">
-        <div class="achievement-current-boxes" aria-label="目前徽章狀態">
-          <div class="achievement-current-box">
-            <span>XP 等級徽章</span>
-            <img id="xpLevelLogo" src="assets/images/DD.png" alt="目前 XP 等級徽章">
-            <strong id="xpLevelName">青銅徽章</strong>
+
+        <div class="moofi-status-layout">
+          <div class="moofi-main-stage">
+            <img id="moofiMainImage" src="assets/moofi/Moofi-01.png" alt="Moofi Lv.1 軟爛降落">
+            <span id="moofiPreviewTag" class="moofi-preview-tag">目前狀態</span>
           </div>
-          <div class="achievement-current-box">
-            <span>成就徽章</span>
-            <img id="achievementBadgeLogo" src="assets/images/CC.png" alt="目前成就徽章">
-            <strong id="achievementBadgeName">起步之星</strong>
+
+          <div class="moofi-status-info">
+            <span class="section-kicker">目前等級</span>
+            <h2><span id="moofiLevelNumber">Lv.1</span>｜<span id="moofiLevelName">軟爛降落</span></h2>
+
+            <div class="moofi-metrics">
+              <div>
+                <span>目前等級</span>
+                <strong id="moofiCurrentLevel">Lv.1</strong>
+              </div>
+              <div>
+                <span>累積 XP</span>
+                <strong id="moofiTotalXp">0 XP</strong>
+              </div>
+              <div>
+                <span>距離下一級</span>
+                <strong id="moofiXpToNext">40 XP</strong>
+              </div>
+            </div>
+
+            <div class="moofi-progress-block">
+              <div class="moofi-progress-labels">
+                <span id="moofiProgressStart">Lv.1</span>
+                <strong id="moofiProgressText">0 / 40 XP</strong>
+                <span id="moofiProgressEnd">Lv.2</span>
+              </div>
+              <div class="moofi-progress-track">
+                <div id="moofiProgressFill" class="moofi-progress-fill"></div>
+              </div>
+            </div>
+
+            <p id="moofiLevelMessage" class="moofi-level-message">再累積 40 XP，Moofi 就會慢慢醒來。</p>
           </div>
         </div>
       </div>
 
-      <div class="grid-two" style="margin-bottom: 18px;">
-        <div class="panel">
-          <h2 id="achievementLevelTitle">Lv.1｜創作成長者</h2>
-          <p id="achievementLevelText">目前 XP：0 / 50。完成任務就能累積本周 XP。</p>
-          <div class="progress-track"><div id="achievementProgressFill" class="progress-fill"></div></div>
-          <div class="stats" style="grid-template-columns: repeat(2, 1fr); margin-top: 16px; margin-bottom: 0;">
-            <div class="card stat"><span>本周 XP</span><strong id="weeklyXp">+0</strong></div>
-            <div class="card stat"><span>下一級</span><strong id="nextLevel">Lv.2</strong></div>
+      <div class="panel moofi-collection-card">
+        <div class="moofi-collection-heading">
+          <div>
+            <span class="badge">Moofi Collection</span>
+            <h2>已收集的 Moofi 小圖鑑</h2>
+            <p>點擊已解鎖的 Moofi，可以暫時查看不同成長階段。</p>
           </div>
+          <strong id="moofiCollectionCount">1 / 15</strong>
         </div>
-        <div class="panel">
-          <h2>目前 XP 等級徽章說明</h2>
-          <p>依照累積完成的 XP 自動呈現目前等級徽章。</p>
-          <div class="xp-tier-grid">
-            <div class="timeline-item"><img class="tier-icon" src="assets/images/DD.png" alt=""><div><strong>青銅</strong><br><span class="hint">0 XP 起</span></div></div>
-            <div class="timeline-item"><img class="tier-icon" src="assets/images/EE.png" alt=""><div><strong>白銀</strong><br><span class="hint">500 XP 起</span></div></div>
-            <div class="timeline-item"><img class="tier-icon" src="assets/images/AA.png" alt=""><div><strong>黃金</strong><br><span class="hint">750 XP 起</span></div></div>
-            <div class="timeline-item"><img class="tier-icon" src="assets/images/FF.png" alt=""><div><strong>鑽石</strong><br><span class="hint">1000 XP 起</span></div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="achievement-grid">
-        <div class="achievement"><div class="rank-medal"><img src="assets/images/CC.png" alt=""></div><h2>起步之星</h2><p>完成第一個 Dream Bingo 目標。</p></div>
-        <div class="achievement"><div class="rank-medal"><img src="assets/images/BB.png" alt=""></div><h2>穩定創作</h2><p>連續更新作品與目標進度。</p></div>
-        <div class="achievement"><div class="rank-medal"><img src="assets/star-badge-clean2.png" alt=""></div><h2>Bingo 達人</h2><p>完成 3 條 Bingo。</p></div>
+        <div id="moofiCollection" class="moofi-collection-grid" aria-label="Moofi 等級圖鑑"></div>
+        <div id="moofiLockedMessage" class="moofi-locked-message" role="status">尚未解鎖，繼續完成任務吧！</div>
       </div>
     </section>
 
@@ -5814,7 +6376,7 @@
 
       <div class="teacher-content">
       <div class="stats">
-        <div class="card stat"><span>學生數</span><strong>30</strong></div>
+        <div class="card stat"><span>學生數</span><strong id="adminStudentCount">0</strong></div>
         <div class="card stat"><span>平均完成率</span><strong id="adminRate">4%</strong></div>
         <div class="card stat"><span>總 Bingo</span><strong id="adminBingo">0</strong></div>
         <div class="card stat"><span>提交紀錄</span><strong id="submissionCount">1</strong></div>
@@ -6204,6 +6766,19 @@
       return raw.replace(/[^\u4e00-\u9fa5a-zA-Z0-9_-]+/g, "-").replace(/-+/g, "-") || "student-card";
     }
 
+    function updateDashboardGreeting(xp = earnedXp()) {
+      const heading = document.querySelector("#dashboard h1");
+      if (!heading) return;
+      const isMaxMoofi = Number(xp || 0) >= 1000;
+      if (studentProfile.studentName) {
+        heading.textContent = `${isMaxMoofi ? "你好棒" : "您好"}，${studentProfile.studentName}`;
+      } else {
+        heading.textContent = isMaxMoofi
+          ? "你好棒"
+          : "您好，啟動任務卡前請先填個人資料";
+      }
+    }
+
     function renderProfile() {
       document.getElementById("groupCodeInput").value = studentProfile.groupCode;
       document.getElementById("adminGroupCodeInput").value = studentProfile.groupCode;
@@ -6212,9 +6787,7 @@
       document.getElementById("classNameInput").value = studentProfile.className;
       document.getElementById("seatNumberInput").value = studentProfile.seatNumber;
       document.getElementById("emailInput").value = studentProfile.email;
-      document.querySelector("#dashboard h1").textContent = studentProfile.studentName
-        ? `您好，${studentProfile.studentName}`
-        : "您好，啟動任務卡前請先填個人資料";
+      updateDashboardGreeting();
     }
 
     function bindProfileInputs() {
@@ -6258,6 +6831,7 @@
       updateFirebaseStatus("正在切換群組", `目前群組：${normalizedGroupCode()}`);
       await loadRemoteSettings();
       await loadRemoteSubmissions();
+      renderAdmin();
       saveState();
     }
 
@@ -6629,35 +7203,128 @@
       }, 0);
     }
 
-    function achievementBadgeFor(done, lines, xp) {
-      if (lines >= 3) return { name: "Bingo 達人", src: "assets/star-badge-clean2.png" };
-      if (done >= 10 || xp >= 500) return { name: "穩定創作", src: "assets/images/BB.png" };
-      return { name: "起步之星", src: "assets/images/CC.png" };
-    }
+    const moofiLevels = [
+      { level: 1, xp: 0, name: "軟爛降落", image: "assets/moofi/Moofi-01.png" },
+      { level: 2, xp: 40, name: "慢慢醒來", image: "assets/moofi/Moofi-02.png" },
+      { level: 3, xp: 80, name: "穿上太空小短褲", image: "assets/moofi/Moofi-03.png" },
+      { level: 4, xp: 120, name: "穿上太空上衣", image: "assets/moofi/Moofi-04.png" },
+      { level: 5, xp: 180, name: "背上太空背包", image: "assets/moofi/Moofi-05.png" },
+      { level: 6, xp: 240, name: "透明太空頭罩", image: "assets/moofi/Moofi-06.png" },
+      { level: 7, xp: 300, name: "浮空任務", image: "assets/moofi/Moofi-07.png" },
+      { level: 8, xp: 360, name: "發現小小廢星", image: "assets/moofi/Moofi-08.png" },
+      { level: 9, xp: 420, name: "創作裝備解鎖", image: "assets/moofi/Moofi-09.png" },
+      { level: 10, xp: 500, name: "星際畫袋", image: "assets/moofi/Moofi-10.png" },
+      { level: 11, xp: 600, name: "小火箭出發", image: "assets/moofi/Moofi-11.png" },
+      { level: 12, xp: 700, name: "翱翔星際", image: "assets/moofi/Moofi-12.png" },
+      { level: 13, xp: 800, name: "遇見優秀太空人", image: "assets/moofi/Moofi-13.png" },
+      { level: 14, xp: 900, name: "與太空人一同創作", image: "assets/moofi/Moofi-14.png" },
+      { level: 15, xp: 1000, name: "成為優秀且自豪的自己了", image: "assets/moofi/Moofi-15.png" }
+    ];
+    let selectedMoofiLevel = null;
+    let moofiLockedMessageTimer = null;
 
     function updateAchievementDisplay(done, lines, xp) {
-      const level = updateXpLevelDisplay(xp);
-      const weeklyXp = weeklyEarnedXp();
-      const weeklyLevel = Math.min(20, Math.max(1, Math.floor(weeklyXp / 50) + 1));
-      const nextLevel = Math.min(20, weeklyLevel + 1);
-      const levelBase = (weeklyLevel - 1) * 50;
-      const levelProgress = weeklyLevel >= 20 ? 100 : Math.min(100, Math.round(((weeklyXp - levelBase) / 50) * 100));
-      const badge = achievementBadgeFor(done, lines, xp);
-      const title = document.getElementById("achievementLevelTitle");
-      const text = document.getElementById("achievementLevelText");
-      const fill = document.getElementById("achievementProgressFill");
-      const weekly = document.getElementById("weeklyXp");
-      const next = document.getElementById("nextLevel");
-      const badgeLogo = document.getElementById("achievementBadgeLogo");
-      const badgeName = document.getElementById("achievementBadgeName");
-      if (title) title.textContent = `Lv.${weeklyLevel}｜創作成長者`;
-      if (text) text.textContent = `目前 XP：${weeklyXp} / ${weeklyLevel >= 20 ? 1000 : nextLevel * 50 - 50}。本周每 50 XP 升 1 級，最高 Lv.20。`;
-      if (fill) fill.style.width = `${levelProgress}%`;
-      if (weekly) weekly.textContent = `+${weeklyXp}`;
-      if (next) next.textContent = weeklyLevel >= 20 ? "Lv.20" : `Lv.${nextLevel}`;
-      if (badgeLogo) badgeLogo.src = badge.src;
-      if (badgeName) badgeName.textContent = badge.name;
-      return { level, badge };
+      const totalXp = Math.max(0, Number(xp || 0));
+      const current = moofiLevels.reduce((result, item) => totalXp >= item.xp ? item : result, moofiLevels[0]);
+      const next = current.level < moofiLevels.length ? moofiLevels[current.level] : null;
+      if (selectedMoofiLevel && selectedMoofiLevel.level > current.level) {
+        selectedMoofiLevel = null;
+      }
+      const display = selectedMoofiLevel || current;
+      const image = document.getElementById("moofiMainImage");
+      const previewTag = document.getElementById("moofiPreviewTag");
+      const levelNumber = document.getElementById("moofiLevelNumber");
+      const levelName = document.getElementById("moofiLevelName");
+      const currentLevel = document.getElementById("moofiCurrentLevel");
+      const totalXpText = document.getElementById("moofiTotalXp");
+      const xpToNext = document.getElementById("moofiXpToNext");
+      const progressStart = document.getElementById("moofiProgressStart");
+      const progressEnd = document.getElementById("moofiProgressEnd");
+      const progressText = document.getElementById("moofiProgressText");
+      const progressFill = document.getElementById("moofiProgressFill");
+      const message = document.getElementById("moofiLevelMessage");
+      const collectionCount = document.getElementById("moofiCollectionCount");
+      const range = next ? next.xp - current.xp : 1;
+      const earnedInLevel = next ? Math.max(0, totalXp - current.xp) : 1;
+      const progress = next ? Math.min(100, Math.round(earnedInLevel / range * 100)) : 100;
+
+      if (image) {
+        if (!image.src.endsWith(display.image.replace("assets/", "/assets/"))) {
+          image.classList.add("is-switching");
+          image.onload = () => image.classList.remove("is-switching");
+          image.src = display.image;
+        }
+        image.classList.toggle("is-full-stage", display.level >= 12);
+        image.alt = `Moofi Lv.${display.level} ${display.name}`;
+      }
+      if (previewTag) previewTag.textContent = selectedMoofiLevel ? "查看已收集狀態" : "目前狀態";
+      if (levelNumber) levelNumber.textContent = `Lv.${display.level}`;
+      if (levelName) levelName.textContent = display.name;
+      if (currentLevel) currentLevel.textContent = `Lv.${current.level}`;
+      if (totalXpText) totalXpText.textContent = `${totalXp} XP`;
+      if (xpToNext) xpToNext.textContent = next ? `${Math.max(0, next.xp - totalXp)} XP` : "已達最高級";
+      if (progressStart) progressStart.textContent = `Lv.${current.level}`;
+      if (progressEnd) progressEnd.textContent = next ? `Lv.${next.level}` : "MAX";
+      if (progressText) progressText.textContent = next ? `${earnedInLevel} / ${range} XP` : "1000 / 1000 XP";
+      if (progressFill) progressFill.style.width = `${progress}%`;
+      if (collectionCount) collectionCount.textContent = `${current.level} / 15`;
+      if (message) {
+        if (selectedMoofiLevel && selectedMoofiLevel.level !== current.level) {
+          message.textContent = `正在查看 Lv.${display.level}「${display.name}」；目前養成進度是 Lv.${current.level}。`;
+        } else if (!next) {
+          message.textContent = `恭喜你，${current.name}`;
+        } else {
+          message.textContent = `再累積 ${Math.max(0, next.xp - totalXp)} XP，Moofi 就會進入「${next.name}」。`;
+        }
+      }
+      renderMoofiCollection(current, totalXp);
+      return { current, display, next, progress };
+    }
+
+    function renderMoofiCollection(current, totalXp) {
+      const collection = document.getElementById("moofiCollection");
+      if (!collection) return;
+      collection.innerHTML = moofiLevels.map(item => {
+        const unlocked = totalXp >= item.xp;
+        const isCurrent = item.level === current.level;
+        const isSelected = selectedMoofiLevel?.level === item.level;
+        return `
+          <button
+            class="moofi-collection-item ${unlocked ? "is-unlocked" : "is-locked"} ${isCurrent ? "is-current" : ""} ${isSelected ? "is-selected" : ""}"
+            type="button"
+            data-moofi-level="${item.level}"
+            aria-label="Lv.${item.level} ${escapeHtml(item.name)}${unlocked ? "，已解鎖" : "，尚未解鎖"}"
+            aria-pressed="${isSelected || (!selectedMoofiLevel && isCurrent) ? "true" : "false"}"
+          >
+            ${unlocked ? "" : `<span class="moofi-lock" aria-hidden="true">🔒</span>`}
+            <img src="${item.image}" alt="" loading="lazy">
+            <span class="moofi-thumb-copy">
+              <strong>Lv.${item.level}</strong>
+              <span title="${escapeHtml(item.name)}">${escapeHtml(item.name)}</span>
+            </span>
+          </button>
+        `;
+      }).join("");
+      collection.querySelectorAll("[data-moofi-level]").forEach(button => {
+        button.addEventListener("click", () => {
+          const item = moofiLevels[Number(button.dataset.moofiLevel) - 1];
+          if (!item) return;
+          if (totalXp < item.xp) {
+            showMoofiLockedMessage();
+            return;
+          }
+          selectedMoofiLevel = item.level === current.level ? null : item;
+          updateAchievementDisplay(completedGoals().length, boardGoals ? calculateBingoLines() : 0, earnedXp());
+        });
+      });
+    }
+
+    function showMoofiLockedMessage() {
+      const message = document.getElementById("moofiLockedMessage");
+      if (!message) return;
+      message.classList.add("show");
+      if (moofiLockedMessageTimer) clearTimeout(moofiLockedMessageTimer);
+      moofiLockedMessageTimer = setTimeout(() => message.classList.remove("show"), 2600);
     }
 
     function renderRecentTasks() {
@@ -6695,6 +7362,17 @@
       document.getElementById("dashRate").textContent = `${rate}%`;
       document.getElementById("dashBingo").textContent = lines;
       document.getElementById("dashXp").textContent = xp;
+      updateDashboardGreeting(xp);
+      const dashboardMoofiStatus = document.getElementById("dashboardMoofiStatus");
+      if (dashboardMoofiStatus) {
+        const currentMoofi = moofiLevels.reduce(
+          (result, item) => xp >= item.xp ? item : result,
+          moofiLevels[0]
+        );
+        dashboardMoofiStatus.textContent = currentMoofi.level === 1
+          ? "你的小廢星Moofi降落了!"
+          : `你的小廢星Moofi已進化到 Lv.${currentMoofi.level}！`;
+      }
       const leaderRate = document.getElementById("leaderRate");
       const leaderBingo = document.getElementById("leaderBingo");
       const leaderName = document.getElementById("leaderName");
@@ -6703,10 +7381,6 @@
       if (leaderBingo) leaderBingo.textContent = lines;
       if (leaderName) leaderName.textContent = studentProfile.studentName || "自己";
       if (leaderClass) leaderClass.textContent = studentProfile.className || "尚未填寫";
-      const adminRate = document.getElementById("adminRate");
-      const adminBingo = document.getElementById("adminBingo");
-      if (adminRate) adminRate.textContent = `${rate}%`;
-      if (adminBingo) adminBingo.textContent = lines;
       renderRecentTasks();
       updateAchievementDisplay(done, lines, xp);
       renderLeaderboard();
@@ -6724,7 +7398,7 @@
 
     function normalizedLeaderboardRecords() {
       const records = new Map();
-      submissions.forEach(record => {
+      currentGroupSubmissions().forEach(record => {
         if (!record || !(record.studentName || record.id)) return;
         const id = record.id || `${record.groupCode || normalizedGroupCode()}-${record.className || ""}-${record.seatNumber || ""}-${record.studentName || ""}`;
         records.set(id, {
@@ -6929,7 +7603,10 @@
     }
 
     async function loadRemoteSubmissions() {
-      if (!firestoreDb) return;
+      if (!firestoreDb) {
+        renderAdmin();
+        return;
+      }
       try {
         const snapshot = await submissionsCollectionRef().orderBy("updatedAt", "desc").limit(100).get();
         submissions = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -7038,8 +7715,6 @@
       document.getElementById("dashDone").textContent = `${done} / 25`;
       document.getElementById("dashRate").textContent = `${rate}%`;
       document.getElementById("dashBingo").textContent = lines;
-      document.getElementById("adminRate").textContent = `${rate}%`;
-      document.getElementById("adminBingo").textContent = lines;
       if (profileReady()) {
         const record = buildSubmissionRecord();
         submissions = [record, ...submissions.filter(item => item.id !== record.id)];
@@ -7080,15 +7755,40 @@
       alert("卡片目前已鎖定，請聯絡外星人從教師後台解鎖。");
     });
 
+    function currentGroupSubmissions() {
+      const currentGroup = normalizedGroupCode();
+      const records = new Map();
+      submissions.forEach(submission => {
+        if (!submission) return;
+        const groupCode = normalizeEditableGroupCode(submission.groupCode || "main");
+        if (groupCode !== currentGroup) return;
+        const id = submission.id || `${groupCode}-${submission.className || ""}-${submission.seatNumber || ""}-${submission.studentName || ""}`;
+        const previous = records.get(id);
+        if (!previous || String(submission.updatedAt || "") >= String(previous.updatedAt || "")) {
+          records.set(id, { ...submission, id, groupCode });
+        }
+      });
+      return [...records.values()];
+    }
+
     function renderAdmin() {
       renderLeaderboard();
-      document.getElementById("submissionCount").textContent = submissions.length;
+      const groupSubmissions = currentGroupSubmissions();
+      const studentCount = groupSubmissions.length;
+      const averageRate = studentCount
+        ? Math.round(groupSubmissions.reduce((sum, submission) => sum + Number(submission.completionRate || 0), 0) / studentCount)
+        : 0;
+      const totalBingo = groupSubmissions.reduce((sum, submission) => sum + Number(submission.bingoCount || 0), 0);
+      document.getElementById("adminStudentCount").textContent = studentCount;
+      document.getElementById("adminRate").textContent = `${averageRate}%`;
+      document.getElementById("adminBingo").textContent = totalBingo;
+      document.getElementById("submissionCount").textContent = groupSubmissions.length;
       const list = document.getElementById("submissions");
-      if (!submissions.length) {
+      if (!groupSubmissions.length) {
         list.innerHTML = `<div class="submission"><div><strong>尚未收到學生資料</strong><div class="hint">學生送出賓果卡後會出現在這裡。</div></div></div>`;
         return;
       }
-      list.innerHTML = submissions.map((submission, index) => `
+      list.innerHTML = groupSubmissions.map((submission, index) => `
         <div class="submission" data-submission-index="${index}">
           <div>
             <strong>${escapeHtml(submission.studentName || "未命名")}</strong>
@@ -7105,7 +7805,7 @@
       list.querySelectorAll("[data-submission-index]").forEach(item => {
         item.addEventListener("click", () => {
           const index = Number(item.dataset.submissionIndex);
-          openStudentDetail(submissions[index]);
+          openStudentDetail(groupSubmissions[index]);
         });
       });
     }
