@@ -1,54 +1,37 @@
-# Firebase 收資料設定
+# Firebase 正式版設定
 
-這版 Dream Bingo 已經有 Firestore 收資料程式。
-你只需要建立 Firebase 專案，然後把網站設定貼到 `index.html`。
+目前版本已完成：
 
-## 1. 建立 Firebase 專案
+- 學生 Email／密碼註冊與登入
+- 老師 Google 白名單登入
+- 學生私人 Bingo 資料
+- 登入後可查看的公開排行榜摘要
+- 正式 Firestore 安全規則
 
-1. 到 Firebase Console
-2. 建立新專案
-3. 進入專案後，新增 Web App
-4. Firebase 會給你一段 `firebaseConfig`
+## Authentication
 
-## 2. 貼上 firebaseConfig
+Firebase Authentication 必須啟用：
 
-打開 `index.html`，找到這段：
+1. Email／密碼
+2. Google
 
-```js
-const firebaseConfig = {
-  apiKey: "",
-  authDomain: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: ""
-};
-```
+老師白名單帳號：
 
-把 Firebase 給你的值貼進去。
+`sssh1213@sssh.tyc.edu.tw`
 
-## 3. 建立 Firestore
+## Firestore
 
-1. 在 Firebase Console 左側選 Firestore Database
-2. 建立資料庫
-3. 測試期間可以先用測試模式
-4. 系統會寫入 collection：`bingoSubmissions`
+資料位置：
 
-## 4. 測試
+- `groups/{group}/settings/public`
+- `groups/{group}/bingoSubmissions/{學生 UID}`
+- `groups/{group}/leaderboard/{學生 UID}`
 
-學生送出後，Firestore 裡會出現：
+學生只能讀寫自己的 `bingoSubmissions` 文件。
+排行榜只包含姓名、班級、完成率、XP 與 Bingo 數。
+中心目標、公告、群組重置及刪除僅限老師。
 
-- 姓名
-- 班級
-- 座號
-- Email
-- 25 格目標
-- XP
-- 完成狀態
-- 完成率
-- Bingo 數
+## 安全規則
 
-## 重要提醒
-
-測試模式適合短期測試。
-正式給學生長期使用前，建議再加登入或安全規則，避免外人修改資料。
+規則保存在 `firestore.rules`，並已發布到 Firebase。
+若未來修改規則，請將該檔案內容重新發布到 Firestore「規則」頁。

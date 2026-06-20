@@ -1,0 +1,84 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isTeacher() {
+      return signedIn()
+        && request.auth.token.email == "sssh1213@sssh.tyc.edu.tw";
+    }
+
+    function isOwner(userId) {
+      return signedIn() && request.auth.uid == userId;
+    }
+
+    match /groups/{groupId} {
+      allow read, delete: if isTeacher();
+
+      allow create, update: if isTeacher() || (
+        signedIn()
+        && request.resource.data.groupCode == groupId
+        && request.resource.data.keys().hasOnly([
+          "groupCode",
+          "lastActivityAt"
+        ])
+      );
+
+      match /settings/{settingId} {
+        allow read: if signedIn();
+        allow create, update, delete: if isTeacher();
+      }
+
+      match /bingoSubmissions/{userId} {
+        allow read: if isTeacher() || isOwner(userId);
+
+        allow create: if isOwner(userId)
+          && request.resource.data.ownerUid == request.auth.uid
+          && request.resource.data.groupCode == groupId;
+
+        allow update: if isTeacher() || (
+          isOwner(userId)
+          && resource.data.ownerUid == request.auth.uid
+          && request.resource.data.ownerUid == request.auth.uid
+          && request.resource.data.groupCode == groupId
+        );
+
+        allow delete: if isTeacher();
+      }
+
+      match /leaderboard/{userId} {
+        allow read: if signedIn();
+
+        allow create, update: if isTeacher() || (
+          isOwner(userId)
+          && request.resource.data.ownerUid == request.auth.uid
+          && request.resource.data.groupCode == groupId
+          && request.resource.data.keys().hasOnly([
+              "ownerUid",
+              "groupCode",
+              "studentName",
+              "className",
+              "seatNumber",
+              "earnedXp",
+              "completionRate",
+              "bingoCount",
+              "updatedAt"
+            ])
+        );
+
+        allow delete: if isTeacher();
+      }
+    }
+
+    match /bingoSubmissions/{document=**} {
+      allow read, write: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

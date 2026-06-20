@@ -6165,6 +6165,161 @@
       overflow: hidden;
       text-overflow: clip;
     }
+
+    .student-auth-panel {
+      width: min(calc(100% - 32px), 520px);
+      margin: 28px auto 0;
+      padding: 24px;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #f8fafc;
+      background:
+        radial-gradient(circle at 82% 12%, rgba(34, 211, 238, 0.18), transparent 34%),
+        linear-gradient(145deg, rgba(25, 34, 76, 0.96), rgba(7, 11, 30, 0.96));
+      box-shadow:
+        0 24px 70px rgba(0, 0, 0, 0.4),
+        0 0 32px rgba(108, 92, 231, 0.18);
+      box-sizing: border-box;
+    }
+
+    .student-auth-panel h1 {
+      margin: 12px 0 8px;
+      font-size: 30px;
+    }
+
+    .student-auth-panel p {
+      margin-bottom: 16px;
+      color: #aab4d4;
+    }
+
+    .student-auth-fields {
+      display: grid;
+      gap: 12px;
+    }
+
+    .student-auth-panel input {
+      box-sizing: border-box;
+      color: #ffffff;
+      background: rgba(6, 10, 26, 0.78);
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+
+    .student-auth-panel .actions {
+      margin-top: 16px;
+    }
+
+    body.student-authenticated .student-auth-panel {
+      display: none;
+    }
+
+    body:not(.student-authenticated):not(.teacher-mode) main .page,
+    body:not(.student-authenticated):not(.teacher-mode) .countdown-card {
+      display: none !important;
+    }
+
+    body.teacher-mode .student-auth-panel {
+      display: none;
+    }
+
+    .student-account-button {
+      display: none;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      padding: 0;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 16px;
+      color: #f8fafc;
+      background:
+        radial-gradient(circle at 35% 20%, rgba(108, 92, 231, 0.3), transparent 46%),
+        rgba(255, 255, 255, 0.08);
+      box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.28),
+        0 0 20px rgba(108, 92, 231, 0.16);
+      cursor: pointer;
+    }
+
+    body.student-authenticated:not(.teacher-mode) .student-account-button {
+      display: grid;
+    }
+
+    .student-account-button svg {
+      width: 23px;
+      height: 23px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 0 9px rgba(34, 211, 238, 0.3));
+    }
+
+    .account-dialog .account-email {
+      margin: 14px 0 18px;
+      padding: 13px 14px;
+      border-radius: 15px;
+      color: #dffbff;
+      background: rgba(34, 211, 238, 0.09);
+      border: 1px solid rgba(34, 211, 238, 0.22);
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .topbar {
+      grid-template-columns: auto minmax(0, 1fr) auto auto !important;
+    }
+
+    .topbar .student-account-button {
+      grid-column: 4;
+      justify-self: end;
+    }
+
+    @media (max-width: 900px) {
+      .topbar {
+        grid-template-columns: minmax(0, 1fr) auto auto !important;
+      }
+
+      .topbar .brand {
+        grid-column: 1;
+      }
+
+      .topbar .news-bell {
+        grid-column: 2;
+      }
+
+      .topbar .student-account-button {
+        grid-column: 3;
+      }
+
+      .topbar .nav-tabs {
+        grid-column: 1 / -1;
+      }
+
+      .student-account-button {
+        width: 40px;
+        height: 40px;
+        border-radius: 14px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .student-auth-panel {
+        padding: 19px;
+      }
+
+      .student-auth-panel h1 {
+        font-size: 25px;
+      }
+
+      .student-auth-panel .actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .student-auth-panel .button {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -6195,8 +6350,37 @@
         </span>
         <i id="newsDot" class="news-dot" aria-hidden="true"></i>
       </button>
+      <button id="studentAccountBtn" class="student-account-button" type="button" aria-label="學生帳號">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="8" r="4"></circle>
+          <path d="M4.5 21a7.5 7.5 0 0 1 15 0"></path>
+        </svg>
+      </button>
     </div>
   </header>
+
+  <section id="studentAuthPanel" class="student-auth-panel" aria-live="polite">
+    <div class="student-auth-form">
+      <span class="section-kicker">Student Login</span>
+      <h1>登入你的星際任務</h1>
+      <p>第一次使用請先註冊，之後使用相同 Email 與密碼登入。</p>
+      <div class="student-auth-fields">
+        <label class="field-label">
+          Email
+          <input id="studentAuthEmail" type="email" autocomplete="email" placeholder="name@example.com">
+        </label>
+        <label class="field-label">
+          密碼
+          <input id="studentAuthPassword" type="password" minlength="6" autocomplete="current-password" placeholder="至少 6 個字元">
+        </label>
+      </div>
+      <div class="actions">
+        <button id="studentLoginBtn" class="button" type="button">登入</button>
+        <button id="studentRegisterBtn" class="button secondary" type="button">第一次使用，建立帳號</button>
+      </div>
+      <p id="studentAuthStatus" class="hint">請輸入 Email 與密碼。</p>
+    </div>
+  </section>
 
   <main>
     <section id="dashboard" class="page active dashboard-page">
@@ -6353,37 +6537,37 @@
 
       <div class="leaderboard-visual" aria-label="前三名星際排行榜">
         <div class="podium-name podium-silver">
-          <span class="podium-class">設計群 2 班</span>
-          <strong>陳柏宇</strong>
-          <span class="podium-rate">完成率 92%</span>
+          <span class="podium-class">等待挑戰者</span>
+          <strong>尚未有排名</strong>
+          <span class="podium-rate">完成率 —</span>
         </div>
         <div class="podium-name podium-gold">
-          <span class="podium-class">設計群 1 班</span>
-          <strong>林語萱</strong>
-          <span class="podium-rate">完成率 96%</span>
+          <span class="podium-class">等待挑戰者</span>
+          <strong>尚未有排名</strong>
+          <span class="podium-rate">完成率 —</span>
         </div>
         <div class="podium-name podium-bronze">
-          <span class="podium-class">設計群 1 班</span>
-          <strong>黃品瑜</strong>
-          <span class="podium-rate">完成率 91%</span>
+          <span class="podium-class">等待挑戰者</span>
+          <strong>尚未有排名</strong>
+          <span class="podium-rate">完成率 —</span>
         </div>
       </div>
 
       <div class="rank-grid" style="margin-bottom: 18px;">
         <div class="rank-card">
           <div class="rank-medal">🥇</div>
-          <h2>林語萱</h2>
-          <p>設計群 1 班｜完成率 96%｜Bingo 8 條</p>
+          <h2>尚未有排名</h2>
+          <p>等待第一位挑戰者</p>
         </div>
         <div class="rank-card">
           <div class="rank-medal">🥈</div>
-          <h2>陳柏宇</h2>
-          <p>設計群 2 班｜完成率 92%｜Bingo 7 條</p>
+          <h2>尚未有排名</h2>
+          <p>等待第二位挑戰者</p>
         </div>
         <div class="rank-card">
           <div class="rank-medal">🥉</div>
-          <h2>黃品瑜</h2>
-          <p>設計群 1 班｜完成率 91%｜Bingo 7 條</p>
+          <h2>尚未有排名</h2>
+          <p>等待第三位挑戰者</p>
         </div>
       </div>
 
@@ -6401,12 +6585,7 @@
               </tr>
             </thead>
             <tbody id="leaderboardBody">
-              <tr><td>1</td><td>林語萱</td><td>設計群 1 班</td><td>96%</td><td>8</td></tr>
-              <tr><td>2</td><td>陳柏宇</td><td>設計群 2 班</td><td>92%</td><td>7</td></tr>
-              <tr><td>3</td><td>黃品瑜</td><td>設計群 1 班</td><td>91%</td><td>7</td></tr>
-              <tr><td>4</td><td>吳承翰</td><td>設計群 1 班</td><td>88%</td><td>6</td></tr>
-              <tr><td>5</td><td>劉子晴</td><td>設計群 2 班</td><td>84%</td><td>5</td></tr>
-              <tr class="self-rank"><td>6</td><td id="leaderName">王小明</td><td id="leaderClass">設計群 1 班</td><td id="leaderRate">4%</td><td id="leaderBingo">0</td></tr>
+              <tr><td colspan="5">尚未有排名資料</td></tr>
             </tbody>
           </table>
         </div>
@@ -6622,6 +6801,19 @@
     </div>
   </div>
 
+  <div id="studentAccountDialog" class="dialog-backdrop" role="dialog" aria-modal="true" aria-labelledby="studentAccountTitle">
+    <div class="confirm-dialog account-dialog">
+      <span class="badge">Student Account</span>
+      <h2 id="studentAccountTitle">學生帳號</h2>
+      <p>此裝置會保持登入，不需要每次重新輸入密碼。</p>
+      <div id="studentAccountEmail" class="account-email"></div>
+      <div class="dialog-actions">
+        <button id="studentLogoutBtn" class="button secondary" type="button">登出</button>
+        <button id="closeStudentAccountBtn" class="button" type="button">關閉</button>
+      </div>
+    </div>
+  </div>
+
   <div class="countdown countdown-card glass-card glow-border" aria-label="開學倒數">
     <img src="assets/rocket.webp" alt="火箭" onerror="this.style.display='none'; this.parentElement.classList.add('rocket-fallback');">
     <div>
@@ -6637,7 +6829,8 @@
   <script>
     document.body.dataset.page = "dashboard";
 
-    const storageKey = "dream-bingo-student-card-v1";
+    const storageKeyBase = "dream-bingo-student-card-v3";
+    const retiredStorageKeys = ["dream-bingo-student-card-v1", "dream-bingo-student-card-v2"];
     const firebaseConfig = {
       apiKey: "AIzaSyDPJ6LNYvkLa5W7I6vX6TDZXNdLfhZYbU4",
       authDomain: "dream-bingo.firebaseapp.com",
@@ -6675,9 +6868,11 @@
     let activeDetailSubmission = null;
     let firestoreDb = null;
     let firebaseAuth = null;
+    let currentAuthUser = null;
     let currentTeacherUser = null;
     let knownGroups = ["main"];
     let submissions = [];
+    let leaderboardRecords = [];
     let latestNews = {
       title: "任務中心公告",
       body: "目前還沒有新的公告。",
@@ -6712,6 +6907,11 @@
       return group ? group.collection("bingoSubmissions") : null;
     }
 
+    function leaderboardCollectionRef() {
+      const group = groupDocRef();
+      return group ? group.collection("leaderboard") : null;
+    }
+
     function initFirebase() {
       if (!hasFirebaseConfig()) {
         updateFirebaseStatus("目前為本機測試模式", "貼上 Firebase 設定後，資料會上傳到 Firestore。");
@@ -6723,7 +6923,10 @@
         }
         firestoreDb = window.firebase.firestore();
         firebaseAuth = window.firebase.auth();
-        bindTeacherAuth();
+        firebaseAuth.setPersistence(window.firebase.auth.Auth.Persistence.LOCAL).catch(error => {
+          console.warn("無法設定持續登入", error);
+        });
+        bindAuthState();
         updateFirebaseStatus("Firebase 已連線", `目前群組：${normalizedGroupCode()}。學生送出後會寫入該群組。`);
       } catch (error) {
         console.warn("Firebase 初始化失敗", error);
@@ -6743,20 +6946,155 @@
       if (!teacherMode) return;
       if (!user) {
         if (status) status.textContent = "尚未登入。";
-        switchPage("dashboard");
+        switchPage("admin");
         return;
       }
       if (!allowed) {
         if (status) status.textContent = `${user.email} 不在老師白名單內。`;
-        switchPage("dashboard");
+        switchPage("admin");
         return;
       }
       if (status) status.textContent = `已登入：${user.email}`;
     }
 
-    function bindTeacherAuth() {
+    function updateStudentAuthUi(user) {
+      const authenticated = Boolean(user);
+      document.body.classList.toggle("student-authenticated", Boolean(!teacherMode && authenticated));
+      const emailText = document.getElementById("studentAccountEmail");
+      const status = document.getElementById("studentAuthStatus");
+      if (emailText) emailText.textContent = user?.email || "";
+      if (!authenticated) {
+        if (status) status.textContent = "請輸入 Email 與密碼。";
+        return;
+      }
+      studentProfile.email = user.email || "";
+    }
+
+    function renderStudentSession() {
+      renderProfile();
+      renderRows();
+      if (boardGoals) {
+        document.getElementById("draftView").style.display = "none";
+        document.getElementById("boardView").style.display = "block";
+        document.getElementById("bingoNotice").classList.add("show");
+        renderBoard();
+      } else {
+        document.getElementById("draftView").style.display = "block";
+        document.getElementById("boardView").style.display = "none";
+        document.getElementById("bingoNotice").classList.remove("show");
+        updateDraftState();
+      }
+      updateDashboardPanels();
+    }
+
+    async function handleAuthState(user) {
+      currentAuthUser = user || null;
+      if (teacherMode) {
+        updateTeacherAuthUi(user);
+        if (isAllowedTeacher(user)) {
+          await loadKnownGroups();
+          await loadRemoteSettings();
+          await loadRemoteSubmissions();
+          await loadRemoteLeaderboard();
+          switchPage("admin");
+        }
+        return;
+      }
+      updateStudentAuthUi(user);
+      if (user) {
+        resetStudentSessionState();
+        loadState();
+        studentProfile.email = user.email || "";
+        renderStudentSession();
+        await loadRemoteSettings();
+        await loadRemoteSubmissions();
+        await loadRemoteLeaderboard();
+        updateDashboardPanels();
+        saveState();
+      } else {
+        resetStudentSessionState();
+        renderStudentSession();
+      }
+    }
+
+    function bindAuthState() {
       if (!firebaseAuth) return;
-      firebaseAuth.onAuthStateChanged(updateTeacherAuthUi);
+      firebaseAuth.onAuthStateChanged(handleAuthState);
+    }
+
+    function studentAuthErrorMessage(error) {
+      const messages = {
+        "auth/email-already-in-use": "這個 Email 已註冊，請直接登入。",
+        "auth/invalid-email": "Email 格式不正確。",
+        "auth/invalid-credential": "Email 或密碼不正確。",
+        "auth/user-not-found": "找不到這個帳號，請先註冊。",
+        "auth/wrong-password": "密碼不正確。",
+        "auth/weak-password": "密碼至少需要 6 個字元。",
+        "auth/too-many-requests": "嘗試次數過多，請稍後再試。",
+        "auth/operation-not-allowed": "Firebase 尚未啟用 Email／密碼登入。"
+      };
+      return messages[error?.code] || error?.message || "登入失敗，請稍後再試。";
+    }
+
+    function studentAuthCredentials() {
+      return {
+        email: document.getElementById("studentAuthEmail")?.value.trim() || "",
+        password: document.getElementById("studentAuthPassword")?.value || ""
+      };
+    }
+
+    async function studentLogin() {
+      if (!firebaseAuth) return;
+      const { email, password } = studentAuthCredentials();
+      const status = document.getElementById("studentAuthStatus");
+      if (!email || password.length < 6) {
+        status.textContent = "請輸入正確 Email，密碼至少 6 個字元。";
+        return;
+      }
+      status.textContent = "登入中…";
+      try {
+        await firebaseAuth.setPersistence(window.firebase.auth.Auth.Persistence.LOCAL);
+        await firebaseAuth.signInWithEmailAndPassword(email, password);
+      } catch (error) {
+        status.textContent = studentAuthErrorMessage(error);
+      }
+    }
+
+    async function studentRegister() {
+      if (!firebaseAuth) return;
+      const { email, password } = studentAuthCredentials();
+      const status = document.getElementById("studentAuthStatus");
+      if (!email || password.length < 6) {
+        status.textContent = "請輸入正確 Email，密碼至少 6 個字元。";
+        return;
+      }
+      status.textContent = "建立帳號中…";
+      try {
+        await firebaseAuth.setPersistence(window.firebase.auth.Auth.Persistence.LOCAL);
+        await firebaseAuth.createUserWithEmailAndPassword(email, password);
+      } catch (error) {
+        status.textContent = studentAuthErrorMessage(error);
+      }
+    }
+
+    async function studentLogout() {
+      if (!firebaseAuth) return;
+      closeStudentAccountDialog();
+      await firebaseAuth.signOut();
+      resetStudentSessionState();
+      leaderboardRecords = [];
+      submissions = [];
+      renderStudentSession();
+      renderLeaderboard();
+    }
+
+    function openStudentAccountDialog() {
+      if (!currentAuthUser || teacherMode) return;
+      document.getElementById("studentAccountDialog")?.classList.add("show");
+    }
+
+    function closeStudentAccountDialog() {
+      document.getElementById("studentAccountDialog")?.classList.remove("show");
     }
 
     async function teacherLogin() {
@@ -6818,9 +7156,13 @@
       return `--tone: ${tone}; --tone-soft: ${soft}; --tone-ink: ${ink};`;
     }
 
+    function currentStorageKey() {
+      return currentAuthUser?.uid ? `${storageKeyBase}-${currentAuthUser.uid}` : `${storageKeyBase}-guest`;
+    }
+
     function saveState() {
       try {
-        localStorage.setItem(storageKey, JSON.stringify({ centerGoal, studentProfile, draftGoals, boardGoals, submissions, latestNews, newsItems, newsReadAt, appliedGroupResetAt }));
+        localStorage.setItem(currentStorageKey(), JSON.stringify({ centerGoal, studentProfile, draftGoals, boardGoals, submissions, leaderboardRecords, latestNews, newsItems, newsReadAt, appliedGroupResetAt }));
       } catch (error) {
         console.warn("無法儲存到這台裝置", error);
       }
@@ -6828,7 +7170,7 @@
 
     function loadState() {
       try {
-        const saved = JSON.parse(localStorage.getItem(storageKey) || "null");
+        const saved = JSON.parse(localStorage.getItem(currentStorageKey()) || "null");
         if (!saved) return;
         if (saved.centerGoal) {
           centerGoal = {
@@ -6859,6 +7201,9 @@
         if (Array.isArray(saved.submissions) && saved.submissions.length) {
           submissions = saved.submissions;
         }
+        if (Array.isArray(saved.leaderboardRecords)) {
+          leaderboardRecords = saved.leaderboardRecords;
+        }
         if (saved.latestNews) {
           latestNews = {
             title: saved.latestNews.title || latestNews.title,
@@ -6880,6 +7225,29 @@
       }
     }
 
+    function resetStudentSessionState() {
+      centerGoal = { ...defaultCenterGoal };
+      studentProfile = {
+        groupCode: "main",
+        studentName: "",
+        className: "",
+        seatNumber: "",
+        email: currentAuthUser?.email || ""
+      };
+      draftGoals = Array.from({ length: 24 }, (_, index) => ({
+        id: `goal-${String(index + 1).padStart(2, "0")}`,
+        category: categories[index % categories.length],
+        title: "",
+        points: 40,
+        completed: false,
+        gridIndex: index
+      }));
+      boardGoals = null;
+      submissions = [];
+      leaderboardRecords = [];
+      selectedMoofiLevel = null;
+    }
+
     function profileReady() {
       return Boolean(studentProfile.groupCode.trim() && studentProfile.studentName.trim() && studentProfile.className.trim() && String(studentProfile.seatNumber).trim());
     }
@@ -6894,8 +7262,7 @@
     }
 
     function studentDocumentId() {
-      const raw = `${normalizedGroupCode()}-${studentProfile.className}-${studentProfile.seatNumber}-${studentProfile.studentName}`.trim();
-      return raw.replace(/[^\u4e00-\u9fa5a-zA-Z0-9_-]+/g, "-").replace(/-+/g, "-") || "student-card";
+      return currentAuthUser?.uid || "student-card";
     }
 
     function updateDashboardGreeting(xp = earnedXp()) {
@@ -6979,6 +7346,7 @@
       updateFirebaseStatus("正在切換群組", `目前群組：${normalizedGroupCode()}`);
       await loadRemoteSettings();
       await loadRemoteSubmissions();
+      await loadRemoteLeaderboard();
       renderAdmin();
       saveState();
     }
@@ -7030,6 +7398,7 @@
         let deleted = 0;
         if (firestoreDb) {
           deleted = await deleteFirestoreCollectionDocuments(submissionsCollectionRef());
+          await deleteFirestoreCollectionDocuments(leaderboardCollectionRef());
           const resetAt = new Date().toISOString();
           await groupDocRef().set({
             groupCode: group,
@@ -7073,6 +7442,7 @@
         let deleted = 0;
         if (firestoreDb) {
           deleted = await deleteFirestoreCollectionDocuments(submissionsCollectionRef());
+          await deleteFirestoreCollectionDocuments(leaderboardCollectionRef());
           await settingsRef.delete();
           await groupRef.delete();
         }
@@ -7098,7 +7468,7 @@
     }
 
     async function loadKnownGroups() {
-      if (!firestoreDb) {
+      if (!firestoreDb || !isAllowedTeacher(currentAuthUser)) {
         renderGroupSelect();
         return;
       }
@@ -7120,7 +7490,7 @@
     }
 
     async function loadRemoteSettings() {
-      if (!firestoreDb) {
+      if (!firestoreDb || !currentAuthUser) {
         renderCenterGoalSettings();
         renderLatestNews();
         return;
@@ -7701,21 +8071,11 @@
       renderLeaderboard();
     }
 
-    function sampleLeaderboardRecords() {
-      return [
-        { id: "sample-1", studentName: "林語萱", className: "設計群 1 班", completionRate: 96, bingoCount: 8, earnedXp: 960 },
-        { id: "sample-2", studentName: "陳柏宇", className: "設計群 2 班", completionRate: 92, bingoCount: 7, earnedXp: 920 },
-        { id: "sample-3", studentName: "黃品瑜", className: "設計群 1 班", completionRate: 91, bingoCount: 7, earnedXp: 910 },
-        { id: "sample-4", studentName: "吳承翰", className: "設計群 1 班", completionRate: 88, bingoCount: 6, earnedXp: 880 },
-        { id: "sample-5", studentName: "劉子晴", className: "設計群 2 班", completionRate: 84, bingoCount: 5, earnedXp: 840 }
-      ];
-    }
-
     function normalizedLeaderboardRecords() {
       const records = new Map();
-      currentGroupSubmissions().forEach(record => {
+      leaderboardRecords.forEach(record => {
         if (!record || !(record.studentName || record.id)) return;
-        const id = record.id || `${record.groupCode || normalizedGroupCode()}-${record.className || ""}-${record.seatNumber || ""}-${record.studentName || ""}`;
+        const id = record.id || record.ownerUid || `${record.groupCode || normalizedGroupCode()}-${record.className || ""}-${record.seatNumber || ""}-${record.studentName || ""}`;
         records.set(id, {
           ...record,
           id,
@@ -7728,19 +8088,9 @@
       });
       if (profileReady()) {
         const current = buildSubmissionRecord();
-        records.set(current.id, current);
+        records.set(current.id, buildLeaderboardRecord(current));
       }
-      const list = [...records.values()];
-      if (list.length < 5) {
-        sampleLeaderboardRecords().forEach(sample => {
-          const duplicate = list.some(record =>
-            record.studentName === sample.studentName &&
-            record.className === sample.className
-          );
-          if (!duplicate && list.length < 5) list.push(sample);
-        });
-      }
-      return list.sort((a, b) => {
+      return [...records.values()].sort((a, b) => {
         const byRate = Number(b.completionRate || 0) - Number(a.completionRate || 0);
         if (byRate) return byRate;
         const byBingo = Number(b.bingoCount || 0) - Number(a.bingoCount || 0);
@@ -7759,13 +8109,13 @@
       ];
       podiums.forEach(({ selector, record }) => {
         const node = document.querySelector(selector);
-        if (!node || !record) return;
+        if (!node) return;
         const classText = node.querySelector(".podium-class");
         const nameText = node.querySelector("strong");
         const rateText = node.querySelector(".podium-rate");
-        if (classText) classText.textContent = record.className || "未填班級";
-        if (nameText) nameText.textContent = record.studentName || "未命名";
-        if (rateText) rateText.textContent = `完成率 ${Number(record.completionRate || 0)}%`;
+        if (classText) classText.textContent = record?.className || "等待挑戰者";
+        if (nameText) nameText.textContent = record?.studentName || "尚未有排名";
+        if (rateText) rateText.textContent = record ? `完成率 ${Number(record.completionRate || 0)}%` : "完成率 —";
       });
     }
 
@@ -7777,13 +8127,16 @@
       const currentId = profileReady() ? studentDocumentId() : "";
       const currentIndex = currentId ? ranked.findIndex(record => record.id === currentId) : -1;
       const topRows = ranked.slice(0, 5).map((record, index) => ({ record, rank: index + 1, self: false }));
-      const currentRecord = currentIndex >= 0
-        ? ranked[currentIndex]
-        : (profileReady()
-          ? buildSubmissionRecord()
-          : { studentName: "自己", className: "尚未填寫", completionRate: 0, bingoCount: 0 });
-      const currentRank = currentIndex >= 0 ? currentIndex + 1 : (profileReady() ? ranked.length + 1 : "—");
-      const rows = [...topRows, { record: currentRecord, rank: currentRank, self: true }];
+      const rows = [...topRows];
+      if (profileReady()) {
+        const currentRecord = currentIndex >= 0 ? ranked[currentIndex] : buildSubmissionRecord();
+        const currentRank = currentIndex >= 0 ? currentIndex + 1 : ranked.length + 1;
+        rows.push({ record: currentRecord, rank: currentRank, self: true });
+      }
+      if (!rows.length) {
+        tbody.innerHTML = `<tr><td colspan="5">尚未有排名資料</td></tr>`;
+        return;
+      }
       tbody.innerHTML = rows.map(({ record, rank, self }) => `
         <tr class="${self ? "self-rank" : ""}">
           <td>${rank}</td>
@@ -7881,6 +8234,7 @@
 
       return {
         id: studentDocumentId(),
+        ownerUid: currentAuthUser?.uid || "",
         groupCode: normalizedGroupCode(),
         studentName: studentProfile.studentName,
         className: studentProfile.className,
@@ -7896,21 +8250,42 @@
       };
     }
 
+    function buildLeaderboardRecord(record = buildSubmissionRecord()) {
+      return {
+        ownerUid: record.ownerUid,
+        groupCode: record.groupCode,
+        studentName: record.studentName,
+        className: record.className,
+        seatNumber: record.seatNumber,
+        earnedXp: Number(record.earnedXp || 0),
+        completionRate: Number(record.completionRate || 0),
+        bingoCount: Number(record.bingoCount || 0),
+        updatedAt: record.updatedAt
+      };
+    }
+
     async function syncCurrentSubmission() {
-      if (!boardGoals) return;
+      if (!boardGoals || !currentAuthUser) return;
       const record = buildSubmissionRecord();
       submissions = [record, ...submissions.filter(item => item.id !== record.id)];
+      leaderboardRecords = [buildLeaderboardRecord(record), ...leaderboardRecords.filter(item => item.ownerUid !== record.ownerUid)];
       renderAdmin();
       saveState();
       if (!firestoreDb) return;
       try {
-        await groupDocRef().set({
-          groupCode: normalizedGroupCode(),
-          updatedAt: new Date().toISOString()
-        }, { merge: true });
+        try {
+          await groupDocRef().set({
+            groupCode: normalizedGroupCode(),
+            lastActivityAt: new Date().toISOString()
+          }, { merge: true });
+        } catch (groupError) {
+          console.info("群組索引已存在或無需更新", groupError?.code || "");
+        }
         await submissionsCollectionRef().doc(record.id).set(record, { merge: true });
+        await leaderboardCollectionRef().doc(record.id).set(buildLeaderboardRecord(record), { merge: true });
         updateFirebaseStatus("已同步到 Firebase", `最後更新：${new Date().toLocaleTimeString("zh-TW", { hour: "2-digit", minute: "2-digit" })}`);
         await loadRemoteSubmissions();
+        await loadRemoteLeaderboard();
       } catch (error) {
         console.warn("Firestore 上傳失敗", error);
         updateFirebaseStatus("Firebase 上傳失敗", "請確認 Firestore 規則與網路狀態。");
@@ -7918,18 +8293,84 @@
     }
 
     async function loadRemoteSubmissions() {
-      if (!firestoreDb) {
+      if (!firestoreDb || !currentAuthUser) {
         renderAdmin();
         return;
       }
       try {
-        const snapshot = await submissionsCollectionRef().orderBy("updatedAt", "desc").limit(100).get();
-        submissions = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        if (teacherMode && isAllowedTeacher(currentAuthUser)) {
+          const snapshot = await submissionsCollectionRef().orderBy("updatedAt", "desc").limit(100).get();
+          submissions = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        } else {
+          const doc = await submissionsCollectionRef().doc(currentAuthUser.uid).get();
+          submissions = doc.exists ? [{ id: doc.id, ...doc.data() }] : [];
+          if (doc.exists) restoreOwnSubmission(submissions[0]);
+        }
         applyRevisionIfNeeded();
         renderAdmin();
         saveState();
       } catch (error) {
         console.warn("Firestore 讀取失敗", error);
+      }
+    }
+
+    function restoreOwnSubmission(record) {
+      if (!record || !Array.isArray(record.goals)) return;
+      studentProfile = {
+        ...studentProfile,
+        groupCode: record.groupCode || studentProfile.groupCode || "main",
+        studentName: record.studentName || "",
+        className: record.className || "",
+        seatNumber: record.seatNumber || "",
+        email: currentAuthUser?.email || record.email || ""
+      };
+      const savedCenter = record.goals.find(goal => goal.id === "center-goal");
+      if (savedCenter) {
+        centerGoal = {
+          ...defaultCenterGoal,
+          ...savedCenter,
+          points: Number(savedCenter.points || defaultCenterGoal.points),
+          completed: Boolean(savedCenter.completed),
+          completedByClick: Boolean(savedCenter.completed),
+          completedAt: savedCenter.completedAt || ""
+        };
+      }
+      const savedGoals = record.goals
+        .filter(goal => goal.id !== "center-goal")
+        .slice(0, 24)
+        .map((goal, index) => ({
+          ...normalizeGoal(goal, index),
+          completed: Boolean(goal.completed),
+          completedAt: goal.completedAt || "",
+          gridIndex: Number.isInteger(goal.gridIndex) ? goal.gridIndex : boardPositions[index]
+        }));
+      if (savedGoals.length === 24) {
+        boardGoals = savedGoals;
+        draftGoals = savedGoals.map((goal, index) => ({
+          ...goal,
+          completed: false,
+          completedAt: "",
+          gridIndex: index
+        }));
+      }
+      renderStudentSession();
+    }
+
+    async function loadRemoteLeaderboard() {
+      if (!firestoreDb || !currentAuthUser) {
+        leaderboardRecords = [];
+        renderLeaderboard();
+        return;
+      }
+      try {
+        const snapshot = await leaderboardCollectionRef().orderBy("completionRate", "desc").limit(100).get();
+        leaderboardRecords = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        renderLeaderboard();
+        saveState();
+      } catch (error) {
+        console.warn("排行榜讀取失敗", error);
+        leaderboardRecords = [];
+        renderLeaderboard();
       }
     }
 
@@ -8242,6 +8683,8 @@
           profileUpdatedAt: nextRecord.profileUpdatedAt,
           updatedAt: nextRecord.updatedAt
         }, { merge: true });
+        await leaderboardCollectionRef().doc(nextRecord.id).set(buildLeaderboardRecord(nextRecord), { merge: true });
+        await loadRemoteLeaderboard();
         alert("學生資料已修正並同步。");
       } catch (error) {
         console.warn("修正學生資料失敗", error);
@@ -8261,7 +8704,9 @@
       if (!firestoreDb || !target.id) return;
       try {
         await submissionsCollectionRef().doc(target.id).delete();
+        await leaderboardCollectionRef().doc(target.id).delete();
         await loadRemoteSubmissions();
+        await loadRemoteLeaderboard();
       } catch (error) {
         console.warn("刪除學生資料失敗", error);
         alert("刪除失敗，請確認 Firebase 權限。");
@@ -8277,6 +8722,17 @@
     });
     document.getElementById("teacherLoginBtn").addEventListener("click", teacherLogin);
     document.getElementById("teacherLogoutBtn").addEventListener("click", teacherLogout);
+    document.getElementById("studentLoginBtn").addEventListener("click", studentLogin);
+    document.getElementById("studentRegisterBtn").addEventListener("click", studentRegister);
+    document.getElementById("studentLogoutBtn").addEventListener("click", studentLogout);
+    document.getElementById("studentAccountBtn").addEventListener("click", openStudentAccountDialog);
+    document.getElementById("closeStudentAccountBtn").addEventListener("click", closeStudentAccountDialog);
+    document.getElementById("studentAccountDialog").addEventListener("click", event => {
+      if (event.target.id === "studentAccountDialog") closeStudentAccountDialog();
+    });
+    document.getElementById("studentAuthPassword").addEventListener("keydown", event => {
+      if (event.key === "Enter") studentLogin();
+    });
 
     function updateCountdown() {
       const target = new Date("2026-08-31T00:00:00+08:00");
@@ -8285,7 +8741,7 @@
       document.getElementById("daysLeft").textContent = `${days} 天`;
     }
 
-    loadState();
+    retiredStorageKeys.forEach(key => localStorage.removeItem(key));
     if (teacherMode) {
       document.body.classList.add("teacher-mode");
     }
@@ -8309,9 +8765,6 @@
     if (teacherMode) {
       switchPage("admin");
     }
-    loadKnownGroups();
-    loadRemoteSettings();
-    loadRemoteSubmissions();
     updateCountdown();
     fitDynamicSingleLineHeadings();
   </script>
