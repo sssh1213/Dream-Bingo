@@ -4184,10 +4184,79 @@
     }
 
     #bingo > .panel:first-child::after {
-      background-image: url("assets/rocket.webp");
-      opacity: 0.42;
-      right: 12px;
-      bottom: -26px;
+      content: none !important;
+      display: none !important;
+    }
+
+    #bingo > .panel:first-child {
+      display: block;
+      min-height: 230px;
+      padding: 28px;
+      isolation: isolate;
+      background:
+        linear-gradient(90deg, rgba(7, 10, 25, 0.9) 0%, rgba(7, 10, 25, 0.76) 52%, rgba(7, 10, 25, 0.36) 100%),
+        radial-gradient(circle at 78% 34%, rgba(108, 92, 231, 0.22), transparent 36%),
+        url("assets/space-bg.webp") center / cover no-repeat;
+    }
+
+    .bingo-intro-copy {
+      position: relative;
+      z-index: 3;
+      width: min(620px, 68%);
+    }
+
+    #bingo .bingo-intro-copy h1 {
+      max-width: none;
+      margin-bottom: 12px;
+    }
+
+    #bingo .bingo-intro-copy p {
+      max-width: 560px;
+      margin: 0;
+      line-height: 1.72;
+      text-align: left;
+    }
+
+    #bingo .bingo-intro-copy p span {
+      display: block;
+      white-space: nowrap;
+    }
+
+    .bingo-activity-visual {
+      position: absolute !important;
+      z-index: 2;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: auto;
+      display: grid;
+      place-items: center;
+      width: min(38%, 340px);
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .bingo-activity-visual::before {
+      content: "";
+      position: absolute;
+      width: min(210px, 90%);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background:
+        radial-gradient(ellipse at 50% 62%, rgba(0, 0, 0, 0.58) 0 24%, rgba(3, 8, 24, 0.34) 42%, transparent 70%),
+        radial-gradient(circle, rgba(254, 200, 87, 0.2), rgba(108, 92, 231, 0.12) 48%, transparent 72%);
+      filter: blur(7px);
+      transform: translateY(12px) scaleX(1.08);
+    }
+
+    .bingo-activity-visual img {
+      position: relative;
+      width: min(270px, 92%);
+      max-height: 225px;
+      object-fit: contain;
+      filter:
+        drop-shadow(0 0 22px rgba(254, 200, 87, 0.3))
+        drop-shadow(0 18px 28px rgba(0, 0, 0, 0.34));
     }
 
     #achievements > .panel:first-child::after {
@@ -5701,8 +5770,9 @@
       display: flex;
       align-items: center;
       gap: 9px;
-      width: fit-content;
+      width: min(510px, 100%);
       max-width: 100%;
+      box-sizing: border-box;
       margin-top: 12px;
       padding: 8px 12px;
       border: 1px solid rgba(34, 211, 238, 0.3);
@@ -5717,11 +5787,16 @@
       line-height: 1.45;
     }
 
-    .dashboard-moofi-status::before {
-      content: "✦";
+    .dashboard-moofi-status img {
       flex: 0 0 auto;
-      color: #fec857;
-      text-shadow: 0 0 12px rgba(254, 200, 87, 0.8);
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 10px rgba(254, 200, 87, 0.48));
+    }
+
+    .dashboard-moofi-status span {
+      min-width: 0;
     }
 
     .moofi-main-stage img.is-switching {
@@ -6471,6 +6546,436 @@
       line-height: 1.55;
     }
 
+    .daily-mission {
+      position: relative;
+      z-index: 3;
+      width: min(510px, 100%);
+      box-sizing: border-box;
+      margin-top: 12px;
+      padding: 11px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(254, 200, 87, 0.28);
+      background: linear-gradient(135deg, rgba(12, 22, 55, 0.82), rgba(61, 43, 117, 0.68));
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24), 0 0 22px rgba(108, 92, 231, 0.14);
+    }
+
+    .daily-mission-head,
+    .daily-mission-actions,
+    .weekly-report-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .daily-mission-kicker {
+      color: #fec857;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .daily-mission-xp {
+      color: #fff1a8;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .daily-mission-title {
+      display: block;
+      margin: 5px 0 8px;
+      overflow: hidden;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 900;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .daily-mission-actions {
+      justify-content: flex-start;
+    }
+
+    .daily-mission-actions .button {
+      min-height: 32px;
+      padding: 7px 11px;
+      border-radius: 11px;
+      font-size: 11px;
+    }
+
+    .daily-mission.is-complete {
+      border-color: rgba(0, 255, 163, 0.42);
+      background: linear-gradient(135deg, rgba(0, 255, 163, 0.13), rgba(28, 72, 94, 0.72));
+    }
+
+    .weekly-report-button {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 36px;
+      padding: 8px 13px;
+      font-size: 12px;
+    }
+
+    .weekly-report-button img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 8px rgba(254, 200, 87, 0.32));
+    }
+
+    .weekly-report-dialog {
+      width: min(720px, 100%);
+      max-height: min(820px, 90vh);
+      overflow: auto;
+      color: #f8fafc;
+      background:
+        radial-gradient(circle at 82% 10%, rgba(34, 211, 238, 0.18), transparent 30%),
+        radial-gradient(circle at 12% 88%, rgba(108, 92, 231, 0.22), transparent 34%),
+        linear-gradient(145deg, rgba(18, 24, 52, 0.98), rgba(6, 10, 26, 0.98));
+    }
+
+    .weekly-report-dialog > p {
+      color: #aab4d4;
+    }
+
+    .weekly-report-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .weekly-report-title-row img {
+      order: 2;
+      flex: 0 0 auto;
+      width: 168px;
+      height: 168px;
+      object-fit: contain;
+      filter:
+        drop-shadow(0 18px 13px rgba(0, 0, 0, 0.58))
+        drop-shadow(0 0 24px rgba(254, 200, 87, 0.42));
+    }
+
+    .weekly-report-title-row h2 {
+      order: 1;
+      margin: 0;
+    }
+
+    .weekly-report-hero {
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr);
+      gap: 18px;
+      align-items: center;
+      margin: 18px 0;
+      padding: 16px;
+      border-radius: 20px;
+      border: 1px solid rgba(108, 92, 231, 0.34);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .weekly-report-hero img {
+      width: 100%;
+      height: 130px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 22px rgba(108, 92, 231, 0.45));
+    }
+
+    .weekly-report-hero h3 {
+      margin: 0 0 7px;
+      color: #ffffff;
+      font-size: 24px;
+    }
+
+    .weekly-report-hero p {
+      margin: 0;
+      color: #c7d1ee;
+      line-height: 1.6;
+    }
+
+    .weekly-report-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .weekly-report-stat {
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.055);
+      text-align: center;
+    }
+
+    .weekly-report-stat span,
+    .weekly-report-stat small {
+      display: block;
+      color: #9eabd0;
+      font-size: 11px;
+    }
+
+    .weekly-report-stat strong {
+      display: block;
+      margin: 6px 0;
+      color: #ffffff;
+      font-size: 25px;
+    }
+
+    .mission-clear-dialog {
+      cursor: default;
+    }
+
+    .mission-clear-card {
+      position: relative;
+      width: min(390px, 92vw);
+      padding: 22px;
+      overflow: hidden;
+      border: 1px solid rgba(254, 200, 87, 0.56);
+      border-radius: 28px;
+      color: #ffffff;
+      text-align: center;
+      background:
+        radial-gradient(circle at 50% 28%, rgba(254, 200, 87, 0.25), transparent 36%),
+        radial-gradient(circle at 80% 80%, rgba(34, 211, 238, 0.2), transparent 34%),
+        linear-gradient(145deg, rgba(40, 30, 91, 0.98), rgba(6, 11, 29, 0.98));
+      box-shadow: 0 0 50px rgba(254, 200, 87, 0.26), 0 30px 80px rgba(0, 0, 0, 0.48);
+      animation: missionClearEnter 0.42s cubic-bezier(.2, .9, .25, 1.2) both;
+    }
+
+    .mission-clear-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 8;
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      border: 1px solid rgba(255, 255, 255, 0.26);
+      border-radius: 50%;
+      color: #ffffff;
+      background: rgba(4, 8, 24, 0.62);
+      font-size: 25px;
+      line-height: 1;
+      cursor: pointer;
+      box-shadow: 0 0 18px rgba(34, 211, 238, 0.16);
+    }
+
+    .mission-clear-close:hover {
+      background: rgba(255, 107, 157, 0.48);
+      transform: scale(1.05);
+    }
+
+    .mission-clear-stage {
+      position: relative;
+      display: grid;
+      place-items: center;
+      height: 216px;
+      margin-top: 8px;
+      overflow: visible;
+      isolation: isolate;
+    }
+
+    .mission-clear-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      border-radius: inherit;
+      pointer-events: none;
+      opacity: 0;
+      background: radial-gradient(circle at 50% 37%, #ffffff 0 7%, #fff4b8 12%, rgba(254, 200, 87, 0.74) 24%, transparent 52%);
+    }
+
+    .mission-clear-card.is-evolution::before {
+      animation: evolutionFlash 0.72s 0.82s ease-out both;
+    }
+
+    .mission-clear-stage img {
+      position: relative;
+      z-index: 3;
+      width: min(210px, 58vw);
+      height: 190px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 28px rgba(254, 200, 87, 0.48));
+      animation: moofiCelebrate 1.1s ease-in-out infinite alternate;
+    }
+
+    .mission-clear-card.is-evolution .mission-clear-stage img {
+      animation: moofiCharge 0.9s ease-in both, evolvedMoofiReveal 0.55s 0.94s cubic-bezier(.2, .9, .3, 1.25) forwards;
+    }
+
+    .mission-star-stream,
+    .mission-impact-ring,
+    .mission-impact-core {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .mission-star {
+      position: absolute;
+      z-index: 2;
+      left: 50%;
+      top: 50%;
+      width: var(--size, 8px);
+      height: var(--size, 8px);
+      margin: calc(var(--size, 8px) / -2);
+      border-radius: 50%;
+      opacity: 0;
+      background: #ffffff;
+      box-shadow:
+        0 0 7px #ffffff,
+        0 0 16px var(--color, #fec857),
+        0 0 30px var(--color, #fec857);
+      animation: none;
+    }
+
+    .mission-star::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: clamp(24px, 9vw, 54px);
+      height: 2px;
+      opacity: 0.8;
+      background: linear-gradient(90deg, transparent, var(--color, #fec857));
+      transform: translate(-100%, -50%) rotate(var(--angle, 0deg));
+      transform-origin: right center;
+      filter: blur(0.4px);
+    }
+
+    .mission-impact-ring {
+      z-index: 1;
+      inset: 50% auto auto 50%;
+      width: 52px;
+      height: 52px;
+      border: 3px solid rgba(255, 244, 184, 0.88);
+      border-radius: 50%;
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.15);
+      box-shadow: 0 0 24px rgba(254, 200, 87, 0.9), inset 0 0 20px rgba(34, 211, 238, 0.62);
+      animation: none;
+    }
+
+    .mission-impact-core {
+      z-index: 2;
+      inset: 50% auto auto 50%;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      opacity: 0;
+      background: #ffffff;
+      transform: translate(-50%, -50%) scale(0.2);
+      box-shadow: 0 0 38px 20px rgba(254, 200, 87, 0.72);
+      animation: none;
+    }
+
+    .mission-clear-card.is-playing .mission-star {
+      animation: starRush 0.78s var(--delay, 0s) cubic-bezier(.7, .05, .9, .4) both;
+    }
+
+    .mission-clear-card.is-playing .mission-impact-ring {
+      animation: impactRing 0.68s 0.72s ease-out both;
+    }
+
+    .mission-clear-card.is-playing .mission-impact-core {
+      animation: impactCore 0.45s 0.75s ease-out both;
+    }
+
+    .mission-clear-card h2 {
+      margin: 2px 0 6px;
+      font-size: 29px;
+    }
+
+    .mission-clear-card p {
+      margin: 5px 0;
+      color: #d9e2ff;
+    }
+
+    .mission-clear-xp {
+      display: inline-flex;
+      margin: 10px 0 6px;
+      padding: 8px 15px;
+      border-radius: 999px;
+      color: #241a04;
+      background: linear-gradient(135deg, #fff2a9, #fec857);
+      font-size: 18px;
+      font-weight: 900;
+      box-shadow: 0 0 26px rgba(254, 200, 87, 0.46);
+    }
+
+    .cell.daily-highlight {
+      z-index: 2;
+      animation: dailyMissionPulse 0.8s ease-in-out 3;
+      border-color: #35e7ff !important;
+      box-shadow: 0 0 0 2px rgba(53, 231, 255, 0.24), 0 0 34px rgba(53, 231, 255, 0.64) !important;
+    }
+
+    @keyframes missionClearEnter {
+      from { opacity: 0; transform: translateY(24px) scale(0.86); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes moofiCelebrate {
+      from { transform: translateY(4px) rotate(-2deg) scale(0.98); }
+      to { transform: translateY(-6px) rotate(2deg) scale(1.03); }
+    }
+
+    @keyframes starRush {
+      0% {
+        opacity: 0;
+        transform: translate(var(--sx), var(--sy)) scale(0.16);
+      }
+      16% {
+        opacity: 1;
+      }
+      82% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: translate(0, 0) scale(1.7);
+      }
+    }
+
+    @keyframes impactRing {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.15); }
+      20% { opacity: 1; }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(5.2); }
+    }
+
+    @keyframes impactCore {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.2); }
+      35% { opacity: 1; transform: translate(-50%, -50%) scale(1.8); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(4.5); }
+    }
+
+    @keyframes evolutionFlash {
+      0% { opacity: 0; }
+      25% { opacity: 1; }
+      55% { opacity: 0.92; }
+      100% { opacity: 0; }
+    }
+
+    @keyframes moofiCharge {
+      0% { opacity: 1; transform: scale(1); filter: brightness(1) drop-shadow(0 0 20px rgba(254, 200, 87, 0.4)); }
+      72% { opacity: 1; transform: scale(0.92); filter: brightness(1.8) saturate(0.4) drop-shadow(0 0 42px rgba(254, 200, 87, 0.9)); }
+      100% { opacity: 0; transform: scale(0.62); filter: brightness(4) saturate(0) drop-shadow(0 0 64px #ffffff); }
+    }
+
+    @keyframes evolvedMoofiReveal {
+      0% { opacity: 0; transform: scale(0.62); filter: brightness(3) drop-shadow(0 0 56px #ffffff); }
+      100% { opacity: 1; transform: scale(1.08); filter: brightness(1) drop-shadow(0 0 34px rgba(254, 200, 87, 0.76)); }
+    }
+
+    @keyframes dailyMissionPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.035); }
+    }
+
     .admin-form-link-panel input {
       box-sizing: border-box;
       color: #ffffff;
@@ -6512,6 +7017,16 @@
         width: 40px;
         height: 40px;
         border-radius: 14px;
+      }
+
+      #bingo > .panel:first-child {
+        min-height: 210px;
+        padding: 24px;
+      }
+
+      .bingo-activity-visual img {
+        width: min(220px, 94%);
+        max-height: 196px;
       }
     }
 
@@ -6569,6 +7084,104 @@
         min-height: 42px;
         padding: 10px 11px;
         font-size: 12px;
+      }
+
+      .daily-mission {
+        margin-top: 7px;
+        padding: 8px 9px;
+      }
+
+      .daily-mission-title {
+        margin: 3px 0 5px;
+        font-size: 11px;
+      }
+
+      .daily-mission-actions .button {
+        min-height: 28px;
+        padding: 5px 8px;
+        font-size: 9px;
+      }
+
+      .weekly-report-head {
+        align-items: flex-start;
+      }
+
+      .weekly-report-button {
+        min-height: 31px;
+        padding: 6px 9px;
+        font-size: 10px;
+      }
+
+      .weekly-report-button img {
+        width: 23px;
+        height: 23px;
+      }
+
+      #bingo > .panel:first-child {
+        min-height: 174px;
+        padding: 16px;
+        background:
+          linear-gradient(90deg, rgba(7, 10, 25, 0.92) 0%, rgba(7, 10, 25, 0.78) 56%, rgba(7, 10, 25, 0.34) 100%),
+          radial-gradient(circle at 80% 34%, rgba(108, 92, 231, 0.22), transparent 36%),
+          url("assets/space-bg.webp") center / cover no-repeat;
+      }
+
+      .bingo-intro-copy {
+        width: 68%;
+      }
+
+      #bingo .bingo-intro-copy h1 {
+        margin: 10px 0 8px;
+      }
+
+      #bingo .bingo-intro-copy p {
+        font-size: 11px;
+        line-height: 1.55;
+        text-align: left;
+      }
+
+      .bingo-activity-visual img {
+        width: min(142px, 98%);
+        max-height: 150px;
+      }
+
+      .bingo-activity-visual::before {
+        width: 132px;
+      }
+
+      .weekly-report-hero {
+        grid-template-columns: 92px minmax(0, 1fr);
+        gap: 10px;
+        padding: 11px;
+      }
+
+      .weekly-report-hero img {
+        height: 92px;
+      }
+
+      .weekly-report-hero h3 {
+        font-size: 18px;
+      }
+
+      .weekly-report-title-row img {
+        width: 122px;
+        height: 122px;
+      }
+
+      .weekly-report-hero p {
+        font-size: 12px;
+      }
+
+      .weekly-report-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .weekly-report-stat {
+        padding: 10px 7px;
+      }
+
+      .weekly-report-stat strong {
+        font-size: 20px;
       }
     }
   </style>
@@ -6636,7 +7249,20 @@
           <h1 class="dynamic-single-line" data-min-font-size="10">您好，啟動任務卡前請先填個人資料</h1>
           <p>今天也完成一個任務，點亮你的夢想星圖，成為比昨天更好的自己。</p>
           <button class="button mission-button" data-page-link="bingo">啟動我的任務卡</button>
-          <div id="dashboardMoofiStatus" class="dashboard-moofi-status" aria-live="polite">你的小廢星Moofi降落了!</div>
+          <div id="dashboardMoofiStatus" class="dashboard-moofi-status" aria-live="polite">
+            <span id="dashboardMoofiStatusText">你的小廢星Moofi降落了!</span>
+          </div>
+          <div id="dailyMissionCard" class="daily-mission" aria-live="polite">
+            <div class="daily-mission-head">
+              <span class="daily-mission-kicker">今日推薦任務</span>
+              <span id="dailyMissionXp" class="daily-mission-xp">等待任務卡</span>
+            </div>
+            <strong id="dailyMissionTitle" class="daily-mission-title">建立任務卡後，Moofi 會為你推薦今天的任務。</strong>
+            <div class="daily-mission-actions">
+              <button id="goDailyMissionBtn" class="button" type="button" disabled>前往任務</button>
+              <button id="swapDailyMissionBtn" class="button secondary" type="button" disabled>換一個</button>
+            </div>
+          </div>
         </div>
 
         <div class="hero-visual">
@@ -6645,10 +7271,15 @@
       </section>
 
       <section class="progress-panel glass-card">
-        <div class="section-header">
-          <span class="section-kicker">Today Mission</span>
-          <h2>今日任務進度</h2>
-          <p>完成目標、累積 XP，解鎖你的星際徽章。</p>
+        <div class="weekly-report-head">
+          <div class="section-header">
+            <span class="section-kicker">Today Mission</span>
+            <h2>今日任務進度</h2>
+            <p>完成目標、累積 XP，解鎖你的星際徽章。</p>
+          </div>
+          <button id="openWeeklyReportBtn" class="button secondary weekly-report-button" type="button">
+            <span>本週星際報告</span>
+          </button>
         </div>
 
         <div class="stats-grid">
@@ -6695,9 +7326,17 @@
 
     <section id="bingo" class="page">
       <div class="panel" style="margin-bottom: 18px;">
-        <span class="badge">Bingo Board</span>
-        <h1>我的 Bingo 卡</h1>
-        <p>先填 24 個自己的目標。完成後系統會亂數排列成 5x5 賓果卡，並把內容鎖定在這台裝置上。</p>
+        <div class="bingo-intro-copy">
+          <span class="badge">Bingo Board</span>
+          <h1>我的 Bingo 卡</h1>
+          <p>
+            <span>填寫 24 個目標，組成任務卡。</span>
+            <span>產生後鎖定並保存在此裝置。</span>
+          </p>
+        </div>
+        <div class="bingo-activity-visual">
+          <img id="bingoActivityImage" src="assets/moofi/a01-happy.webp" alt="目前任務狀態">
+        </div>
       </div>
 
       <div id="draftView">
@@ -7041,6 +7680,64 @@
     </div>
   </div>
 
+  <div id="missionClearDialog" class="dialog-backdrop mission-clear-dialog" role="dialog" aria-modal="true" aria-labelledby="missionClearTitle">
+    <div class="mission-clear-card">
+      <button id="closeMissionClearBtn" class="mission-clear-close" type="button" aria-label="關閉任務完成動畫">×</button>
+      <div class="mission-clear-stage">
+        <div class="mission-star-stream" aria-hidden="true">
+          <i class="mission-star" style="--sx:-190px;--sy:-125px;--delay:.02s;--size:8px;--color:#fec857;--angle:34deg"></i>
+          <i class="mission-star" style="--sx:185px;--sy:-132px;--delay:.08s;--size:6px;--color:#35e7ff;--angle:146deg"></i>
+          <i class="mission-star" style="--sx:-220px;--sy:-18px;--delay:.15s;--size:10px;--color:#ff6b9d;--angle:4deg"></i>
+          <i class="mission-star" style="--sx:230px;--sy:10px;--delay:.19s;--size:7px;--color:#fec857;--angle:184deg"></i>
+          <i class="mission-star" style="--sx:-170px;--sy:142px;--delay:.22s;--size:6px;--color:#35e7ff;--angle:-38deg"></i>
+          <i class="mission-star" style="--sx:178px;--sy:138px;--delay:.28s;--size:9px;--color:#b9b2ff;--angle:218deg"></i>
+          <i class="mission-star" style="--sx:-72px;--sy:-190px;--delay:.11s;--size:7px;--color:#ffffff;--angle:70deg"></i>
+          <i class="mission-star" style="--sx:78px;--sy:190px;--delay:.32s;--size:8px;--color:#00ffa3;--angle:250deg"></i>
+          <i class="mission-star" style="--sx:55px;--sy:-205px;--delay:.25s;--size:5px;--color:#ff6b9d;--angle:104deg"></i>
+          <i class="mission-star" style="--sx:-42px;--sy:205px;--delay:.37s;--size:6px;--color:#fec857;--angle:-78deg"></i>
+          <i class="mission-star" style="--sx:-235px;--sy:78px;--delay:.31s;--size:5px;--color:#ffffff;--angle:-18deg"></i>
+          <i class="mission-star" style="--sx:225px;--sy:-70px;--delay:.36s;--size:8px;--color:#35e7ff;--angle:162deg"></i>
+        </div>
+        <div class="mission-impact-ring" aria-hidden="true"></div>
+        <div class="mission-impact-core" aria-hidden="true"></div>
+        <img id="missionClearMoofi" src="assets/moofi/Moofi-01.webp" alt="Moofi 任務完成">
+      </div>
+      <span id="missionClearXp" class="mission-clear-xp">+40 XP</span>
+      <h2 id="missionClearTitle">任務完成！</h2>
+      <p id="missionClearGoal">你又完成了一個成長目標。</p>
+      <p id="missionClearMessage">今天的你，又比昨天前進了一點。</p>
+    </div>
+  </div>
+
+  <div id="weeklyReportDialog" class="dialog-backdrop" role="dialog" aria-modal="true" aria-labelledby="weeklyReportTitle">
+    <div class="confirm-dialog weekly-report-dialog">
+      <span class="badge">Weekly Mission Report</span>
+      <div class="weekly-report-title-row">
+        <h2 id="weeklyReportTitle">本週星際報告</h2>
+        <img id="weeklyActivityImage" src="assets/moofi/a01-happy.webp" alt="本週任務狀態">
+      </div>
+      <p id="weeklyReportPeriod">星期一至星期日</p>
+      <div class="weekly-report-hero">
+        <img id="weeklyReportMoofi" src="assets/moofi/Moofi-01.webp" alt="本週 Moofi 狀態">
+        <div>
+          <h3 id="weeklyReportHeadline">這週也一起前進吧！</h3>
+          <p id="weeklyReportMessage">每完成一個目標，都是一次值得記住的成長。</p>
+        </div>
+      </div>
+      <div class="weekly-report-grid">
+        <div class="weekly-report-stat"><span>完成任務</span><strong id="weeklyTaskCount">0</strong><small id="weeklyTaskCompare">本週紀錄</small></div>
+        <div class="weekly-report-stat"><span>獲得 XP</span><strong id="weeklyXpCount">0</strong><small id="weeklyXpCompare">本週累積</small></div>
+        <div class="weekly-report-stat"><span>新增 Bingo</span><strong id="weeklyBingoCount">0</strong><small>本週解鎖</small></div>
+        <div class="weekly-report-stat"><span>Moofi 成長</span><strong id="weeklyMoofiGrowth">Lv.1</strong><small id="weeklyMoofiCompare">目前等級</small></div>
+        <div class="weekly-report-stat"><span>最常完成</span><strong id="weeklyTopCategory">—</strong><small>任務類別</small></div>
+        <div class="weekly-report-stat"><span>連續行動</span><strong id="weeklyActiveDays">0 天</strong><small>本週完成天數</small></div>
+      </div>
+      <div class="dialog-actions">
+        <button id="closeWeeklyReportBtn" class="button" type="button">繼續前進</button>
+      </div>
+    </div>
+  </div>
+
   <div id="studentDetailDialog" class="dialog-backdrop" role="dialog" aria-modal="true" aria-labelledby="studentDetailTitle">
     <div class="confirm-dialog student-dialog">
       <span class="badge">學生目標詳情</span>
@@ -7134,7 +7831,7 @@
       "sssh.tyc.edu.tw"
     ];
     const categories = ["創作", "平面設計", "數位繪圖", "學習", "練習", "合作", "表達", "語言", "生活技能", "好人好事", "變可愛", "健康"];
-    const defaultCenterGoal = { id: "center-goal", category: "創作", title: "完成漫畫美展作品", points: 100, completed: false, completedByClick: false, completedAt: "", gridIndex: 12 };
+    const defaultCenterGoal = { id: "center-goal", category: "中心目標", title: "完成漫畫美展作品", points: 100, completed: false, completedByClick: false, completedAt: "", gridIndex: 12 };
     let centerGoal = { ...defaultCenterGoal };
     let studentProfile = {
       groupCode: "main",
@@ -7176,6 +7873,12 @@
     let appliedGroupResetAt = {};
     let stickerFormUrl = "";
     let studentAuthNotice = "";
+    let journeyStartedAt = "";
+    let dailyMissionState = {
+      dateKey: "",
+      goalId: "",
+      swaps: 0
+    };
 
     function hasFirebaseConfig() {
       return Boolean(firebaseConfig.apiKey && firebaseConfig.projectId && window.firebase);
@@ -7651,6 +8354,7 @@
 
     function categoryToneStyle(category) {
       const tones = {
+        "中心目標": ["#fec857", "#fff4c7", "#5a3900"],
         "創作": ["#f47b20", "#fff0e4", "#8a3800"],
         "平面設計": ["#4f6ef7", "#e9eeff", "#243a9b"],
         "數位繪圖": ["#9b5de5", "#f2eaff", "#55268f"],
@@ -7674,7 +8378,7 @@
 
     function saveState() {
       try {
-        localStorage.setItem(currentStorageKey(), JSON.stringify({ centerGoal, studentProfile, draftGoals, boardGoals, submissions, leaderboardRecords, latestNews, newsItems, newsReadAt, appliedGroupResetAt, stickerFormUrl }));
+        localStorage.setItem(currentStorageKey(), JSON.stringify({ centerGoal, studentProfile, draftGoals, boardGoals, submissions, leaderboardRecords, latestNews, newsItems, newsReadAt, appliedGroupResetAt, stickerFormUrl, journeyStartedAt, dailyMissionState }));
       } catch (error) {
         console.warn("無法儲存到這台裝置", error);
       }
@@ -7688,7 +8392,7 @@
           centerGoal = {
             ...defaultCenterGoal,
             title: saved.centerGoal.title || defaultCenterGoal.title,
-            category: saved.centerGoal.category || defaultCenterGoal.category,
+            category: "中心目標",
             points: Number(saved.centerGoal.points || defaultCenterGoal.points),
             completed: Boolean(saved.centerGoal.completedByClick),
             completedByClick: Boolean(saved.centerGoal.completedByClick),
@@ -7733,6 +8437,14 @@
           appliedGroupResetAt = saved.appliedGroupResetAt;
         }
         stickerFormUrl = typeof saved.stickerFormUrl === "string" ? saved.stickerFormUrl : "";
+        journeyStartedAt = saved.journeyStartedAt || "";
+        if (saved.dailyMissionState && typeof saved.dailyMissionState === "object") {
+          dailyMissionState = {
+            dateKey: saved.dailyMissionState.dateKey || "",
+            goalId: saved.dailyMissionState.goalId || "",
+            swaps: Number(saved.dailyMissionState.swaps || 0)
+          };
+        }
       } catch (error) {
         console.warn("無法讀取已儲存卡片", error);
       }
@@ -7760,6 +8472,8 @@
       leaderboardRecords = [];
       selectedMoofiLevel = null;
       stickerFormUrl = "";
+      journeyStartedAt = "";
+      dailyMissionState = { dateKey: "", goalId: "", swaps: 0 };
     }
 
     function profileReady() {
@@ -8117,7 +8831,7 @@
           centerGoal = {
             ...centerGoal,
             title: data.centerGoalTitle,
-            category: data.centerGoalCategory || centerGoal.category,
+            category: "中心目標",
             points: Number(data.centerGoalPoints || centerGoal.points)
           };
         }
@@ -8151,6 +8865,7 @@
             }));
           }
           appliedGroupResetAt[group] = remoteResetAt;
+          journeyStartedAt = remoteResetAt;
         }
         renderCenterGoalSettings();
         renderLatestNews();
@@ -8195,7 +8910,7 @@
         }, { merge: true });
         await settingsDocRef().set({
           centerGoalTitle: centerGoal.title,
-          centerGoalCategory: centerGoal.category,
+          centerGoalCategory: "中心目標",
           centerGoalPoints: centerGoal.points,
           groupCode: normalizedGroupCode(),
           updatedAt: new Date().toISOString()
@@ -8582,6 +9297,301 @@
     ];
     let selectedMoofiLevel = null;
     let moofiLockedMessageTimer = null;
+    let missionClearTimer = null;
+    let missionEvolutionTimer = null;
+
+    function currentMoofiForXp(xp) {
+      const total = Math.max(0, Number(xp || 0));
+      return moofiLevels.reduce((result, item) => total >= item.xp ? item : result, moofiLevels[0]);
+    }
+
+    const activityStates = [
+      { minDays: 21, image: "assets/moofi/a04-dead.webp", label: "三週以上未完成任務", message: "Moofi 已經沉睡了，完成一個小任務喚醒它吧。" },
+      { minDays: 14, image: "assets/moofi/a03-tired.webp", label: "兩週未完成任務", message: "Moofi 有點疲累，今天陪它完成一個任務吧。" },
+      { minDays: 7, image: "assets/moofi/a02-angry.webp", label: "一週未完成任務", message: "Moofi 等得有點生氣了，選一個簡單任務重新出發吧。" },
+      { minDays: 0, image: "assets/moofi/a01-happy.webp", label: "持續完成任務", message: "Moofi 很有精神，繼續保持你的成長節奏！" }
+    ];
+
+    function latestActivityDate() {
+      const latest = completedGoals()
+        .map(goal => goal.completedAt)
+        .filter(Boolean)
+        .sort()
+        .at(-1);
+      const source = latest || journeyStartedAt || new Date().toISOString();
+      const parsed = new Date(source);
+      return Number.isNaN(parsed.getTime()) ? new Date() : parsed;
+    }
+
+    function currentActivityState(reference = new Date()) {
+      const latest = latestActivityDate();
+      const elapsed = Math.max(0, reference.getTime() - latest.getTime());
+      const inactiveDays = Math.floor(elapsed / 86400000);
+      const state = activityStates.find(item => inactiveDays >= item.minDays) || activityStates.at(-1);
+      return { ...state, inactiveDays, latest };
+    }
+
+    function renderActivityState() {
+      const state = currentActivityState();
+      const dashboardImage = document.getElementById("dashboardActivityImage");
+      const weeklyImage = document.getElementById("weeklyActivityImage");
+      const weeklyButtonImage = document.getElementById("weeklyReportButtonImage");
+      const bingoImage = document.getElementById("bingoActivityImage");
+      if (dashboardImage) {
+        dashboardImage.src = state.image;
+        dashboardImage.alt = state.label;
+      }
+      if (weeklyImage) {
+        weeklyImage.src = state.image;
+        weeklyImage.alt = state.label;
+      }
+      if (weeklyButtonImage) {
+        weeklyButtonImage.src = state.image;
+        weeklyButtonImage.alt = state.label;
+      }
+      if (bingoImage) {
+        bingoImage.src = state.image;
+        bingoImage.alt = state.label;
+        bingoImage.title = state.message;
+      }
+      return state;
+    }
+
+    function localDateKey(date = new Date()) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
+
+    function stableDailyIndex(seed, length) {
+      let hash = 0;
+      for (let index = 0; index < seed.length; index += 1) {
+        hash = ((hash << 5) - hash + seed.charCodeAt(index)) | 0;
+      }
+      return length ? Math.abs(hash) % length : 0;
+    }
+
+    function dailyMissionGoal() {
+      if (!boardGoals || !dailyMissionState.goalId) return null;
+      return activeBoardGoals().find(goal => goal.id === dailyMissionState.goalId) || null;
+    }
+
+    function ensureDailyMission(forceSwap = false) {
+      const today = localDateKey();
+      const available = activeBoardGoals().filter(goal => !goal.completed);
+      if (!boardGoals) {
+        dailyMissionState = { dateKey: today, goalId: "", swaps: 0 };
+        return null;
+      }
+      const existing = dailyMissionGoal();
+      const sameDay = dailyMissionState.dateKey === today;
+      if (!forceSwap && sameDay && existing) return existing;
+      if (!available.length) {
+        dailyMissionState = { dateKey: today, goalId: "", swaps: sameDay ? dailyMissionState.swaps : 0 };
+        return null;
+      }
+      const excludedId = forceSwap ? dailyMissionState.goalId : "";
+      const candidates = available.filter(goal => goal.id !== excludedId);
+      const pool = candidates.length ? candidates : available;
+      const seed = `${today}-${currentAuthUser?.uid || studentProfile.studentName || "dream-bingo"}-${forceSwap ? 1 : 0}`;
+      const selected = pool[stableDailyIndex(seed, pool.length)];
+      dailyMissionState = {
+        dateKey: today,
+        goalId: selected.id,
+        swaps: forceSwap ? 1 : 0
+      };
+      saveState();
+      return selected;
+    }
+
+    function renderDailyMission() {
+      const card = document.getElementById("dailyMissionCard");
+      const title = document.getElementById("dailyMissionTitle");
+      const xp = document.getElementById("dailyMissionXp");
+      const goButton = document.getElementById("goDailyMissionBtn");
+      const swapButton = document.getElementById("swapDailyMissionBtn");
+      if (!card || !title || !xp || !goButton || !swapButton) return;
+      card.classList.remove("is-complete");
+      if (!boardGoals) {
+        title.textContent = "建立任務卡後，Moofi 會為你推薦今天的任務。";
+        xp.textContent = "等待任務卡";
+        goButton.disabled = true;
+        swapButton.disabled = true;
+        swapButton.textContent = "換一個";
+        return;
+      }
+      let goal = dailyMissionGoal();
+      if (dailyMissionState.dateKey !== localDateKey() || !goal) goal = ensureDailyMission();
+      if (!goal) {
+        card.classList.add("is-complete");
+        title.textContent = "今天的星際任務全部完成！";
+        xp.textContent = "MISSION CLEAR";
+        goButton.disabled = true;
+        swapButton.disabled = true;
+        swapButton.textContent = "太棒了";
+        return;
+      }
+      title.textContent = goal.completed ? `已完成｜${goal.title}` : goal.title;
+      xp.textContent = `${goal.category} · ${Number(goal.points || 0)} XP`;
+      card.classList.toggle("is-complete", goal.completed);
+      goButton.disabled = false;
+      goButton.textContent = goal.completed ? "查看完成任務" : "前往任務";
+      swapButton.disabled = goal.completed || dailyMissionState.swaps >= 1;
+      swapButton.textContent = dailyMissionState.swaps >= 1 ? "今日已更換" : "換一個";
+    }
+
+    function swapDailyMission() {
+      if (!boardGoals || dailyMissionState.swaps >= 1) return;
+      ensureDailyMission(true);
+      renderDailyMission();
+    }
+
+    function goToDailyMission() {
+      const goal = dailyMissionGoal();
+      if (!goal || !boardGoals) return;
+      switchPage("bingo");
+      renderBoard();
+      requestAnimationFrame(() => {
+        const cell = document.querySelector(`[data-goal-id="${goal.id}"]`);
+        if (!cell) return;
+        cell.classList.add("daily-highlight");
+        cell.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+        window.setTimeout(() => cell.classList.remove("daily-highlight"), 2800);
+      });
+    }
+
+    function weekBounds(reference = new Date()) {
+      const start = new Date(reference);
+      start.setHours(0, 0, 0, 0);
+      start.setDate(start.getDate() - ((start.getDay() + 6) % 7));
+      const end = new Date(start);
+      end.setDate(end.getDate() + 7);
+      const previousStart = new Date(start);
+      previousStart.setDate(previousStart.getDate() - 7);
+      return { start, end, previousStart };
+    }
+
+    function goalsCompletedBetween(start, end) {
+      return completedGoals().filter(goal => {
+        if (!goal.completedAt) return false;
+        const completedAt = new Date(goal.completedAt);
+        return completedAt >= start && completedAt < end;
+      });
+    }
+
+    function bingoLinesBefore(cutoff) {
+      if (!boardGoals) return 0;
+      const matrix = Array.from({ length: 5 }, () => Array.from({ length: 5 }, () => false));
+      const wasComplete = goal => Boolean(goal.completed && goal.completedAt && new Date(goal.completedAt) < cutoff);
+      matrix[2][2] = wasComplete(centerGoal);
+      boardGoals.forEach(goal => {
+        const row = Math.floor(goal.gridIndex / 5);
+        const col = goal.gridIndex % 5;
+        matrix[row][col] = wasComplete(goal);
+      });
+      let lines = 0;
+      for (let row = 0; row < 5; row += 1) if (matrix[row].every(Boolean)) lines += 1;
+      for (let col = 0; col < 5; col += 1) if (matrix.every(row => row[col])) lines += 1;
+      if ([0, 1, 2, 3, 4].every(index => matrix[index][index])) lines += 1;
+      if ([0, 1, 2, 3, 4].every(index => matrix[index][4 - index])) lines += 1;
+      return lines;
+    }
+
+    function renderWeeklyReport() {
+      const { start, end, previousStart } = weekBounds();
+      const thisWeek = goalsCompletedBetween(start, end);
+      const previousWeek = goalsCompletedBetween(previousStart, start);
+      const thisXp = thisWeek.reduce((sum, goal) => sum + Number(goal.points || 0), 0);
+      const previousXp = previousWeek.reduce((sum, goal) => sum + Number(goal.points || 0), 0);
+      const xpBeforeWeek = Math.max(0, earnedXp() - thisXp);
+      const startMoofi = currentMoofiForXp(xpBeforeWeek);
+      const currentMoofi = currentMoofiForXp(earnedXp());
+      const categories = new Map();
+      const activeDays = new Set();
+      thisWeek.forEach(goal => {
+        categories.set(goal.category, (categories.get(goal.category) || 0) + 1);
+        if (goal.completedAt) activeDays.add(localDateKey(new Date(goal.completedAt)));
+      });
+      const topCategory = [...categories.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] || "—";
+      const newBingo = boardGoals ? Math.max(0, calculateBingoLines() - bingoLinesBefore(start)) : 0;
+      const weekEndDisplay = new Date(end);
+      weekEndDisplay.setDate(weekEndDisplay.getDate() - 1);
+      const dateText = date => `${date.getMonth() + 1}/${date.getDate()}`;
+      const improved = thisWeek.length - previousWeek.length;
+      const headline = thisWeek.length
+        ? `本週完成 ${thisWeek.length} 個星際任務！`
+        : "這週的第一顆星，正等著你點亮。";
+      const message = improved > 0
+        ? `比上週多完成 ${improved} 個任務，Moofi 看見你的進步了。`
+        : (thisWeek.length ? "每一次完成都算數，照自己的節奏繼續前進。" : "從今天推薦任務開始，一小步也能累積成很遠的旅程。");
+      const activity = renderActivityState();
+      document.getElementById("weeklyReportPeriod").textContent = `${dateText(start)}（一）－${dateText(weekEndDisplay)}（日）`;
+      document.getElementById("weeklyReportHeadline").textContent = headline;
+      document.getElementById("weeklyReportMessage").textContent = `${message} ${activity.message}`;
+      document.getElementById("weeklyReportMoofi").src = currentMoofi.image;
+      document.getElementById("weeklyTaskCount").textContent = thisWeek.length;
+      document.getElementById("weeklyTaskCompare").textContent = improved > 0 ? `比上週多 ${improved} 個` : `上週 ${previousWeek.length} 個`;
+      document.getElementById("weeklyXpCount").textContent = thisXp;
+      document.getElementById("weeklyXpCompare").textContent = thisXp > previousXp ? `比上週多 ${thisXp - previousXp} XP` : `上週 ${previousXp} XP`;
+      document.getElementById("weeklyBingoCount").textContent = newBingo;
+      document.getElementById("weeklyMoofiGrowth").textContent = `Lv.${currentMoofi.level}`;
+      document.getElementById("weeklyMoofiCompare").textContent = currentMoofi.level > startMoofi.level ? `本週升了 ${currentMoofi.level - startMoofi.level} 級` : `本週從 Lv.${startMoofi.level} 出發`;
+      document.getElementById("weeklyTopCategory").textContent = topCategory;
+      document.getElementById("weeklyActiveDays").textContent = `${activeDays.size} 天`;
+    }
+
+    function openWeeklyReport() {
+      renderWeeklyReport();
+      document.getElementById("weeklyReportDialog")?.classList.add("show");
+    }
+
+    function closeWeeklyReport() {
+      document.getElementById("weeklyReportDialog")?.classList.remove("show");
+    }
+
+    function showMissionClear(goal, previousXp) {
+      const nextXp = previousXp + Number(goal.points || 0);
+      const previousMoofi = currentMoofiForXp(previousXp);
+      const currentMoofi = currentMoofiForXp(nextXp);
+      const leveledUp = currentMoofi.level > previousMoofi.level;
+      const messages = [
+        "今天的你，又比昨天前進了一點。",
+        "這顆星已經被你親手點亮了。",
+        "做得很好，Moofi 正在吸收你的成長能量！",
+        "完成不是終點，是你變強的證明。"
+      ];
+      const card = document.querySelector(".mission-clear-card");
+      const image = document.getElementById("missionClearMoofi");
+      const title = document.getElementById("missionClearTitle");
+      if (missionEvolutionTimer) clearTimeout(missionEvolutionTimer);
+      card?.classList.remove("is-playing", "is-evolution");
+      void card?.offsetWidth;
+      card?.classList.add("is-playing");
+      if (leveledUp) card?.classList.add("is-evolution");
+      image.src = leveledUp ? previousMoofi.image : currentMoofi.image;
+      document.getElementById("missionClearXp").textContent = `+${Number(goal.points || 0)} XP`;
+      title.textContent = leveledUp ? "星光能量匯聚中…" : "任務完成！";
+      document.getElementById("missionClearGoal").textContent = goal.title;
+      document.getElementById("missionClearMessage").textContent = leveledUp
+        ? `Moofi 正在吸收 ${Number(goal.points || 0)} XP 的成長能量。`
+        : messages[stableDailyIndex(`${goal.id}-${goal.completedAt}`, messages.length)];
+      if (leveledUp) {
+        missionEvolutionTimer = window.setTimeout(() => {
+          image.src = currentMoofi.image;
+          title.textContent = `Moofi 進化到 Lv.${currentMoofi.level}！`;
+          document.getElementById("missionClearMessage").textContent = `解鎖「${currentMoofi.name}」，你的努力讓 Moofi 長大了。`;
+        }, 940);
+      }
+      const dialog = document.getElementById("missionClearDialog");
+      dialog?.classList.add("show");
+    }
+
+    function closeMissionClear() {
+      if (missionClearTimer) clearTimeout(missionClearTimer);
+      if (missionEvolutionTimer) clearTimeout(missionEvolutionTimer);
+      document.getElementById("missionClearDialog")?.classList.remove("show");
+    }
 
     function updateAchievementDisplay(done, lines, xp) {
       const totalXp = Math.max(0, Number(xp || 0));
@@ -8754,6 +9764,14 @@
     }
 
     function updateDashboardPanels() {
+      if (boardGoals && !journeyStartedAt) {
+        const earliestCompletion = completedGoals()
+          .map(goal => goal.completedAt)
+          .filter(Boolean)
+          .sort()[0];
+        journeyStartedAt = earliestCompletion || new Date().toISOString();
+        saveState();
+      }
       const done = completedGoals().length;
       const rate = boardGoals ? Math.round(done / 25 * 100) : 0;
       const lines = boardGoals ? calculateBingoLines() : 0;
@@ -8764,14 +9782,18 @@
       document.getElementById("dashXp").textContent = xp;
       updateDashboardGreeting(xp);
       const dashboardMoofiStatus = document.getElementById("dashboardMoofiStatus");
+      const dashboardMoofiStatusText = document.getElementById("dashboardMoofiStatusText");
       if (dashboardMoofiStatus) {
         const currentMoofi = moofiLevels.reduce(
           (result, item) => xp >= item.xp ? item : result,
           moofiLevels[0]
         );
-        dashboardMoofiStatus.textContent = currentMoofi.level === 1
+        const statusText = currentMoofi.level === 1
           ? "你的小廢星Moofi降落了!"
           : `你的小廢星Moofi已進化到 Lv.${currentMoofi.level}！`;
+        if (dashboardMoofiStatusText) dashboardMoofiStatusText.textContent = statusText;
+        const activity = renderActivityState();
+        dashboardMoofiStatus.title = activity.message;
       }
       const leaderRate = document.getElementById("leaderRate");
       const leaderBingo = document.getElementById("leaderBingo");
@@ -8782,6 +9804,7 @@
       if (leaderName) leaderName.textContent = studentProfile.studentName || "自己";
       if (leaderClass) leaderClass.textContent = studentProfile.className || "尚未填寫";
       renderRecentTasks();
+      renderDailyMission();
       updateAchievementDisplay(done, lines, xp);
       updateStickerClaimDisplay(done);
       renderLeaderboard();
@@ -8961,6 +9984,7 @@
         completionRate,
         bingoCount,
         goals,
+        journeyStartedAt: journeyStartedAt || new Date().toISOString(),
         reviewStatus: "已送出",
         updatedAt: new Date().toISOString()
       };
@@ -9040,11 +10064,13 @@
         seatNumber: record.seatNumber || "",
         email: currentAuthUser?.email || record.email || ""
       };
+      journeyStartedAt = record.journeyStartedAt || journeyStartedAt || new Date().toISOString();
       const savedCenter = record.goals.find(goal => goal.id === "center-goal");
       if (savedCenter) {
         centerGoal = {
           ...defaultCenterGoal,
           ...savedCenter,
+          category: "中心目標",
           points: Number(savedCenter.points || defaultCenterGoal.points),
           completed: Boolean(savedCenter.completed),
           completedByClick: Boolean(savedCenter.completed),
@@ -9161,7 +10187,9 @@
 
       cells.forEach(goal => {
         const cell = document.createElement("button");
+        if (goal.id === "center-goal") goal.category = "中心目標";
         cell.className = `cell ${goal.id === "center-goal" ? "center" : ""} ${goal.completed ? "done" : ""}`;
+        cell.dataset.goalId = goal.id;
         cell.setAttribute("style", categoryToneStyle(goal.category));
         cell.innerHTML = `
           <span class="category">${escapeHtml(goal.category)}</span>
@@ -9200,15 +10228,28 @@
     });
     document.getElementById("confirmCompleteBtn").addEventListener("click", () => {
       if (!pendingCompleteGoal) return;
-      pendingCompleteGoal.completed = true;
-      pendingCompleteGoal.completedAt = new Date().toISOString();
-      if (pendingCompleteGoal.id === "center-goal") pendingCompleteGoal.completedByClick = true;
+      const completedGoal = pendingCompleteGoal;
+      const previousXp = earnedXp();
+      completedGoal.completed = true;
+      completedGoal.completedAt = new Date().toISOString();
+      if (completedGoal.id === "center-goal") completedGoal.completedByClick = true;
       closeCompleteDialog();
       renderBoard();
       syncCurrentSubmission();
+      showMissionClear(completedGoal, previousXp);
     });
 
+    document.getElementById("goDailyMissionBtn").addEventListener("click", goToDailyMission);
+    document.getElementById("swapDailyMissionBtn").addEventListener("click", swapDailyMission);
+    document.getElementById("openWeeklyReportBtn").addEventListener("click", openWeeklyReport);
+    document.getElementById("closeWeeklyReportBtn").addEventListener("click", closeWeeklyReport);
+    document.getElementById("weeklyReportDialog").addEventListener("click", event => {
+      if (event.target.id === "weeklyReportDialog") closeWeeklyReport();
+    });
+    document.getElementById("closeMissionClearBtn").addEventListener("click", closeMissionClear);
+
     document.getElementById("uploadBtn").addEventListener("click", () => {
+      journeyStartedAt = new Date().toISOString();
       centerGoal = { ...centerGoal, completed: false, completedAt: "" };
       boardGoals = shuffle(draftGoals).map((goal, index) => ({
         ...goal,
