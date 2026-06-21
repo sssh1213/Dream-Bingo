@@ -11,15 +11,43 @@ service cloud.firestore {
         && request.auth.token.email == "sssh1213@sssh.tyc.edu.tw";
     }
 
+    function isSchoolAccount() {
+      return signedIn()
+        && request.auth.token.email is string
+        && request.auth.token.email.matches('.*@sssh[.]tyc[.]edu[.]tw$')
+        && request.auth.token.firebase.sign_in_provider == "google.com";
+    }
+
+    function isApprovedFriend() {
+      return signedIn()
+        && request.auth.token.email is string
+        && request.auth.token.firebase.sign_in_provider == "google.com"
+        && exists(/databases/$(database)/documents/allowedFriendEmails/$(request.auth.token.email))
+        && get(/databases/$(database)/documents/allowedFriendEmails/$(request.auth.token.email)).data.active == true;
+    }
+
+    function isApprovedUser() {
+      return isSchoolAccount() || isApprovedFriend();
+    }
+
     function isOwner(userId) {
-      return signedIn() && request.auth.uid == userId;
+      return isApprovedUser() && request.auth.uid == userId;
+    }
+
+    match /allowedFriendEmails/{email} {
+      allow get: if isTeacher() || (
+        signedIn()
+        && request.auth.token.email == email
+        && request.auth.token.firebase.sign_in_provider == "google.com"
+      );
+      allow list, create, update, delete: if isTeacher();
     }
 
     match /groups/{groupId} {
       allow read, delete: if isTeacher();
 
       allow create, update: if isTeacher() || (
-        signedIn()
+        isApprovedUser()
         && request.resource.data.groupCode == groupId
         && request.resource.data.keys().hasOnly([
           "groupCode",
@@ -28,7 +56,7 @@ service cloud.firestore {
       );
 
       match /settings/{settingId} {
-        allow read: if signedIn();
+        allow read: if isApprovedUser();
         allow create, update, delete: if isTeacher();
       }
 
@@ -50,7 +78,7 @@ service cloud.firestore {
       }
 
       match /leaderboard/{userId} {
-        allow read: if signedIn();
+        allow read: if isApprovedUser();
 
         allow create, update: if isTeacher() || (
           isOwner(userId)

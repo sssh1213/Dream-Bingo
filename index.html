@@ -5434,6 +5434,38 @@
       line-height: 1.45;
     }
 
+    .friend-allowlist {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .friend-allowlist-item {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 14px;
+      padding: 13px 15px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(6, 10, 26, 0.58);
+    }
+
+    .friend-allowlist-item strong,
+    .friend-allowlist-item small {
+      display: block;
+      overflow-wrap: anywhere;
+    }
+
+    .friend-allowlist-item strong {
+      color: #ffffff;
+    }
+
+    .friend-allowlist-item small {
+      margin-top: 4px;
+      color: #8f9abd;
+    }
+
     .student-edit-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -5525,6 +5557,10 @@
       }
 
       .admin-news-item {
+        grid-template-columns: 1fr;
+      }
+
+      .friend-allowlist-item {
         grid-template-columns: 1fr;
       }
     }
@@ -6197,11 +6233,36 @@
       gap: 12px;
     }
 
-    .student-auth-panel input {
-      box-sizing: border-box;
-      color: #ffffff;
-      background: rgba(6, 10, 26, 0.78);
-      border-color: rgba(255, 255, 255, 0.18);
+    .student-google-button {
+      width: 100%;
+      min-height: 54px;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 18px;
+      font-size: 16px;
+    }
+
+    .student-google-button svg {
+      width: 22px;
+      height: 22px;
+      flex: 0 0 auto;
+      padding: 3px;
+      border-radius: 50%;
+      background: #ffffff;
+    }
+
+    .school-login-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      margin-top: 14px;
+      padding: 12px 14px;
+      border: 1px solid rgba(34, 211, 238, 0.2);
+      border-radius: 16px;
+      color: #bfeff8;
+      background: rgba(34, 211, 238, 0.07);
+      font-size: 13px;
+      line-height: 1.65;
     }
 
     .student-auth-panel .actions {
@@ -6265,6 +6326,158 @@
       overflow-wrap: anywhere;
     }
 
+    .teacher-account-link {
+      display: none;
+    }
+
+    body.teacher-student-account .teacher-account-link {
+      display: inline-flex;
+    }
+
+    .moofi-sticker-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+      margin-top: 18px;
+      padding: 28px 24px;
+      text-align: center;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 16% 50%, rgba(254, 200, 87, 0.17), transparent 34%),
+        radial-gradient(circle at 88% 18%, rgba(34, 211, 238, 0.14), transparent 32%),
+        linear-gradient(145deg, rgba(40, 35, 92, 0.84), rgba(9, 18, 46, 0.9));
+      border: 1px solid rgba(176, 151, 255, 0.38);
+      box-shadow:
+        0 22px 56px rgba(0, 0, 0, 0.34),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+
+    .moofi-sticker-visual {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: min(290px, 72vw);
+      min-height: 230px;
+      border-radius: 22px;
+      background: radial-gradient(circle, rgba(254, 200, 87, 0.2), rgba(108, 92, 231, 0.08) 48%, transparent 72%);
+    }
+
+    .moofi-sticker-visual::before {
+      content: "";
+      position: absolute;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      background: rgba(254, 200, 87, 0.14);
+      filter: blur(20px);
+    }
+
+    .moofi-sticker-visual img {
+      position: relative;
+      z-index: 1;
+      width: min(236px, 100%);
+      max-height: 226px;
+      object-fit: contain;
+      filter: grayscale(1) brightness(0.62) drop-shadow(0 16px 24px rgba(0, 0, 0, 0.35));
+      transition: filter 0.25s ease, transform 0.25s ease;
+    }
+
+    .moofi-sticker-card.is-unlocked {
+      border-color: rgba(254, 200, 87, 0.68);
+      box-shadow:
+        0 22px 56px rgba(0, 0, 0, 0.34),
+        0 0 34px rgba(254, 200, 87, 0.17),
+        inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    }
+
+    .moofi-sticker-card.is-unlocked .moofi-sticker-visual img {
+      filter:
+        drop-shadow(0 0 22px rgba(254, 200, 87, 0.48))
+        drop-shadow(0 18px 28px rgba(0, 0, 0, 0.38));
+      transform: scale(1.03);
+    }
+
+    .moofi-sticker-copy h2 {
+      margin: 0;
+      color: #ffffff;
+      font-size: clamp(22px, 3vw, 30px);
+    }
+
+    .moofi-sticker-details {
+      display: none;
+      width: min(620px, 100%);
+      margin-top: 8px;
+      text-align: center;
+      animation: stickerDetailsEnter 0.35s ease both;
+    }
+
+    .moofi-sticker-card.is-unlocked .moofi-sticker-details {
+      display: block;
+    }
+
+    @keyframes stickerDetailsEnter {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .moofi-sticker-copy p {
+      margin: 0 0 16px;
+      color: #aab4d4;
+      line-height: 1.75;
+    }
+
+    .sticker-progress {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      color: #d7d2ff;
+      background: rgba(108, 92, 231, 0.15);
+      border: 1px solid rgba(108, 92, 231, 0.3);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .moofi-sticker-card.is-unlocked .sticker-progress {
+      color: #fff2bd;
+      background: rgba(254, 200, 87, 0.13);
+      border-color: rgba(254, 200, 87, 0.34);
+    }
+
+    #stickerClaimBtn[disabled] {
+      cursor: not-allowed;
+      opacity: 0.52;
+      filter: grayscale(0.38);
+      transform: none;
+      box-shadow: none;
+    }
+
+    #stickerClaimHint {
+      display: block;
+      margin-top: 10px;
+      color: #8f9abd;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .admin-form-link-panel input {
+      box-sizing: border-box;
+      color: #ffffff;
+      background: rgba(6, 10, 26, 0.78);
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+
     .topbar {
       grid-template-columns: auto minmax(0, 1fr) auto auto !important;
     }
@@ -6319,6 +6532,44 @@
       .student-auth-panel .button {
         width: 100%;
       }
+
+      .moofi-sticker-card {
+        gap: 9px;
+        padding: 20px 16px;
+      }
+
+      .moofi-sticker-visual {
+        width: min(230px, 78vw);
+        min-height: 188px;
+      }
+
+      .moofi-sticker-visual img {
+        width: min(194px, 100%);
+        max-height: 184px;
+      }
+
+      .moofi-sticker-copy h2 {
+        font-size: 21px;
+      }
+
+      .moofi-sticker-copy p {
+        margin-bottom: 11px;
+        font-size: 12px;
+        line-height: 1.55;
+      }
+
+      .sticker-progress {
+        margin-bottom: 10px;
+        padding: 6px 9px;
+        font-size: 11px;
+      }
+
+      #stickerClaimBtn {
+        width: 100%;
+        min-height: 42px;
+        padding: 10px 11px;
+        font-size: 12px;
+      }
     }
   </style>
 </head>
@@ -6361,24 +6612,19 @@
 
   <section id="studentAuthPanel" class="student-auth-panel" aria-live="polite">
     <div class="student-auth-form">
-      <span class="section-kicker">Student Login</span>
+      <span class="section-kicker">Google Account Login</span>
       <h1>登入你的星際任務</h1>
-      <p>第一次使用請先註冊，之後使用相同 Email 與密碼登入。</p>
-      <div class="student-auth-fields">
-        <label class="field-label">
-          Email
-          <input id="studentAuthEmail" type="email" autocomplete="email" placeholder="name@example.com">
-        </label>
-        <label class="field-label">
-          密碼
-          <input id="studentAuthPassword" type="password" minlength="6" autocomplete="current-password" placeholder="至少 6 個字元">
-        </label>
-      </div>
-      <div class="actions">
-        <button id="studentLoginBtn" class="button" type="button">登入</button>
-        <button id="studentRegisterBtn" class="button secondary" type="button">第一次使用，建立帳號</button>
-      </div>
-      <p id="studentAuthStatus" class="hint">請輸入 Email 與密碼。</p>
+      <p>請使用學校帳號，或老師已加入白名單的 Google 帳號登入。登入一次後，此裝置會保持登入狀態。</p>
+      <button id="studentGoogleLoginBtn" class="button mission-button student-google-button" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="#4285F4" d="M21.6 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.3z"/>
+          <path fill="#34A853" d="M12 22c2.7 0 5-.9 6.6-2.5l-3.2-2.5c-.9.6-2 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3.1v2.6A10 10 0 0 0 12 22z"/>
+          <path fill="#FBBC05" d="M6.4 13.9a6 6 0 0 1 0-3.8V7.5H3.1a10 10 0 0 0 0 9l3.3-2.6z"/>
+          <path fill="#EA4335" d="M12 6c1.5 0 2.8.5 3.8 1.5l2.9-2.8A9.7 9.7 0 0 0 12 2a10 10 0 0 0-8.9 5.5l3.3 2.6C7.2 7.8 9.4 6 12 6z"/>
+        </svg>
+        使用 Google 帳號登入
+      </button>
+      <p id="studentAuthStatus" class="hint">請選擇學校帳號，或老師已加入白名單的 Google 帳號。</p>
     </div>
   </section>
 
@@ -6653,6 +6899,21 @@
         <div id="moofiCollection" class="moofi-collection-grid" aria-label="Moofi 等級圖鑑"></div>
         <div id="moofiLockedMessage" class="moofi-locked-message" role="status">尚未解鎖，繼續完成任務吧！</div>
       </div>
+
+      <div id="moofiStickerCard" class="panel moofi-sticker-card">
+        <div class="moofi-sticker-visual">
+          <img src="assets/moofi/final.png" alt="Moofi 貼圖解鎖圖示">
+        </div>
+        <div class="moofi-sticker-copy">
+          <h2>解鎖獎勵資格</h2>
+          <div class="moofi-sticker-details">
+            <div id="stickerClaimProgress" class="sticker-progress">25 / 25 全部完成</div>
+            <p id="stickerClaimMessage">恭喜！你已完成全部目標，Moofi 貼圖領取資格已解鎖。</p>
+            <button id="stickerClaimBtn" class="button mission-button" type="button" disabled>領取 Moofi 貼圖</button>
+            <small id="stickerClaimHint">將前往老師提供的 Google 表單上傳完成證明。</small>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section id="admin" class="page">
@@ -6718,6 +6979,19 @@
           </div>
         </div>
       </div>
+      <div class="panel admin-friend-access-panel">
+        <h2>朋友帳號白名單</h2>
+        <p>新增朋友的完整 Google Email。加入後，朋友可使用該帳號登入學生頁面，再輸入您提供的群組代碼。</p>
+        <label class="field-label" style="margin-bottom: 12px;">
+          朋友 Google Email
+          <input id="friendEmailInput" type="email" inputmode="email" autocomplete="off" placeholder="例如：friend@gmail.com">
+        </label>
+        <div class="actions">
+          <button id="addFriendEmailBtn" class="button" type="button">加入白名單</button>
+          <span id="friendEmailStatus" class="hint">白名單適用於所有群組。</span>
+        </div>
+        <div id="friendEmailList" class="friend-allowlist"></div>
+      </div>
       <div class="panel admin-news-panel">
         <h2>最新消息廣播</h2>
         <p>老師可以在這裡更新公告，學生點右上角鈴鐺就能看到最新消息。</p>
@@ -6734,6 +7008,18 @@
           <span id="newsStatus" class="hint">會儲存到目前群組的 settings/public。</span>
         </div>
         <div id="adminNewsList" class="admin-news-list"></div>
+      </div>
+      <div class="panel admin-form-link-panel">
+        <h2>Moofi 貼圖領取表單</h2>
+        <p>貼上目前群組使用的 Google 表單網址。學生完成 25 / 25 後，Moofi 頁面的解鎖按鈕會連到這個表單。</p>
+        <label class="field-label" style="margin-bottom: 12px;">
+          Google 表單網址
+          <input id="stickerFormUrlInput" type="url" placeholder="https://forms.gle/...">
+        </label>
+        <div class="actions">
+          <button id="saveStickerFormUrlBtn" class="button" type="button">儲存表單網址</button>
+          <span id="stickerFormUrlStatus" class="hint">每個群組可以設定不同的表單。</span>
+        </div>
       </div>
       </div>
     </section>
@@ -6805,9 +7091,10 @@
     <div class="confirm-dialog account-dialog">
       <span class="badge">Student Account</span>
       <h2 id="studentAccountTitle">學生帳號</h2>
-      <p>此裝置會保持登入，不需要每次重新輸入密碼。</p>
+      <p>此裝置會保持登入，不需要每次重新選擇 Google 帳號。</p>
       <div id="studentAccountEmail" class="account-email"></div>
       <div class="dialog-actions">
+        <a id="studentTeacherAdminLink" class="button teacher-account-link" href="?teacher=1">進入教師後台</a>
         <button id="studentLogoutBtn" class="button secondary" type="button">登出</button>
         <button id="closeStudentAccountBtn" class="button" type="button">關閉</button>
       </div>
@@ -6843,6 +7130,9 @@
     const teacherEmailAllowlist = [
       "sssh1213@sssh.tyc.edu.tw"
     ];
+    const schoolEmailDomains = [
+      "sssh.tyc.edu.tw"
+    ];
     const categories = ["創作", "平面設計", "數位繪圖", "學習", "練習", "合作", "表達", "語言", "生活技能", "好人好事", "變可愛", "健康"];
     const defaultCenterGoal = { id: "center-goal", category: "創作", title: "完成漫畫美展作品", points: 100, completed: false, completedByClick: false, completedAt: "", gridIndex: 12 };
     let centerGoal = { ...defaultCenterGoal };
@@ -6870,6 +7160,9 @@
     let firebaseAuth = null;
     let currentAuthUser = null;
     let currentTeacherUser = null;
+    let friendEmailAllowlist = [];
+    const googleIdentityClientId = "407102075551-brcsm0l1cbo0db0nm46408ll6oph9fe4.apps.googleusercontent.com";
+    let googleIdentityScriptPromise = null;
     let knownGroups = ["main"];
     let submissions = [];
     let leaderboardRecords = [];
@@ -6881,6 +7174,8 @@
     let newsItems = [];
     let newsReadAt = "";
     let appliedGroupResetAt = {};
+    let stickerFormUrl = "";
+    let studentAuthNotice = "";
 
     function hasFirebaseConfig() {
       return Boolean(firebaseConfig.apiKey && firebaseConfig.projectId && window.firebase);
@@ -6890,6 +7185,91 @@
       const status = document.getElementById("firebaseStatus");
       if (!status) return;
       status.innerHTML = `<span>${escapeHtml(text)}</span><small>${escapeHtml(detail)}</small>`;
+    }
+
+    function loadGoogleIdentityScript() {
+      if (window.google?.accounts?.id) return Promise.resolve();
+      if (googleIdentityScriptPromise) return googleIdentityScriptPromise;
+      googleIdentityScriptPromise = new Promise((resolve, reject) => {
+        const existing = document.querySelector('script[data-google-identity-services="true"]');
+        if (existing && window.google?.accounts?.id) {
+          resolve();
+          return;
+        }
+        const script = document.createElement("script");
+        script.src = "https://accounts.google.com/gsi/client";
+        script.async = true;
+        script.defer = true;
+        script.dataset.googleIdentityServices = "true";
+        script.onload = () => resolve();
+        script.onerror = () => reject(new Error("Google Identity Services 載入失敗"));
+        document.head.appendChild(script);
+      });
+      return googleIdentityScriptPromise;
+    }
+
+    function parseJwtPayload(token) {
+      if (!token || typeof token !== "string") return null;
+      const parts = token.split(".");
+      if (parts.length < 2) return null;
+      try {
+        const base64 = parts[1].replace(/-/g, "+").replace(/_/g, "/");
+        const padded = base64 + "=".repeat((4 - (base64.length % 4)) % 4);
+        return JSON.parse(atob(padded));
+      } catch (error) {
+        console.warn("解析 Google 憑證失敗", error);
+        return null;
+      }
+    }
+
+    async function signInWithGoogleIdentity({ hostedDomain } = {}) {
+      if (!firebaseAuth) {
+        throw new Error("Firebase Auth 尚未初始化。");
+      }
+      await loadGoogleIdentityScript();
+      await firebaseAuth.setPersistence(window.firebase.auth.Auth.Persistence.LOCAL);
+      return new Promise((resolve, reject) => {
+        let settled = false;
+        const finish = (fn, value) => {
+          if (settled) return;
+          settled = true;
+          window.clearTimeout(timeoutId);
+          try {
+            fn(value);
+          } catch (error) {
+            reject(error);
+          }
+        };
+        const timeoutId = window.setTimeout(() => {
+          finish(reject, new Error("Google 登入逾時，請再試一次。"));
+        }, 60000);
+        const tokenClient = window.google.accounts.oauth2.initTokenClient({
+          client_id: googleIdentityClientId,
+          scope: "openid email profile",
+          callback: async response => {
+            try {
+              if (!response?.access_token) {
+                throw new Error("Google 未回傳登入權杖");
+              }
+              const credential = window.firebase.auth.GoogleAuthProvider.credential(null, response.access_token);
+              const result = await firebaseAuth.signInWithCredential(credential);
+              const email = String(result?.user?.email || "").toLowerCase();
+              if (hostedDomain && !email.endsWith(`@${hostedDomain}`)) {
+                await firebaseAuth.signOut();
+                throw new Error(`請使用 @${hostedDomain} 學校帳號登入。`);
+              }
+              finish(resolve, result);
+            } catch (error) {
+              finish(reject, error);
+            }
+          }
+        });
+        try {
+          tokenClient.requestAccessToken({ prompt: "select_account" });
+        } catch (error) {
+          finish(reject, error);
+        }
+      });
     }
 
     function groupDocRef() {
@@ -6912,6 +7292,10 @@
       return group ? group.collection("leaderboard") : null;
     }
 
+    function friendEmailCollectionRef() {
+      return firestoreDb ? firestoreDb.collection("allowedFriendEmails") : null;
+    }
+
     function initFirebase() {
       if (!hasFirebaseConfig()) {
         updateFirebaseStatus("目前為本機測試模式", "貼上 Firebase 設定後，資料會上傳到 Firestore。");
@@ -6927,6 +7311,7 @@
           console.warn("無法設定持續登入", error);
         });
         bindAuthState();
+        completeRedirectLogin();
         updateFirebaseStatus("Firebase 已連線", `目前群組：${normalizedGroupCode()}。學生送出後會寫入該群組。`);
       } catch (error) {
         console.warn("Firebase 初始化失敗", error);
@@ -6936,6 +7321,33 @@
 
     function isAllowedTeacher(user) {
       return Boolean(user && teacherEmailAllowlist.includes(String(user.email || "").toLowerCase()));
+    }
+
+    function isAllowedSchoolUser(user) {
+      const email = String(user?.email || "").trim().toLowerCase();
+      return Boolean(email && schoolEmailDomains.some(domain => email.endsWith(`@${domain}`)));
+    }
+
+    function normalizeFriendEmail(value) {
+      return String(value || "").trim().toLowerCase();
+    }
+
+    function isValidEmail(value) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizeFriendEmail(value));
+    }
+
+    async function isAllowedStudentUser(user) {
+      if (!user?.email) return false;
+      if (isAllowedSchoolUser(user) || isAllowedTeacher(user)) return true;
+      if (!firestoreDb) return false;
+      try {
+        const email = normalizeFriendEmail(user.email);
+        const doc = await friendEmailCollectionRef().doc(email).get();
+        return doc.exists && doc.data()?.active === true;
+      } catch (error) {
+        console.warn("檢查朋友帳號白名單失敗", error);
+        return false;
+      }
     }
 
     function updateTeacherAuthUi(user) {
@@ -6960,13 +7372,16 @@
     function updateStudentAuthUi(user) {
       const authenticated = Boolean(user);
       document.body.classList.toggle("student-authenticated", Boolean(!teacherMode && authenticated));
+      document.body.classList.toggle("teacher-student-account", Boolean(!teacherMode && isAllowedTeacher(user)));
       const emailText = document.getElementById("studentAccountEmail");
       const status = document.getElementById("studentAuthStatus");
       if (emailText) emailText.textContent = user?.email || "";
       if (!authenticated) {
-        if (status) status.textContent = "請輸入 Email 與密碼。";
+        if (status) status.textContent = studentAuthNotice || "請選擇 Google 帳號。";
         return;
       }
+      studentAuthNotice = "";
+      if (status) status.textContent = `已登入：${user.email || ""}`;
       studentProfile.email = user.email || "";
     }
 
@@ -6993,11 +7408,18 @@
         updateTeacherAuthUi(user);
         if (isAllowedTeacher(user)) {
           await loadKnownGroups();
+          await loadFriendEmailAllowlist();
           await loadRemoteSettings();
           await loadRemoteSubmissions();
           await loadRemoteLeaderboard();
           switchPage("admin");
         }
+        return;
+      }
+      if (user && !(await isAllowedStudentUser(user))) {
+        studentAuthNotice = "此 Google 帳號尚未取得使用資格，請聯絡老師加入朋友白名單。";
+        updateStudentAuthUi(null);
+        await firebaseAuth.signOut();
         return;
       }
       updateStudentAuthUi(user);
@@ -7024,56 +7446,97 @@
 
     function studentAuthErrorMessage(error) {
       const messages = {
-        "auth/email-already-in-use": "這個 Email 已註冊，請直接登入。",
-        "auth/invalid-email": "Email 格式不正確。",
-        "auth/invalid-credential": "Email 或密碼不正確。",
-        "auth/user-not-found": "找不到這個帳號，請先註冊。",
-        "auth/wrong-password": "密碼不正確。",
-        "auth/weak-password": "密碼至少需要 6 個字元。",
+        "auth/popup-closed-by-user": "登入視窗已關閉，請再試一次。",
+        "auth/cancelled-popup-request": "登入視窗已取消，請再試一次。",
+        "auth/popup-blocked": "瀏覽器封鎖了登入視窗，請允許彈出視窗後再試。",
+        "auth/unauthorized-domain": "目前網址尚未加入 Firebase 授權網域，請告訴老師協助設定。",
+        "auth/account-exists-with-different-credential": "此 Email 已使用其他登入方式，請告訴老師協助處理。",
         "auth/too-many-requests": "嘗試次數過多，請稍後再試。",
-        "auth/operation-not-allowed": "Firebase 尚未啟用 Email／密碼登入。"
+        "auth/operation-not-allowed": "Firebase 尚未啟用 Google 登入。"
       };
       return messages[error?.code] || error?.message || "登入失敗，請稍後再試。";
     }
 
-    function studentAuthCredentials() {
-      return {
-        email: document.getElementById("studentAuthEmail")?.value.trim() || "",
-        password: document.getElementById("studentAuthPassword")?.value || ""
-      };
+    function shouldUseRedirectLogin() {
+      const hostname = window.location.hostname.toLowerCase();
+      return hostname.endsWith(".firebaseapp.com")
+        || hostname.endsWith(".web.app");
     }
 
-    async function studentLogin() {
-      if (!firebaseAuth) return;
-      const { email, password } = studentAuthCredentials();
-      const status = document.getElementById("studentAuthStatus");
-      if (!email || password.length < 6) {
-        status.textContent = "請輸入正確 Email，密碼至少 6 個字元。";
-        return;
-      }
-      status.textContent = "登入中…";
+    function is127LoopbackPreview() {
+      const hostname = window.location.hostname.toLowerCase();
+      return hostname === "127.0.0.1";
+    }
+
+    function isFilePreview() {
+      return window.location.protocol === "file:";
+    }
+
+    async function completeRedirectLogin() {
+      if (!firebaseAuth || !shouldUseRedirectLogin()) return;
       try {
-        await firebaseAuth.setPersistence(window.firebase.auth.Auth.Persistence.LOCAL);
-        await firebaseAuth.signInWithEmailAndPassword(email, password);
+        const result = await firebaseAuth.getRedirectResult();
+        if (!result?.user) return;
+        if (!teacherMode && !(await isAllowedStudentUser(result.user))) {
+          studentAuthNotice = "此 Google 帳號尚未取得使用資格，請聯絡老師加入朋友白名單。";
+          await firebaseAuth.signOut();
+          updateStudentAuthUi(null);
+        }
       } catch (error) {
-        status.textContent = studentAuthErrorMessage(error);
+        const message = studentAuthErrorMessage(error);
+        console.warn("Google 跳轉登入失敗", error);
+        if (teacherMode) {
+          const status = document.getElementById("teacherAuthStatus");
+          if (status) status.textContent = message;
+        } else {
+          studentAuthNotice = message;
+          const status = document.getElementById("studentAuthStatus");
+          if (status) status.textContent = message;
+        }
       }
     }
 
-    async function studentRegister() {
+    async function signInWithGoogleProvider(provider) {
+      await firebaseAuth.setPersistence(window.firebase.auth.Auth.Persistence.LOCAL);
+      try {
+        return await firebaseAuth.signInWithPopup(provider);
+      } catch (error) {
+        if (shouldUseRedirectLogin() && (
+          error?.code === "auth/popup-blocked" ||
+          error?.code === "auth/cancelled-popup-request" ||
+          error?.code === "auth/popup-closed-by-user"
+        )) {
+          await firebaseAuth.signInWithRedirect(provider);
+          return null;
+        }
+        throw error;
+      }
+    }
+
+    async function studentGoogleLogin() {
       if (!firebaseAuth) return;
-      const { email, password } = studentAuthCredentials();
       const status = document.getElementById("studentAuthStatus");
-      if (!email || password.length < 6) {
-        status.textContent = "請輸入正確 Email，密碼至少 6 個字元。";
+      studentAuthNotice = "";
+      if (is127LoopbackPreview() || isFilePreview()) {
+        const message = "請改用 http://localhost:8787 開啟測試頁，再進行 Google 登入。";
+        studentAuthNotice = message;
+        if (status) status.textContent = message;
         return;
       }
-      status.textContent = "建立帳號中…";
+      if (status) status.textContent = "正在前往 Google 登入…";
+      const provider = new window.firebase.auth.GoogleAuthProvider();
+      provider.setCustomParameters({
+        prompt: "select_account"
+      });
       try {
-        await firebaseAuth.setPersistence(window.firebase.auth.Auth.Persistence.LOCAL);
-        await firebaseAuth.createUserWithEmailAndPassword(email, password);
+        const result = await signInWithGoogleProvider(provider);
+        if (result?.user && !(await isAllowedStudentUser(result.user))) {
+          studentAuthNotice = "此 Google 帳號尚未取得使用資格，請聯絡老師加入朋友白名單。";
+          await firebaseAuth.signOut();
+          if (status) status.textContent = studentAuthNotice;
+        }
       } catch (error) {
-        status.textContent = studentAuthErrorMessage(error);
+        if (status) status.textContent = studentAuthErrorMessage(error);
       }
     }
 
@@ -7102,9 +7565,14 @@
         alert("Firebase Auth 尚未初始化。");
         return;
       }
+      if (is127LoopbackPreview() || isFilePreview()) {
+        alert("請改用 http://localhost:8787 開啟測試頁，再進行 Google 登入。");
+        return;
+      }
       const provider = new window.firebase.auth.GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: "select_account" });
       try {
-        await firebaseAuth.signInWithPopup(provider);
+        await signInWithGoogleProvider(provider);
       } catch (error) {
         console.warn("老師登入失敗", error);
         alert(`Google 登入失敗：${error.code || "unknown"}\n${error.message || "請確認 Firebase Authentication、授權網域與目前網址。"}`);
@@ -7114,6 +7582,50 @@
     async function teacherLogout() {
       if (!firebaseAuth) return;
       await firebaseAuth.signOut();
+    }
+
+    async function studentGoogleLoginViaGis() {
+      if (!firebaseAuth) return;
+      const status = document.getElementById("studentAuthStatus");
+      studentAuthNotice = "";
+      if (is127LoopbackPreview() || isFilePreview()) {
+        const message = "請改用 http://localhost:8787 開啟測試頁，再進行 Google 登入。";
+        studentAuthNotice = message;
+        if (status) status.textContent = message;
+        return;
+      }
+      if (status) status.textContent = "正在開啟 Google 登入…";
+      try {
+        const result = await signInWithGoogleIdentity();
+        if (result?.user && !(await isAllowedStudentUser(result.user))) {
+          studentAuthNotice = "此 Google 帳號尚未取得使用資格，請聯絡老師加入朋友白名單。";
+          await firebaseAuth.signOut();
+          if (status) status.textContent = studentAuthNotice;
+        }
+      } catch (error) {
+        if (status) status.textContent = studentAuthErrorMessage(error);
+      }
+    }
+
+    async function teacherLoginViaGis() {
+      if (!firebaseAuth) {
+        alert("Firebase Auth 尚未初始化。");
+        return;
+      }
+      if (is127LoopbackPreview() || isFilePreview()) {
+        alert("請改用 http://localhost:8787 開啟測試頁，再進行 Google 登入。");
+        return;
+      }
+      try {
+        await signInWithGoogleIdentity({ hostedDomain: schoolEmailDomains[0] });
+        if (!isAllowedTeacher(currentAuthUser)) {
+          await firebaseAuth.signOut();
+          throw new Error("not-allowed");
+        }
+      } catch (error) {
+        console.warn("教師登入失敗", error);
+        alert(`Google 登入失敗：${error.code || "unknown"}\n${error.message || "請確認 Firebase Authentication、授權網域與目前網址。"}`);
+      }
     }
 
     function escapeHtml(value) {
@@ -7162,7 +7674,7 @@
 
     function saveState() {
       try {
-        localStorage.setItem(currentStorageKey(), JSON.stringify({ centerGoal, studentProfile, draftGoals, boardGoals, submissions, leaderboardRecords, latestNews, newsItems, newsReadAt, appliedGroupResetAt }));
+        localStorage.setItem(currentStorageKey(), JSON.stringify({ centerGoal, studentProfile, draftGoals, boardGoals, submissions, leaderboardRecords, latestNews, newsItems, newsReadAt, appliedGroupResetAt, stickerFormUrl }));
       } catch (error) {
         console.warn("無法儲存到這台裝置", error);
       }
@@ -7220,6 +7732,7 @@
         if (saved.appliedGroupResetAt && typeof saved.appliedGroupResetAt === "object") {
           appliedGroupResetAt = saved.appliedGroupResetAt;
         }
+        stickerFormUrl = typeof saved.stickerFormUrl === "string" ? saved.stickerFormUrl : "";
       } catch (error) {
         console.warn("無法讀取已儲存卡片", error);
       }
@@ -7246,6 +7759,7 @@
       submissions = [];
       leaderboardRecords = [];
       selectedMoofiLevel = null;
+      stickerFormUrl = "";
     }
 
     function profileReady() {
@@ -7482,6 +7996,105 @@
       }
     }
 
+    function renderFriendEmailAllowlist() {
+      const list = document.getElementById("friendEmailList");
+      if (!list) return;
+      if (!friendEmailAllowlist.length) {
+        list.innerHTML = `<div class="friend-allowlist-item"><div><strong>尚未加入朋友帳號</strong><small>學校帳號不需要加入此清單。</small></div></div>`;
+        return;
+      }
+      list.innerHTML = friendEmailAllowlist.map(item => `
+        <div class="friend-allowlist-item">
+          <div>
+            <strong>${escapeHtml(item.email)}</strong>
+            <small>${item.createdAt ? `加入時間：${escapeHtml(formatNewsDate(item.createdAt))}` : "已加入白名單"}</small>
+          </div>
+          <button class="button danger" type="button" data-remove-friend-email="${escapeHtml(item.email)}">刪除</button>
+        </div>
+      `).join("");
+    }
+
+    async function loadFriendEmailAllowlist() {
+      if (!firestoreDb || !isAllowedTeacher(currentAuthUser)) {
+        friendEmailAllowlist = [];
+        renderFriendEmailAllowlist();
+        return;
+      }
+      try {
+        const snapshot = await friendEmailCollectionRef().orderBy("createdAt", "desc").limit(100).get();
+        friendEmailAllowlist = snapshot.docs.map(doc => ({
+          email: normalizeFriendEmail(doc.id),
+          ...doc.data()
+        }));
+      } catch (error) {
+        console.warn("讀取朋友白名單失敗", error);
+        const status = document.getElementById("friendEmailStatus");
+        if (status) status.textContent = "無法讀取白名單，請確認 Firestore 規則已更新。";
+      }
+      renderFriendEmailAllowlist();
+    }
+
+    async function addFriendEmail() {
+      const input = document.getElementById("friendEmailInput");
+      const status = document.getElementById("friendEmailStatus");
+      const email = normalizeFriendEmail(input?.value);
+      if (!isValidEmail(email)) {
+        if (status) status.textContent = "請輸入完整且正確的 Google Email。";
+        return;
+      }
+      if (isAllowedSchoolUser({ email })) {
+        if (status) status.textContent = "學校帳號原本就可以登入，不需要加入白名單。";
+        return;
+      }
+      if (!firestoreDb || !isAllowedTeacher(currentAuthUser)) {
+        if (status) status.textContent = "請先使用老師帳號登入後台。";
+        return;
+      }
+      try {
+        const now = new Date().toISOString();
+        await friendEmailCollectionRef().doc(email).set({
+          email,
+          active: true,
+          createdAt: now,
+          createdBy: currentAuthUser.email || "",
+          updatedAt: now
+        }, { merge: true });
+        if (input) input.value = "";
+        if (status) status.textContent = `${email} 已加入朋友白名單。`;
+        await loadFriendEmailAllowlist();
+      } catch (error) {
+        console.warn("新增朋友白名單失敗", error);
+        if (status) status.textContent = "新增失敗，請確認 Firestore 規則已發布。";
+      }
+    }
+
+    async function removeFriendEmail(email) {
+      const normalizedEmail = normalizeFriendEmail(email);
+      if (!normalizedEmail || !firestoreDb || !isAllowedTeacher(currentAuthUser)) return;
+      if (!confirm(`確定要將 ${normalizedEmail} 從朋友白名單移除嗎？`)) return;
+      const status = document.getElementById("friendEmailStatus");
+      try {
+        await friendEmailCollectionRef().doc(normalizedEmail).delete();
+        if (status) status.textContent = `${normalizedEmail} 已從白名單移除。`;
+        await loadFriendEmailAllowlist();
+      } catch (error) {
+        console.warn("刪除朋友白名單失敗", error);
+        if (status) status.textContent = "刪除失敗，請確認 Firestore 規則。";
+      }
+    }
+
+    function bindFriendEmailAllowlist() {
+      document.getElementById("addFriendEmailBtn")?.addEventListener("click", addFriendEmail);
+      document.getElementById("friendEmailInput")?.addEventListener("keydown", event => {
+        if (event.key === "Enter") addFriendEmail();
+      });
+      document.getElementById("friendEmailList")?.addEventListener("click", event => {
+        const button = event.target.closest("[data-remove-friend-email]");
+        if (button) removeFriendEmail(button.dataset.removeFriendEmail);
+      });
+      renderFriendEmailAllowlist();
+    }
+
     function renderCenterGoalSettings() {
       const input = document.getElementById("centerGoalTitleInput");
       if (input) input.value = centerGoal.title;
@@ -7493,6 +8106,8 @@
       if (!firestoreDb || !currentAuthUser) {
         renderCenterGoalSettings();
         renderLatestNews();
+        renderStickerFormSettings();
+        updateStickerClaimDisplay(completedGoals().length);
         return;
       }
       try {
@@ -7517,6 +8132,7 @@
           };
           newsItems = latestNews.updatedAt ? [latestNews] : [];
         }
+        stickerFormUrl = typeof data.stickerFormUrl === "string" ? data.stickerFormUrl.trim() : "";
         const group = normalizedGroupCode();
         const remoteResetAt = data.groupResetAt || "";
         const appliedResetAt = appliedGroupResetAt[group] || "";
@@ -7538,13 +8154,17 @@
         }
         renderCenterGoalSettings();
         renderLatestNews();
+        renderStickerFormSettings();
         renderRows();
         if (boardGoals) renderBoard();
+        updateStickerClaimDisplay(completedGoals().length);
         saveState();
       } catch (error) {
         console.warn("讀取中心目標設定失敗", error);
         renderCenterGoalSettings();
         renderLatestNews();
+        renderStickerFormSettings();
+        updateStickerClaimDisplay(completedGoals().length);
       }
     }
 
@@ -7591,6 +8211,62 @@
       const button = document.getElementById("saveCenterGoalBtn");
       if (!button) return;
       button.addEventListener("click", saveCenterGoalSettings);
+    }
+
+    function isValidGoogleFormUrl(value) {
+      try {
+        const url = new URL(value);
+        return url.protocol === "https:"
+          && (url.hostname === "forms.gle" || (url.hostname === "docs.google.com" && url.pathname.startsWith("/forms/")));
+      } catch {
+        return false;
+      }
+    }
+
+    function renderStickerFormSettings() {
+      const input = document.getElementById("stickerFormUrlInput");
+      if (input) input.value = stickerFormUrl;
+    }
+
+    async function saveStickerFormUrlSettings() {
+      const input = document.getElementById("stickerFormUrlInput");
+      const status = document.getElementById("stickerFormUrlStatus");
+      const nextUrl = (input?.value || "").trim();
+      if (nextUrl && !isValidGoogleFormUrl(nextUrl)) {
+        if (status) status.textContent = "請貼上 forms.gle 或 docs.google.com/forms 的 Google 表單網址。";
+        return;
+      }
+      stickerFormUrl = nextUrl;
+      renderStickerFormSettings();
+      updateStickerClaimDisplay(completedGoals().length);
+      saveState();
+      if (!firestoreDb) {
+        if (status) status.textContent = nextUrl ? "已暫存在這台裝置。" : "已清除這台裝置的表單網址。";
+        return;
+      }
+      try {
+        await groupDocRef().set({
+          groupCode: normalizedGroupCode(),
+          updatedAt: new Date().toISOString()
+        }, { merge: true });
+        await settingsDocRef().set({
+          stickerFormUrl,
+          groupCode: normalizedGroupCode(),
+          updatedAt: new Date().toISOString()
+        }, { merge: true });
+        if (status) {
+          status.textContent = stickerFormUrl
+            ? `已儲存群組 ${normalizedGroupCode()} 的貼圖表單網址。`
+            : `已清除群組 ${normalizedGroupCode()} 的貼圖表單網址。`;
+        }
+      } catch (error) {
+        console.warn("儲存貼圖表單網址失敗", error);
+        if (status) status.textContent = "儲存失敗，請確認 Firestore 權限。";
+      }
+    }
+
+    function bindStickerFormSettings() {
+      document.getElementById("saveStickerFormUrlBtn")?.addEventListener("click", saveStickerFormUrlSettings);
     }
 
     function normalizeNewsItems() {
@@ -8012,6 +8688,45 @@
       moofiLockedMessageTimer = setTimeout(() => message.classList.remove("show"), 2600);
     }
 
+    function updateStickerClaimDisplay(done = completedGoals().length) {
+      const completedCount = Math.max(0, Math.min(25, Number(done || 0)));
+      const unlocked = completedCount === 25;
+      const hasForm = isValidGoogleFormUrl(stickerFormUrl);
+      const card = document.getElementById("moofiStickerCard");
+      const progress = document.getElementById("stickerClaimProgress");
+      const message = document.getElementById("stickerClaimMessage");
+      const button = document.getElementById("stickerClaimBtn");
+      const hint = document.getElementById("stickerClaimHint");
+      card?.classList.toggle("is-unlocked", unlocked);
+      if (progress) progress.textContent = unlocked ? "25 / 25 全部完成" : `目前完成 ${completedCount} / 25`;
+      if (!button || !message || !hint) return;
+      if (!unlocked) {
+        message.textContent = "完成全部 25 個目標後，即可解鎖 Moofi 貼圖領取表單。";
+        button.disabled = true;
+        button.textContent = "完成 25 個目標後解鎖";
+        hint.textContent = "解鎖後將前往老師提供的 Google 表單上傳完成證明。";
+        return;
+      }
+      message.textContent = "恭喜！你已完成全部目標，Moofi 貼圖領取資格已解鎖。";
+      if (!hasForm) {
+        button.disabled = true;
+        button.textContent = "領取表單尚未開放";
+        hint.textContent = "資格已解鎖，請等待老師公布 Google 表單。";
+        return;
+      }
+      button.disabled = false;
+      button.textContent = "領取 Moofi 貼圖";
+      hint.textContent = "將開啟 Google 表單，請使用學校帳號上傳完成證明。";
+    }
+
+    function openStickerClaimForm() {
+      if (completedGoals().length !== 25 || !isValidGoogleFormUrl(stickerFormUrl)) {
+        updateStickerClaimDisplay(completedGoals().length);
+        return;
+      }
+      window.open(stickerFormUrl, "_blank", "noopener,noreferrer");
+    }
+
     function renderRecentTasks() {
       const list = document.getElementById("recentList");
       if (!list) return;
@@ -8068,6 +8783,7 @@
       if (leaderClass) leaderClass.textContent = studentProfile.className || "尚未填寫";
       renderRecentTasks();
       updateAchievementDisplay(done, lines, xp);
+      updateStickerClaimDisplay(done);
       renderLeaderboard();
     }
 
@@ -8722,16 +9438,13 @@
     });
     document.getElementById("teacherLoginBtn").addEventListener("click", teacherLogin);
     document.getElementById("teacherLogoutBtn").addEventListener("click", teacherLogout);
-    document.getElementById("studentLoginBtn").addEventListener("click", studentLogin);
-    document.getElementById("studentRegisterBtn").addEventListener("click", studentRegister);
+    document.getElementById("studentGoogleLoginBtn").addEventListener("click", studentGoogleLogin);
     document.getElementById("studentLogoutBtn").addEventListener("click", studentLogout);
     document.getElementById("studentAccountBtn").addEventListener("click", openStudentAccountDialog);
+    document.getElementById("stickerClaimBtn").addEventListener("click", openStickerClaimForm);
     document.getElementById("closeStudentAccountBtn").addEventListener("click", closeStudentAccountDialog);
     document.getElementById("studentAccountDialog").addEventListener("click", event => {
       if (event.target.id === "studentAccountDialog") closeStudentAccountDialog();
-    });
-    document.getElementById("studentAuthPassword").addEventListener("keydown", event => {
-      if (event.key === "Enter") studentLogin();
     });
 
     function updateCountdown() {
@@ -8750,8 +9463,11 @@
     bindProfileInputs();
     bindGroupSelect();
     bindGroupManagement();
+    bindFriendEmailAllowlist();
     renderCenterGoalSettings();
     bindCenterGoalSettings();
+    renderStickerFormSettings();
+    bindStickerFormSettings();
     renderLatestNews();
     bindLatestNewsSettings();
     renderRows();
@@ -8762,6 +9478,7 @@
       renderBoard();
     }
     renderAdmin();
+    updateStickerClaimDisplay(completedGoals().length);
     if (teacherMode) {
       switchPage("admin");
     }
