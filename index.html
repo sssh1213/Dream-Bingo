@@ -8376,6 +8376,33 @@
       return currentAuthUser?.uid ? `${storageKeyBase}-${currentAuthUser.uid}` : `${storageKeyBase}-guest`;
     }
 
+    function currentNewsReadKey() {
+      const userPart = currentAuthUser?.uid || "guest";
+      return `${storageKeyBase}-news-read-${userPart}-${normalizedGroupCode()}`;
+    }
+
+    function loadNewsReadAt() {
+      try {
+        const standaloneReadAt = localStorage.getItem(currentNewsReadKey()) || "";
+        if (standaloneReadAt && standaloneReadAt > newsReadAt) {
+          newsReadAt = standaloneReadAt;
+        }
+      } catch (error) {
+        console.warn("無法讀取最新消息已讀狀態", error);
+      }
+    }
+
+    function saveNewsReadAt(value = newsReadAt) {
+      newsReadAt = value || "";
+      try {
+        if (newsReadAt) {
+          localStorage.setItem(currentNewsReadKey(), newsReadAt);
+        }
+      } catch (error) {
+        console.warn("無法儲存最新消息已讀狀態", error);
+      }
+    }
+
     function saveState() {
       try {
         localStorage.setItem(currentStorageKey(), JSON.stringify({ centerGoal, studentProfile, draftGoals, boardGoals, submissions, leaderboardRecords, latestNews, newsItems, newsReadAt, appliedGroupResetAt, stickerFormUrl, journeyStartedAt, dailyMissionState }));
@@ -8433,6 +8460,7 @@
           newsItems = [saved.latestNews];
         }
         newsReadAt = saved.newsReadAt || "";
+        loadNewsReadAt();
         if (saved.appliedGroupResetAt && typeof saved.appliedGroupResetAt === "object") {
           appliedGroupResetAt = saved.appliedGroupResetAt;
         }
@@ -9038,6 +9066,7 @@
           : "尚未發布正式公告。";
       }
       const newestAt = items[0]?.updatedAt || "";
+      loadNewsReadAt();
       if (dot) dot.classList.toggle("show", Boolean(newestAt && newestAt > newsReadAt));
       renderAdminNewsList(items);
     }
@@ -9159,7 +9188,7 @@
           dialog?.classList.add("show");
           const newestAt = normalizeNewsItems()[0]?.updatedAt || "";
           if (newestAt) {
-            newsReadAt = newestAt;
+            saveNewsReadAt(newestAt);
             saveState();
             renderLatestNews();
           }
@@ -9858,13 +9887,24 @@
       });
     }
 
+    function isCurrentStudentRecord(record) {
+      if (!record || !profileReady()) return false;
+      const currentId = studentDocumentId();
+      if (currentId && record.id === currentId) return true;
+      if (currentAuthUser?.uid && record.ownerUid === currentAuthUser.uid) return true;
+      if (studentProfile.email && record.email && String(record.email).toLowerCase() === studentProfile.email.toLowerCase()) return true;
+      return String(record.studentName || "").trim() === studentProfile.studentName.trim()
+        && String(record.className || "").trim() === studentProfile.className.trim()
+        && String(record.seatNumber || "").trim() === String(studentProfile.seatNumber).trim()
+        && String(record.groupCode || normalizedGroupCode()).trim().toLowerCase() === normalizedGroupCode();
+    }
+
     function renderLeaderboard() {
       const tbody = document.getElementById("leaderboardBody");
       if (!tbody) return;
       const ranked = normalizedLeaderboardRecords();
       updatePodiumLabels(ranked);
-      const currentId = profileReady() ? studentDocumentId() : "";
-      const currentIndex = currentId ? ranked.findIndex(record => record.id === currentId) : -1;
+      const currentIndex = profileReady() ? ranked.findIndex(isCurrentStudentRecord) : -1;
       const topRows = ranked.slice(0, 5).map((record, index) => ({ record, rank: index + 1, self: false }));
       const rows = [...topRows];
       if (profileReady()) {
